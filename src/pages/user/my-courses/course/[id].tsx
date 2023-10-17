@@ -12,7 +12,6 @@ import CourseHeader from "@/shared/ui/course/ui/CourseHeader/CourseHeader";
 import CourseAboutTab from "@/shared/ui/course/ui/CourseTabs/CourseAboutTab";
 import CourseReviewsTab from "@/shared/ui/course/ui/CourseTabs/CourseReviewsTab";
 import CourseContentTab from "@/shared/ui/course/ui/CourseTabs/CourseContentTab";
-import {Course} from "@/enteties/Course";
 import {ErrorWidget} from "@/widgets/ErrorWidget";
 
 export enum Tabs {
@@ -106,7 +105,7 @@ const CoursePage = () => {
                             )}
                             <CourseContentTab
                                 courseModulesEdit={courseModulesEdit}
-                                moduleId={router.query.id as string}
+                                courseId={router.query.id as string}
                                 isUserAuthor={isUserCourse}
                             />
                         </>

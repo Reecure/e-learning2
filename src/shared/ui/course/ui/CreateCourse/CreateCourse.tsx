@@ -20,7 +20,7 @@ const CreateCourse: FC<Props> = () => {
     };
 
     const createCourseHandler = async (data: Course) => {
-        const res = await createCourse.mutate({
+        await createCourse.mutate({
             title: data.title,
             cover_description: data.cover_description,
             cover_image: data.cover_image,

@@ -11,29 +11,29 @@ type Props = {
 };
 
 const UserLayout: FC<Props> = ({children, contentClassName}) => {
-	const router = useRouter();
+    const router = useRouter();
 
-	const session = useSession({
-		required: true,
-		onUnauthenticated() {
-			router.push(Routes.LOGIN);
-		},
-	});
+    const session = useSession({
+        required: true,
+        onUnauthenticated() {
+            router.push(Routes.LOGIN);
+        },
+    });
 
-	if (session.status === "loading") {
-		return <p>Loading</p>;
-	}
+    if (session.status === "loading") {
+        return <p>Loading</p>;
+    }
 
-	return (
-		<Suspense fallback={<Loader/>}>
-			<div className={"h-[calc(100vh_-_62px)] flex justify-between"}>
-				<Sidebar/>
-				<div className={`w-full overflow-y-auto p-5 ${contentClassName} `}>
-					{children}
-				</div>
-			</div>
-		</Suspense>
-	);
+    return (
+        <Suspense fallback={<Loader/>}>
+            <div className={"h-[calc(100vh_-_62px)] flex justify-between"}>
+                <Sidebar/>
+                <div className={`w-full overflow-y-auto p-5 ${contentClassName} `}>
+                    {children}
+                </div>
+            </div>
+        </Suspense>
+    );
 };
 
 export default UserLayout;

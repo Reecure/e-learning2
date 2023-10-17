@@ -1,7 +1,8 @@
-import {type FC} from "react";
+import {type FC, useEffect} from "react";
 import {trpc} from "@/shared/utils/trpc";
 import DragAndDrop from "@/shared/ui/DragAndDrop/DragAndDrop";
 import {Loader} from "@/shared/ui";
+import {ModuleLesson} from "@/enteties/Module/model/types/module";
 
 type Props = {
     moduleId: string;
@@ -10,29 +11,32 @@ type Props = {
 };
 
 const CourseLessons: FC<Props> = ({
-	moduleId,
-	lessonCanEdit,
-	isUserLessons,
+    moduleId,
+    lessonCanEdit,
+    isUserLessons,
 }) => {
-	const lessonsQuery = trpc.getModuleById.useQuery({
-		module_id: moduleId,
-	});
+    const lessonsQuery = trpc.module.byId.useQuery({
+        id: moduleId,
+    });
 
-	if (lessonsQuery.isLoading) {
-		return <Loader/>;
-	}
+    useEffect(()=>{
+        console.log(lessonsQuery.data?.lessons);
+    },[lessonsQuery.isLoading]);
 
-	return (
-		<div className={"mt-5"}>
-			<DragAndDrop
-				items={lessonsQuery?.data?.lessons}
-				canEdit={lessonCanEdit}
-				isModule={false}
-				refetch={lessonsQuery.refetch}
-				isUserAuthor={isUserLessons}
-			/>
-		</div>
-	);
+    if (lessonsQuery.isLoading) {
+        return <Loader/>;
+    }
+
+    return (
+        <div className={"mt-5"}>
+            <DragAndDrop
+                items={lessonsQuery.data?.lessons as ModuleLesson[]}
+                canEdit={lessonCanEdit}
+                isModule={false}
+                isUserAuthor={isUserLessons}
+            />
+        </div>
+    );
 };
 
 export default CourseLessons;

@@ -26,6 +26,7 @@ const CourseHeader: FC<Props> = ({course, isUserCourse}) => {
 
 
     const user = trpc.user.userById.useQuery({id: session.data?.user.id || ""});
+    const updateUserCourseProgress = trpc.progress.updateUserCourseProgress.useMutation();
 
     const deleteCourseFromUserCourses = trpc.user.deleteUserCourses.useMutation({
         async onSuccess() {
@@ -47,7 +48,7 @@ const CourseHeader: FC<Props> = ({course, isUserCourse}) => {
             await utils.course.courseById.invalidate();
         },
     });
-    // const updateUserCourseProgress = trpc.updateUserCourseProgress.useMutation();
+
     const deleteCourse = trpc.course.deleteCourse.useMutation({
         async onSuccess() {
             router.push(Routes.COURSES);
@@ -141,14 +142,14 @@ const CourseHeader: FC<Props> = ({course, isUserCourse}) => {
                                                 course_id: course?.id,
                                             });
 
-                                            // await updateUserCourseProgress.mutate({
-                                            //     id: session.data?.user.id || "",
-                                            //     course_progress: {
-                                            //         course_name: data.title,
-                                            //         course_id: data?.id,
-                                            //         is_completed: false,
-                                            //     },
-                                            // });
+                                            await updateUserCourseProgress.mutate({
+                                                id: session.data?.user.id || "",
+                                                course_progress: {
+                                                    course_name: course.title,
+                                                    course_id: course?.id,
+                                                    is_completed: false,
+                                                },
+                                            });
                                         } catch (e) {
                                             console.log(e);
                                         }

@@ -1,6 +1,6 @@
 import React, {type ReactElement, useState} from "react";
 import Layout from "@/pages/layout";
-import {Button, SmallCard} from "@/shared/ui";
+import {Button, Loader, SmallCard} from "@/shared/ui";
 import {useSession} from "next-auth/react";
 import {trpc} from "@/shared/utils/trpc";
 import UserLayout from "@/pages/user/layout";
@@ -30,6 +30,10 @@ const CoursesPage = () => {
     const myselfCourses = trpc.user.getUserCustomCourses.useQuery({
         id: session.data?.user?.id || "",
     });
+
+    if (subscribedCourses.isLoading || myselfCourses.isLoading) {
+        return <Loader />;
+    }
 
     if (subscribedCourses.error || myselfCourses.error) {
         return <ErrorWidget/>;

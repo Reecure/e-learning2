@@ -2,10 +2,11 @@ import {Fragment, type ReactElement} from "react";
 import Layout from "@/pages/layout";
 import UserLayout from "@/pages/user/layout";
 import {useSession} from "next-auth/react";
-import { UserRaw} from "@/shared/ui";
+import {Loader, UserRaw} from "@/shared/ui";
 import {User, UserRoles} from "@/enteties/User";
 import AccesDenied from "@/widgets/AccesDenied/ui/AccesDenied";
 import {trpc} from "@/shared/utils/trpc";
+import {ErrorWidget} from "@/widgets/ErrorWidget";
 
 const rows = ["", "Firstname", "Lastname", "Email", "Role", ];
 
@@ -20,6 +21,13 @@ const UserAdmin = () => {
             return lastPage.nextCursor;
         }
     });
+    if (usersQuery.isLoading) {
+        return <Loader />;
+    }
+
+    if (usersQuery.error) {
+        return <ErrorWidget />;
+    }
 
     if (session.data?.user.role !== UserRoles.ADMIN) {
         return <AccesDenied />;

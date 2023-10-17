@@ -5,35 +5,34 @@ import {Loader} from "@/shared/ui";
 import {Module} from "@/enteties/Module";
 
 type Props = {
-    moduleId: string;
+    courseId: string;
     courseModulesEdit: boolean;
     isUserAuthor: boolean;
 };
 
 const CourseModules: FC<Props> = ({
-	moduleId,
-	courseModulesEdit,
-	isUserAuthor,
+    courseId,
+    courseModulesEdit,
+    isUserAuthor,
 }) => {
-	const modulesQuery = trpc.getModulesByCourseId.useQuery({
-		course_id: moduleId,
-	});
+    const modulesQuery = trpc.module.byCourseId.useQuery({
+        id: courseId,
+    });
 
-	if (modulesQuery.isLoading) {
-		return <Loader/>;
-	}
+    if (modulesQuery.isLoading) {
+        return <Loader/>;
+    }
 
-	return (
-		<div className={"mt-5"}>
-			<DragAndDrop
-				items={modulesQuery?.data?.sort((a, b) => a.order - b.order) as Module[]}
-				canEdit={courseModulesEdit}
-				isModule
-				refetch={modulesQuery.refetch}
-				isUserAuthor={isUserAuthor}
-			/>
-		</div>
-	);
+    return (
+        <div className={"mt-5"}>
+            <DragAndDrop
+                items={modulesQuery.data as Module[]}
+                canEdit={courseModulesEdit}
+                isModule
+                isUserAuthor={isUserAuthor}
+            />
+        </div>
+    );
 };
 
 export default CourseModules;

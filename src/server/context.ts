@@ -13,8 +13,7 @@ export const createContext = async (
         user: prisma.users,
         course: prisma.courses,
         modules: prisma.modules,
-        lessons: prisma.lessons
-
+        lessons: prisma.lessons,
     };
 };
 export type Context = trpc.inferAsyncReturnType<typeof createContext>;
