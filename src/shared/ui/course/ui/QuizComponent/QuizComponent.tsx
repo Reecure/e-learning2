@@ -35,11 +35,12 @@ const QuizComponent: FC<Props> = ({blocks, lesson_id, updateInfo}) => {
 
     const session = useSession();
 
-    // const updateLessonProgress = trpc.updateUserLessonsProgress.useMutation();
-    // const getLessonProgressById = trpc.getUserLessonsProgressById.useQuery({
-    // 	lesson_id,
-    // 	id: session.data?.user.id || "",
-    // });
+    const updateLessonProgress = trpc.progress.updateUserLessonsProgress.useMutation();
+    const getLessonInfoById = trpc.lesson.byId.useQuery({id: lesson_id});
+    const getLessonProgressById = trpc.progress.getUserLessonsProgressById.useQuery({
+        lesson_id,
+        id: session.data?.user.id || "",
+    });
 
     const quizContentRender = (contentType: QuizContentType | string, block: QuizBlocks | LessonBlocks, handleAnswer: (arg1: string, arg2: string) => void) => {
         switch (contentType) {
@@ -91,17 +92,17 @@ const QuizComponent: FC<Props> = ({blocks, lesson_id, updateInfo}) => {
     useEffect(() => {
         if (showScore) {
             try {
-                // updateLessonProgress.mutate({
-                //     id: session.data?.user.id || "",
-                //     lesson_progress: {
-                //         lesson_id: lesson_id,
-                //         lesson_name: getLessonProgressById.data?.lesson_name || "",
-                //         module_id: getLessonProgressById.data?.module_id || "",
-                //         is_completed: true,
-                //         quizScore: score,
-                //         lessonType: getLessonProgressById.data?.lessonType || "",
-                //     },
-                // });
+                updateLessonProgress.mutate({
+                    id: session.data?.user.id || "",
+                    lesson_progress: {
+                        lesson_id: lesson_id,
+                        lesson_name: getLessonInfoById.data?.title || "",
+                        module_id: getLessonInfoById.data?.module_id || "",
+                        is_completed: true,
+                        quizScore: score,
+                        lessonType: getLessonInfoById.data?.lesson_type || "",
+                    },
+                });
             } catch (e) {
                 console.log(e);
             }
@@ -130,9 +131,9 @@ const QuizComponent: FC<Props> = ({blocks, lesson_id, updateInfo}) => {
         setSubmitValuesVisible(false);
     };
 
-    // if (getLessonProgressById.isLoading) {
-    //     return <Loader/>;
-    // }
+    if (getLessonProgressById.isLoading) {
+        return <Loader/>;
+    }
 
     return (
         <div className={"flex flex-col items-center justify-center "}>
@@ -160,11 +161,11 @@ const QuizComponent: FC<Props> = ({blocks, lesson_id, updateInfo}) => {
                 ) : (
                     <>
                         <div>
-                            {/*{blocks?.length && (*/}
-                            {/*    <div>*/}
-                            {/*        Previous res = {getLessonProgressById.data?.quizScore}*/}
-                            {/*    </div>*/}
-                            {/*)}*/}
+                            {blocks?.length && (
+                                <div>
+                                    Previous res = {getLessonProgressById.data?.quizScore}
+                                </div>
+                            )}
                         </div>
                         <div className={"text-xl font-extrabold"}>
                             {blocks?.length ? (

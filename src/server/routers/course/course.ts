@@ -20,6 +20,21 @@ export const courseRouter = router({
         }
         return course;
     }),
+    allVisible: procedure.query(async ({ctx, input}) => {
+        const course = await ctx.course.findMany({
+            where: {
+                is_visible: true
+            }
+        });
+
+        if (!course) {
+            throw new TRPCError({
+                code: "NOT_FOUND",
+                message: "No courses",
+            });
+        }
+        return course;
+    }),
     createCourse: procedure.input(
         z.object({
             cover_image: z.string(),

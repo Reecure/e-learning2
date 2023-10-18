@@ -1,17 +1,19 @@
-import {type ReactElement, useEffect, useState} from "react";
+import {ReactElement, useEffect, useState} from "react";
 import Layout from "@/pages/layout";
 import UserLayout from "@/pages/user/layout";
 import {trpc} from "@/shared/utils/trpc";
 import {useRouter} from "next/router";
 import LessonContent from "@/shared/ui/course/ui/LessonContent/LessonContent";
 import CreateLesson from "@/shared/ui/course/ui/CreateLesson/CreateLesson";
-import {Button, ButtonThemes, Loader, Overlay} from "@/shared/ui";
+import {Button, ButtonThemes, Overlay} from "@/shared/ui";
 import CourseLessons from "@/shared/ui/course/ui/CourseLessons/CourseLessons";
 import {useAppSelector} from "@/app/ReduxProvider/config/hooks";
 import {currentLessonSelector} from "@/shared/ui/course/model";
 import {useCurrentUser} from "@/shared/hooks";
 import {isLessonPreviewVisible} from "@/shared/ui/course/model/selectors/currentLessonSelector";
 import {AiOutlineClose} from "react-icons/ai";
+import {BiLeftArrow} from "react-icons/bi";
+import {Routes} from "@/shared/config/routes";
 
 const CourseModuleLessonsPage = () => {
     const [canLessonEdit, setCanLessonEdit] = useState(false);
@@ -21,9 +23,6 @@ const CourseModuleLessonsPage = () => {
     const router = useRouter();
     const currentUserId = useCurrentUser();
 
-    // const lessons = trpc.lesson.byModuleId.useQuery({
-    //     id: router.query.id as string
-    // });
     const moduleQuery = trpc.module.byId.useQuery({
         id: router.query.id as string
     });
@@ -59,7 +58,11 @@ const CourseModuleLessonsPage = () => {
                         className={"!p-0 md:hidden"}><AiOutlineClose/></Button>
 
                     <div className={"flex justify-between items-center mb-5"}>
-                        <p className={"text-xl mb-5"}>Lessons</p>
+                        <div className={"flex"}>
+                            <Button theme={ButtonThemes.TEXT} className={"!px-2 !py-1 !h-8 rounded-md"} onClick={() => router.push(`${Routes.USER_COURSE_PAGE}/${moduleQuery.data?.course_id}`)}><BiLeftArrow /></Button>
+                            <p className={"text-xl mb-5"}>Lessons</p>
+                        </div>
+
                         {isUserCourse && (!canLessonEdit
                             ? (
                                 <Button

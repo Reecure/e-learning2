@@ -9,6 +9,8 @@ import {ErrorWidget} from "@/widgets/ErrorWidget";
 import {useRole} from "@/shared/hooks";
 import {UserRoles} from "@/enteties/User";
 import {type Course} from "@/enteties/Course";
+import Link from "next/link";
+import {Routes} from "@/shared/config/routes";
 
 enum CourseType {
     MyCourses = "My Courses",
@@ -82,19 +84,25 @@ const CoursesPage = () => {
                     }
                 ></div>
             </div>
-            <div>
+            <>
                 {
                     (
                         <>
                             {courseRendered === CourseType.MyCourses ? (
-                                <div className={"grid grid-cols-1 gap-5"}>
-                                    {myselfCourses.data?.map(item =>
+                                <div className={"grid h-full grid-cols-1 gap-5"}>
+                                    {myselfCourses.data.length === 0 ? <div className={"flex flex-col  justify-center items-center "}>
+                                        <h3 className={"text-3xl font-bold mb-5 text-center max-w-[450px] w-full"}>Looks like your course list is feeling a bit empty at the moment.</h3>
+                                        <Link href={`${Routes.USER_PROFILE}`} className={"text-lg text-dark-primary-main underline"}>Let's create it up together!</Link>
+                                    </div> : myselfCourses.data?.map(item =>
                                         <SmallCard key={item.id}
                                             course={item as Course}/>)}
                                 </div>
                             ) : (
-                                <div className={"grid grid-cols-1 gap-5"}>
-                                    {subscribedCourses.data?.map(item =>
+                                <div className={"grid h-full grid-cols-1 gap-5"}>
+                                    {subscribedCourses.data?.length === 0 ? <div className={"flex flex-col justify-center items-center "}>
+                                        <h3 className={"text-3xl font-bold mb-5 text-center max-w-[450px] w-full"}>Looks like your course list is feeling a bit empty at the moment.</h3>
+                                        <Link href={`${Routes.COURSES}`} className={"text-lg text-dark-primary-main underline"}>Let's fill it up together!</Link>
+                                    </div> : subscribedCourses.data?.map(item =>
                                         <SmallCard key={item.id}
                                             course={item as Course}/>)}
                                 </div>
@@ -102,7 +110,7 @@ const CoursesPage = () => {
                         </>
                     )
                 }
-            </div>
+            </>
         </>
     );
 };

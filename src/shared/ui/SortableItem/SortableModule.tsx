@@ -72,6 +72,8 @@ export const SortableModule: FC<Props<ModuleLesson | Module>> = ({
 
         try {
             deleteLesson.mutate({
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                //@ts-ignore
                 id: item?.lesson_id,
                 module_id: router.query.id as string || ""
             });

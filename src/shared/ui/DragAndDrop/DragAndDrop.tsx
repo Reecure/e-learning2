@@ -33,7 +33,6 @@ const DragAndDrop: FC<Props<ModuleLesson | Module>> = ({
     isModule,
 }) => {
     const utils = trpc.useContext();
-    const [startPropsItems, setStartPropsItems] = useState<Array<ModuleLesson | Module>>(items);
     const [propsItems, setPropsItems] = useState<Array<ModuleLesson | Module>>(items);
     const [orderChange, setOrderChange] = useState(false);
 
@@ -43,7 +42,11 @@ const DragAndDrop: FC<Props<ModuleLesson | Module>> = ({
         async onSuccess(){
             await utils.module.byId.invalidate();
         }});
-    const updateModulesOrder = trpc.module.updateOrder.useMutation();
+    const updateModulesOrder = trpc.module.updateOrder.useMutation({
+        async onSuccess(){
+            await utils.module.byCourseId.invalidate();
+        }
+    });
 
     const sensors = useSensors(
         useSensor(PointerSensor),
@@ -100,10 +103,6 @@ const DragAndDrop: FC<Props<ModuleLesson | Module>> = ({
         }
     };
 
-    const resetHandler = () => {
-        setPropsItems(startPropsItems);
-    };
-
     return (
         <div className={"mt-5"}>
             <div className={"flex justify-center mb-2"}>
@@ -117,13 +116,6 @@ const DragAndDrop: FC<Props<ModuleLesson | Module>> = ({
                             >
                                 Save Order
                             </Button>
-                            <Button
-                                disabled={!orderChange}
-                                theme={ButtonThemes.FILLED}
-                                onClick={resetHandler}
-                            >
-                                Reset
-                            </Button>
                         </div>
 
                     )
@@ -136,19 +128,14 @@ const DragAndDrop: FC<Props<ModuleLesson | Module>> = ({
                             >
                                 Save Order
                             </Button>
-                            <Button
-                                disabled={!orderChange}
-                                theme={ButtonThemes.FILLED}
-                                onClick={resetHandler}
-                            >
-                                Reset
-                            </Button>
                         </div>
                     ))}
             </div>
             {
                 propsItems.length === 0
-                    ? <>empty</>
+                    ? <div className={"w-full h-full flex justify-center items-center"}>
+                        <h3 className={"text-5xl"}>There are no lessons</h3>
+                    </div>
                     : <DndContext
                         sensors={sensors}
                         collisionDetection={closestCenter}

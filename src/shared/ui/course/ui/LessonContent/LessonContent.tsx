@@ -102,7 +102,6 @@ const LessonContent: FC<Props> = ({lesson_id}) => {
                             setLessonContentEditable={LessonContentEditableHandler}
                             setIsSuccessVisible={setIsLessonUpdateSuccessHandler}
                             initialData={lessonQuery.data?.lesson_content.blocks as LessonBlocks[]}
-                            refetch={lessonQuery.refetch}
                         />
                     </>
                 ) : (

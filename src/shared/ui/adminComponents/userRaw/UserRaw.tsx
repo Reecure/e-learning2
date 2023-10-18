@@ -15,7 +15,7 @@ const UserRaw: FC<Props> = ({user, index}) => {
 
     return (
         <>
-            <tr className={"border-b-2 border-light-primary-main "}>
+            <tr className={"border-b-2 border-light-primary-main hover:bg-dark-primary-container/30"}>
                 <td
                     className={"p-1  text-center border-light-primary-main  border-r-2"}
                 >

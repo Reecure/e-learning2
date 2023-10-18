@@ -44,6 +44,7 @@ const CourseLessonForm: FC<Props> = ({
     const updateLesson = trpc.lesson.updateInfo.useMutation({
         async onSuccess() {
             await utils.module.byId.invalidate();
+            await utils.lesson.byId.invalidate();
         }
     });
 
@@ -89,7 +90,7 @@ const CourseLessonForm: FC<Props> = ({
                             updateLesson.mutate({
                                 id: lessonId,
                                 lesson_type: data.lesson_type || "",
-                                module_id: router.query.id,
+                                module_id: router.query.id as string,
                                 title: data.lessonTitle || "",
                                 lesson_content: {
                                     blocks: [],

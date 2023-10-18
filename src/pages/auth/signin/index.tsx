@@ -1,100 +1,58 @@
 import {type ReactElement, useState} from "react";
-import {signIn, useSession} from "next-auth/react";
-import {Routes} from "@/shared/config/routes";
-import {useRouter} from "next/router";
+import { useSession} from "next-auth/react";
 import AuthForm from "@/pages/auth/ui/AuthForm";
-import {useForm} from "react-hook-form";
-import {Button, Label, Text} from "@/shared/ui";
-import {ButtonThemes} from "@/shared/ui/Button/Button";
 import Layout from "@/pages/layout";
+import SignInForm from "@/shared/ui/Auth/SignInForm";
+import SignUpForm from "@/shared/ui/Auth/SignUpForm";
 
-type LoginForm = {
-    email: string;
-    password: string;
-};
 
-type AuthError = {
-    isError: boolean;
-    message: string;
-};
+enum Tabs {
+    SIGNIN = "signin",
+    SIGNUP= "signup"
+}
+
 
 function SignInPage() {
-	const {
-		register,
-		handleSubmit,
-		formState: {errors},
-	} = useForm<LoginForm>();
-	const [authError, setAuthError] = useState<AuthError>({
-		isError: false,
-		message: "",
-	});
-	const router = useRouter();
 
-	const session = useSession();
+    const [currentTab, setCurrentTab] = useState<Tabs>(Tabs.SIGNIN);
 
-	if (session.status === "authenticated") {
-		return (
-			<div className={"w-full h-full flex justify-center items-center"}>
-				<p className={"text-2xl"}>You are an authenticated</p>
-			</div>
-		);
-	}
+    const session = useSession();
 
-	return (
-		<AuthForm>
-			<form
-				onSubmit={handleSubmit(async data => {
-					const res = await signIn("credentials", {
-						email: data.email,
-						password: data.password,
-						redirect: false,
-					});
+    if (session.status === "authenticated") {
+        return (
+            <div className={"w-full h-full flex justify-center items-center"}>
+                <p className={"text-2xl"}>You are an authenticated</p>
+            </div>
+        );
+    }
 
-					if (res?.status !== 200) {
-						setAuthError(() => ({
-							isError: true,
-							message: res?.error || "Some error try again later",
-						}));
-					} else {
-						setAuthError(prev => ({...prev, isError: false}));
-						await router.push(Routes.USER_PROFILE);
-					}
-				})}
-				className={
-					"max-w-[500px] flex flex-col gap-5 w-full p-5 rounded-xl border-2 border-light-primary-main dark:border-dark-primary-main"
-				}
-			>
-				<p className={"text-center text-2xl"}>Login Form</p>
-				{authError.isError && <Text error text={authError.message}/>}
-
-				<Label htmlFor={"email"} labelText={"Email"}>
-					<input
-						className={"inputField"}
-						type='text'
-						{...register("email", {required: true})}
-					/>
-					{errors.email && <Text error text={"Email is required"}/>}
-				</Label>
-
-				<Label htmlFor='password' labelText={"Password"}>
-					<input
-						className={"inputField"}
-						type='password'
-						{...register("password", {required: true})}
-					/>
-					{errors.password && <Text error text={"Password is required"}/>}
-				</Label>
-
-				<Button type={"submit"} theme={ButtonThemes.FILLED}>
-                    SUBMIT
-				</Button>
-			</form>
-		</AuthForm>
-	);
+    return (
+        <AuthForm>
+            <div>
+                <h3 className={"text-center text-2xl mb-5"}>Welcome to E-learning</h3>
+                <div className={"w-[320px] shadow-inner shadow-black/40 mb-5 text-md px-3 py-2 flex justify-between bg-dark-primary-main rounded-full relative z-[1]"}>
+                    <span
+                        className={
+                            `w-[140px] h-[52px] absolute top-[2px] ${currentTab === Tabs.SIGNIN ? "left-1" : "left-44"} rounded-full bg-light-gray dark:bg-dark-primary-container transition-all duration-700`
+                        }
+                    ></span>
+                    <div className={"dark:text-dark-primary-hover-second w-[140px] text-center py-2 rounded-full cursor-pointer"}
+                        onClick={() => setCurrentTab(Tabs.SIGNIN)}
+                    >Login</div>
+                    <div className={"dark:text-dark-primary-hover-second w-[140px] text-center py-2 rounded-full cursor-pointer"}
+                        onClick={() => setCurrentTab(Tabs.SIGNUP)}
+                    >Register</div>
+                </div>
+                {
+                    currentTab ===Tabs.SIGNIN ?  <SignInForm /> : <SignUpForm />
+                }
+            </div>
+        </AuthForm>
+    );
 }
 
 SignInPage.getLayout = function getLayout(page: ReactElement) {
-	return <Layout>{page}</Layout>;
+    return <Layout>{page}</Layout>;
 };
 
 export default SignInPage;

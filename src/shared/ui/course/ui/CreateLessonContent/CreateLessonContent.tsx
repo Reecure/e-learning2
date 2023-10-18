@@ -28,7 +28,13 @@ const CreateLessonContent: FC<Props> = ({
     lessonId,
 }) => {
 
-    const lessonUpdateContentQuery = trpc.lesson.updateContent.useMutation();
+    const utils = trpc.useContext();
+
+    const lessonUpdateContentQuery = trpc.lesson.updateContent.useMutation({
+        async onSuccess(){
+            await utils.module.byId.invalidate();
+        }
+    });
 
     const methods = useForm<FormData>({
         defaultValues: {blocks: initialData || []},

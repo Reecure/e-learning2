@@ -1,6 +1,6 @@
 import {type ReactElement} from "react";
 import {trpc} from "@/shared/utils/trpc";
-import {Loader, SmallCard} from "@/shared/ui";
+import {SmallCard} from "@/shared/ui";
 import Layout from "@/pages/layout";
 import {type Course} from "@/enteties/Course";
 import {BsSearch} from "react-icons/bs";
@@ -8,6 +8,8 @@ import {BsSearch} from "react-icons/bs";
 // type Props = Record<string, unknown>;
 
 const CoursesPage = () => {
+
+    const visibleCourses = trpc.course.allVisible.useQuery();
 
     return (
         <div className={"p-3 sm:p-5 md:p-7 lg:p-10 xl:px-20 "}>
@@ -20,9 +22,9 @@ const CoursesPage = () => {
                 </span>
             </div>
 
-            {/*<div className={"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"}>*/}
-            {/*	{visibleCourses.data?.map(course => <SmallCard key={course.id} course={course as Course}/>)}*/}
-            {/*</div>*/}
+            <div className={"grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5"}>
+                {visibleCourses.data?.map(course => <SmallCard key={course.id} course={course as Course}/>)}
+            </div>
         </div>
     );
 };

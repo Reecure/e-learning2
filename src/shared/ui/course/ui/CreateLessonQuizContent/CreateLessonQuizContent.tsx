@@ -22,7 +22,12 @@ type Props = {
 };
 
 const CreateLessonQuizContent: FC<Props> = ({initialData, setQuizContentEditable, setIsSuccessVisible, lessonId}) => {
-    const lessonUpdateContentQuery = trpc.lesson.updateContent.useMutation();
+    const utils = trpc.useContext();
+    const lessonUpdateContentQuery = trpc.lesson.updateContent.useMutation({
+        async onSuccess() {
+            await utils.lesson.byId.invalidate();
+        }
+    });
 
     const methods = useForm<FormData>({
         defaultValues: {blocks: initialData || []},
