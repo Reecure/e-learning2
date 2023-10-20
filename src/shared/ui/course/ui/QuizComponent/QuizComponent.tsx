@@ -163,7 +163,7 @@ const QuizComponent: FC<Props> = ({blocks, lesson_id, updateInfo}) => {
                         <div>
                             {blocks?.length && (
                                 <div>
-                                    Previous res = {getLessonProgressById.data?.quizScore}
+                                    Previous res = {getLessonProgressById.data?.quizScore || 0}
                                 </div>
                             )}
                         </div>

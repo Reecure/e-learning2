@@ -100,7 +100,7 @@ const CourseLessonForm: FC<Props> = ({
                             console.log(e);
                         }
                     })}
-                    className={"flex flex-col gap-5 w-[300px]"}
+                    className={"flex flex-col gap-2 w-[300px]"}
                 >
                     <p className={"mb-5 text-center text-3xl"}>Update Lesson</p>
                     <Label htmlFor={"title"} labelText={"Title"}>

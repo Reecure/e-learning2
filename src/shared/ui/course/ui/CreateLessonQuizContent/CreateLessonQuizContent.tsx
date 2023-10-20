@@ -85,7 +85,7 @@ const CreateLessonQuizContent: FC<Props> = ({initialData, setQuizContentEditable
         <FormProvider {...methods}>
             <form
                 onSubmit={handleSubmit(onSubmit)}
-                className={"flex flex-col gap-5 "}
+                className={"flex flex-col gap-2 "}
             >
                 {fields.map((field, index) => (
                     <div key={field.id}>

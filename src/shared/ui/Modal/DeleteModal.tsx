@@ -10,49 +10,49 @@ interface Props {
 }
 
 const DeleteModal: FC<Props> = ({deleteIsOpen, deleteOpenHandler, itemName, deleteFunc, setNotificationOpen}) => {
-	const [deleteButtonDisabled, setDeleteButtonDisabled] = useState(false);
-	const [deleteValue, setDeleteValue] = useState("");
+    const [deleteButtonDisabled, setDeleteButtonDisabled] = useState(false);
+    const [deleteValue, setDeleteValue] = useState("");
 
-	useEffect(() => {
-		deleteValue === "delete"
-			? setDeleteButtonDisabled(true)
-			: setDeleteButtonDisabled(false);
-	}, [deleteValue]);
+    useEffect(() => {
+        deleteValue === "delete"
+            ? setDeleteButtonDisabled(true)
+            : setDeleteButtonDisabled(false);
+    }, [deleteValue]);
 
 
-	const deleteValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setDeleteValue(e.currentTarget.value);
-	};
+    const deleteValueHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setDeleteValue(e.currentTarget.value);
+    };
 
-	return (
-		<Modal isOpen={deleteIsOpen} setIsOpen={deleteOpenHandler}>
-			<form onSubmit={(event) => {
-				event.preventDefault();
-				deleteFunc();
-				setNotificationOpen && setNotificationOpen();
-			}} className={"flex flex-col gap-3"}>
-				<div className={"text-xl"}>
+    return (
+        <Modal isOpen={deleteIsOpen} setIsOpen={deleteOpenHandler}>
+            <form onSubmit={(event) => {
+                event.preventDefault();
+                deleteFunc();
+                setNotificationOpen && setNotificationOpen();
+            }} className={"flex flex-col gap-2"}>
+                <div className={"text-xl"}>
                     Write{" "}
-					<span className={"underline text-dark-error-main"}>
+                    <span className={"underline text-dark-error-main"}>
                      delete
-					</span>{" "}
+                    </span>{" "}
                     to delete {itemName}
-				</div>
-				<input
-					type='text'
-					className={"inputField"}
-					onChange={deleteValueHandler}
-				/>
-				<Button
-					type={"submit"}
-					disabled={!deleteButtonDisabled}
-					theme={ButtonThemes.FILLED}
-				>
+                </div>
+                <input
+                    type='text'
+                    className={"inputField"}
+                    onChange={deleteValueHandler}
+                />
+                <Button
+                    type={"submit"}
+                    disabled={!deleteButtonDisabled}
+                    theme={ButtonThemes.FILLED}
+                >
                     DELETE
-				</Button>
-			</form>
-		</Modal>
-	);
+                </Button>
+            </form>
+        </Modal>
+    );
 };
 
 export default DeleteModal;
