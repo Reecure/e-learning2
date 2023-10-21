@@ -12,24 +12,24 @@ interface ISidebarLinks {
 }
 
 export const sidebarLinks: ISidebarLinks[] = [
-	{
-		href: Routes.USER_PROFILE,
-		icon: AiOutlineUser,
-		role: UserRoles.USER
-	},
-	{
-		href: Routes.USER_COURSES,
-		icon: PiStudentDuotone,
-		role: UserRoles.USER
-	},
-	{
-		href: Routes.USER_GRADES,
-		icon: PiCertificateBold,
-		role: UserRoles.USER
-	},
-	{
-		href: Routes.ADMIN_PANEL,
-		icon: RiAdminLine,
-		role: UserRoles.ADMIN
-	},
+    {
+        href: Routes.USER_PROFILE,
+        icon: AiOutlineUser,
+        role: UserRoles.USER
+    },
+    {
+        href: Routes.USER_COURSES,
+        icon: PiStudentDuotone,
+        role: UserRoles.USER
+    },
+    {
+        href: Routes.USER_GRADES,
+        icon: PiCertificateBold,
+        role: UserRoles.USER
+    },
+    {
+        href: Routes.ADMIN_PANEL,
+        icon: RiAdminLine,
+        role: UserRoles.ADMIN
+    },
 ];

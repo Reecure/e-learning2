@@ -1,11 +1,11 @@
-import { AppRouter } from '@/server/routers/_app';
-import { httpBatchLink, loggerLink } from '@trpc/client';
-import { createTRPCNext } from '@trpc/next';
-import superjson from 'superjson';
+import { AppRouter } from "@/server/routers/_app";
+import { httpBatchLink, loggerLink } from "@trpc/client";
+import { createTRPCNext } from "@trpc/next";
+import superjson from "superjson";
 
 function getBaseUrl() {
-    if (typeof window !== 'undefined') {
-        return '';
+    if (typeof window !== "undefined") {
+        return "";
     }
     // reference for vercel.com
     if (process.env.VERCEL_URL) {
@@ -22,11 +22,11 @@ export const trpc = createTRPCNext<AppRouter>({
     config({ ctx }) {
         return {
             transformer: superjson,
-             links: [
-               loggerLink({
+            links: [
+                loggerLink({
                     enabled: (opts) =>
-                        process.env.NODE_ENV === 'development' ||
-                        (opts.direction === 'down' && opts.result instanceof Error),
+                        process.env.NODE_ENV === "development" ||
+                        (opts.direction === "down" && opts.result instanceof Error),
                 }),
                 httpBatchLink({
                     url: `${getBaseUrl()}/api/trpc`,

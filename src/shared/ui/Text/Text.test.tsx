@@ -3,25 +3,25 @@ import {Text} from "@/shared/ui";
 import {screen} from "@testing-library/react";
 
 describe("Text", () => {
-	test("Text rendered", () => {
-		ComponentRender(<Text text={"Hello"}/>);
+    test("Text rendered", () => {
+        ComponentRender(<Text text={"Hello"}/>);
 
-		const textEl = screen.getByTestId("text");
+        const textEl = screen.getByTestId("text");
 
-		expect(textEl).toBeInTheDocument();
-	});
-	test("Text without error rendered", () => {
-		ComponentRender(<Text text={"Hello"}/>);
+        expect(textEl).toBeInTheDocument();
+    });
+    test("Text without error rendered", () => {
+        ComponentRender(<Text text={"Hello"}/>);
 
-		const textEl = screen.getByTestId("text");
+        const textEl = screen.getByTestId("text");
 
-		expect(textEl).not.toHaveClass("text-light-error-main");
-	});
-	test("Text for error rendered", () => {
-		ComponentRender(<Text text={"Hello"} error/>);
+        expect(textEl).not.toHaveClass("text-light-error-main");
+    });
+    test("Text for error rendered", () => {
+        ComponentRender(<Text text={"Hello"} error/>);
 
-		const textEl = screen.getByTestId("text");
+        const textEl = screen.getByTestId("text");
 
-		expect(textEl).toHaveClass("text-light-error-main");
-	});
+        expect(textEl).toHaveClass("text-light-error-main");
+    });
 });

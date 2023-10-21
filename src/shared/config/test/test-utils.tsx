@@ -7,7 +7,7 @@ import {UserRoles} from "@/enteties/User";
 
 const mockSession: Session = {
     user: {
-	 	name: "",
+        name: "",
         role: UserRoles.USER,
         id: "",
         email: "",

@@ -63,6 +63,8 @@ const SortableModuleItem: FC<Props> = ({item, disabled, deleteOpen}) => {
                             id: session.data?.user.id || "",
                             module_progress: {
                                 module_id: item.id,
+                                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                //@ts-ignore
                                 course_id: item.course_id,
                                 module_name: item.title,
                                 is_completed: true,

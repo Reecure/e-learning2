@@ -6,9 +6,9 @@ type Props = {
 };
 
 const CodeBlock: FC<Props> = ({codeBlock}) => (
-	<code>
-		<pre>{codeBlock.code}</pre>
-	</code>
+    <code>
+        <pre>{codeBlock.code}</pre>
+    </code>
 );
 
 export default CodeBlock;

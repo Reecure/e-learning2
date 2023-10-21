@@ -9,20 +9,20 @@ type Props = {
 } & InputHTMLAttributes<HTMLInputElement>;
 
 const Input: FC<Props> = ({
-	className,
-	register,
-	errors,
-	name,
-	...otherProps
+    className,
+    register,
+    errors,
+    name,
+    ...otherProps
 }) => (
-	<>
-		<input
-			type={"text"}
-			{...otherProps}
-			{...register}
-			className={`${className} `}
-		/>
-	</>
+    <>
+        <input
+            type={"text"}
+            {...otherProps}
+            {...register}
+            className={`${className} `}
+        />
+    </>
 );
 
 export default Input;

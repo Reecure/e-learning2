@@ -4,14 +4,14 @@ import {PiCertificateBold, PiStudentDuotone} from "react-icons/pi";
 import {RiAdminLine} from "react-icons/ri";
 
 export const sidebarIconRenderHelper = (icon: IconType) => {
-	switch (icon) {
-	case AiOutlineUser:
-		return <AiOutlineUser/>;
-	case PiStudentDuotone:
-		return <PiStudentDuotone/>;
-	case PiCertificateBold:
-		return <PiCertificateBold/>;
-	case RiAdminLine:
-		return <RiAdminLine/>;
-	}
+    switch (icon) {
+    case AiOutlineUser:
+        return <AiOutlineUser/>;
+    case PiStudentDuotone:
+        return <PiStudentDuotone/>;
+    case PiCertificateBold:
+        return <PiCertificateBold/>;
+    case RiAdminLine:
+        return <RiAdminLine/>;
+    }
 };

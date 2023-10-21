@@ -78,7 +78,6 @@ export interface Lesson {
     title: string;
     order: number;
     author_id: string;
-    is_visible: boolean;
     module_id: string;
     lesson_type: LessonType;
     lesson_content: LessonsContent;

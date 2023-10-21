@@ -15,20 +15,20 @@ import UserRaw from "./adminComponents/userRaw/UserRaw";
 import EditUserProfileModal from "@/shared/ui/profile/ui/EditUserProfileModal/EditUserProfileModal";
 
 export {
-	Text,
-	Overlay,
-	Notification,
-	DeleteModal,
-	Modal,
-	Loader,
-	Label,
-	Input,
-	InfoForUser,
-	Hero,
-	SmallCard,
-	Button,
-	Badge,
-	UserRaw,
-	ButtonThemes,
-	EditUserProfileModal
+    Text,
+    Overlay,
+    Notification,
+    DeleteModal,
+    Modal,
+    Loader,
+    Label,
+    Input,
+    InfoForUser,
+    Hero,
+    SmallCard,
+    Button,
+    Badge,
+    UserRaw,
+    ButtonThemes,
+    EditUserProfileModal
 };

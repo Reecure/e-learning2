@@ -12,11 +12,11 @@ type Props = {
 };
 
 const Badge: FC<Props> = ({color, text}) => (
-	<div
-		className={`${color} px-3 py-1 max-w-min rounded-full text-white mb-3`}
-	>
-		<p>{text}</p>
-	</div>
+    <div
+        className={`${color} px-3 py-1 max-w-min rounded-full text-white mb-3`}
+    >
+        <p>{text}</p>
+    </div>
 );
 
 export default Badge;

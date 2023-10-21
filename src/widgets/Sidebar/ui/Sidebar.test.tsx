@@ -3,10 +3,10 @@ import {Sidebar} from "@/widgets/Sidebar";
 import {screen} from "@testing-library/react";
 
 describe("Sidebar", () => {
-	test("Sidebar rendered", () => {
-		ComponentRender(<Sidebar/>);
-		const sidebarEl = screen.getByTestId("sidebar");
+    test("Sidebar rendered", () => {
+        ComponentRender(<Sidebar/>);
+        const sidebarEl = screen.getByTestId("sidebar");
 
-		expect(sidebarEl).toBeInTheDocument();
-	});
+        expect(sidebarEl).toBeInTheDocument();
+    });
 });

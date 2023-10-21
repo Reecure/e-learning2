@@ -11,12 +11,12 @@ type Props = {
 };
 
 const createAnswer = (blockWithAnswers: QuestionAnswerBlock): string[] => {
-	const res: string[] = [];
-	const arrayWithAnswer = [...blockWithAnswers.answer];
+    const res: string[] = [];
+    const arrayWithAnswer = [...blockWithAnswers.answer];
 
-	arrayWithAnswer.forEach(item => res.push(item.otherAnswer));
+    arrayWithAnswer.forEach(item => res.push(item.otherAnswer));
 
-	return res;
+    return res;
 };
 
 type IsCorrect = {
@@ -25,62 +25,62 @@ type IsCorrect = {
 };
 
 const CourseQuizGameQuestionWithAnswer: FC<Props> = ({
-	block,
-	submitHandler,
-	handleAnswer,
-	isLast,
+    block,
+    submitHandler,
+    handleAnswer,
+    isLast,
 }) => {
-	const [answers, setAnswers] = useState<string[]>([]);
-	const [isSelected, setSelected] = useState<IsCorrect | null>(null);
+    const [answers, setAnswers] = useState<string[]>([]);
+    const [isSelected, setSelected] = useState<IsCorrect | null>(null);
 
-	useEffect(() => {
-	}, [isLast]);
+    useEffect(() => {
+    }, [isLast]);
 
-	useEffect(() => {
-		setAnswers([...createAnswer(block), block.correctAnswer]);
-	}, [block]);
+    useEffect(() => {
+        setAnswers([...createAnswer(block), block.correctAnswer]);
+    }, [block]);
 
-	return (
-		<div className={"mb-5"}>
-			<>
-				<h5 className={"text-lg font-extrabold"}>{block.question}</h5>
-				{answers.map((item, i) => (
-					<div key={i} className={"flex gap-1 items-center"}>
-						<div>{i + 1}.</div>
-						<Button
-							className={`!px-1 rounded-md ${
-								isSelected?.selectedId === i
-									? "bg-light-primary-main/10 dark:bg-dark-primary-main/10"
-									: ""
-							}`}
-							theme={ButtonThemes.TEXT}
-							onClick={() => {
-								setSelected({
-									selectedId: i,
-									value: item,
-								});
-							}}
-						>
-							{item}
-						</Button>
-					</div>
-				))}
-			</>
-			<Button
-				theme={ButtonThemes.FILLED}
-				onClick={() => {
-					handleAnswer(block.correctAnswer, isSelected?.value || "");
-					if (!isLast) {
-						setSelected(null);
-					} else if (isLast) {
-						submitHandler();
-					}
-				}}
-			>
-				{isLast ? "Submit" : "Next"}
-			</Button>
-		</div>
-	);
+    return (
+        <div className={"mb-5"}>
+            <>
+                <h5 className={"text-lg font-extrabold"}>{block.question}</h5>
+                {answers.map((item, i) => (
+                    <div key={i} className={"flex gap-1 items-center"}>
+                        <div>{i + 1}.</div>
+                        <Button
+                            className={`!px-1 rounded-md ${
+                                isSelected?.selectedId === i
+                                    ? "bg-light-primary-main/10 dark:bg-dark-primary-main/10"
+                                    : ""
+                            }`}
+                            theme={ButtonThemes.TEXT}
+                            onClick={() => {
+                                setSelected({
+                                    selectedId: i,
+                                    value: item,
+                                });
+                            }}
+                        >
+                            {item}
+                        </Button>
+                    </div>
+                ))}
+            </>
+            <Button
+                theme={ButtonThemes.FILLED}
+                onClick={() => {
+                    handleAnswer(block.correctAnswer, isSelected?.value || "");
+                    if (!isLast) {
+                        setSelected(null);
+                    } else if (isLast) {
+                        submitHandler();
+                    }
+                }}
+            >
+                {isLast ? "Submit" : "Next"}
+            </Button>
+        </div>
+    );
 };
 
 export default CourseQuizGameQuestionWithAnswer;

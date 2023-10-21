@@ -5,22 +5,22 @@ import {ComponentRender} from "../../../shared/config/test/test-utils";
 
 
 describe("ThemeToggle", () => {
-	test("renders ThemeToggle component with the correct theme", () => {
-		const toggleThemeMock = jest.fn();
-		ComponentRender(<ThemeToggle theme={Themes.LIGHT} toggleTheme={toggleThemeMock}/>);
+    test("renders ThemeToggle component with the correct theme", () => {
+        const toggleThemeMock = jest.fn();
+        ComponentRender(<ThemeToggle theme={Themes.LIGHT} toggleTheme={toggleThemeMock}/>);
 
-		const ThemeToggleComponent = screen.getByTestId("ThemeToggle");
+        const ThemeToggleComponent = screen.getByTestId("ThemeToggle");
 
-		expect(ThemeToggleComponent).toBeInTheDocument();
-	});
-	test("ThemeToggle switch theme", () => {
-		const toggleThemeMock = jest.fn();
-		ComponentRender(<ThemeToggle theme={Themes.LIGHT} toggleTheme={toggleThemeMock}/>);
+        expect(ThemeToggleComponent).toBeInTheDocument();
+    });
+    test("ThemeToggle switch theme", () => {
+        const toggleThemeMock = jest.fn();
+        ComponentRender(<ThemeToggle theme={Themes.LIGHT} toggleTheme={toggleThemeMock}/>);
 
-		const ThemeToggleComponent = screen.getByTestId("ThemeToggle");
+        const ThemeToggleComponent = screen.getByTestId("ThemeToggle");
 
-		fireEvent.click(ThemeToggleComponent);
+        fireEvent.click(ThemeToggleComponent);
 
-		expect(toggleThemeMock).toBeCalledTimes(1);
-	});
+        expect(toggleThemeMock).toBeCalledTimes(1);
+    });
 });

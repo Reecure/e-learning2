@@ -3,21 +3,21 @@ import {useFormContext} from "react-hook-form";
 import {Label} from "@/shared/ui";
 
 const ImageForm: FC<{ index: number }> = ({index}) => {
-	const {register} = useFormContext();
+    const {register} = useFormContext();
 
-	return (
-		<div className={"flex flex-col gap-5 w-full"}>
-			<Label htmlFor={`blocks.${index}.title`} labelText={"Title"}>
-				<input
-					className={"inputField"}
-					{...register(`blocks.${index}.title`)}
-				/>
-			</Label>
-			<Label htmlFor={`blocks.${index}.src`} labelText={"Src"}>
-				<input className={"inputField"} {...register(`blocks.${index}.src`)} />
-			</Label>
-		</div>
-	);
+    return (
+        <div className={"flex flex-col gap-5 w-full"}>
+            <Label htmlFor={`blocks.${index}.title`} labelText={"Title"}>
+                <input
+                    className={"inputField"}
+                    {...register(`blocks.${index}.title`)}
+                />
+            </Label>
+            <Label htmlFor={`blocks.${index}.src`} labelText={"Src"}>
+                <input className={"inputField"} {...register(`blocks.${index}.src`)} />
+            </Label>
+        </div>
+    );
 };
 
 export default ImageForm;

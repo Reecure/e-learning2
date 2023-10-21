@@ -137,7 +137,6 @@ const LessonContent: FC<Props> = ({lesson_id}) => {
                 type={lessonQuery.data?.lesson_type as LessonType}
                 openModal={editableLesson}
                 setModalOpen={editableLessonHandle}
-                refetch={lessonQuery.refetch}
             />
         </div>
     );

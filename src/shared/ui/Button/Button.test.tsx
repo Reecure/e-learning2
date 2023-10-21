@@ -4,21 +4,21 @@ import {ButtonThemes} from "./Button";
 import {ComponentRender} from "../../config/test/test-utils";
 
 describe("Button", () => {
-	test("Button render in document", () => {
-		ComponentRender(<Button theme={ButtonThemes.FILLED}>test</Button>);
+    test("Button render in document", () => {
+        ComponentRender(<Button theme={ButtonThemes.FILLED}>test</Button>);
 
-		const buttonEl = screen.getByTestId("button");
+        const buttonEl = screen.getByTestId("button");
 
-		expect(buttonEl).toBeInTheDocument();
-	});
-	test("Button click event", () => {
-		const mockClickHandler = jest.fn();
-		ComponentRender(<Button theme={ButtonThemes.FILLED} onClick={mockClickHandler}>test</Button>);
+        expect(buttonEl).toBeInTheDocument();
+    });
+    test("Button click event", () => {
+        const mockClickHandler = jest.fn();
+        ComponentRender(<Button theme={ButtonThemes.FILLED} onClick={mockClickHandler}>test</Button>);
 
-		const buttonEl = screen.getByTestId("button");
+        const buttonEl = screen.getByTestId("button");
 
-		fireEvent.click(buttonEl);
+        fireEvent.click(buttonEl);
 
-		expect(mockClickHandler).toHaveBeenCalledTimes(1);
-	});
+        expect(mockClickHandler).toHaveBeenCalledTimes(1);
+    });
 });

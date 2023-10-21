@@ -16,19 +16,19 @@ type Props = {
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 const Button: FC<Props> = ({
-	children,
-	className,
-	theme = ButtonThemes.FILLED,
-	...otherProps
+    children,
+    className,
+    theme = ButtonThemes.FILLED,
+    ...otherProps
 }) => (
-	<button
-		data-testid={"button"}
-		type={"button"}
-		className={`${theme} px-6 py-[10px] ${className}  rounded-full duration-200  disabled:opacity-50`}
-		{...otherProps}
-	>
-		{children}
-	</button>
+    <button
+        data-testid={"button"}
+        type={"button"}
+        className={`${theme} px-6 py-[10px] ${className}  rounded-full duration-200  disabled:opacity-50`}
+        {...otherProps}
+    >
+        {children}
+    </button>
 );
 
 export default Button;

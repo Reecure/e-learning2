@@ -7,18 +7,18 @@ type Props = {
 };
 
 const ImageBlock: FC<Props> = ({imageBlock}) => (
-	<div>
-		<div className={"w-full"}>
-			<Image
-				src={imageBlock.src}
-				alt={"image"}
-				width={400}
-				height={250}
-				className={"mx-auto object-cover w-[400px] h-[250px] mb-2"}
-			></Image>
-		</div>
-		<div className={"text-center"}>{imageBlock.title}</div>
-	</div>
+    <div>
+        <div className={"w-full"}>
+            <Image
+                src={imageBlock.src}
+                alt={"image"}
+                width={400}
+                height={250}
+                className={"mx-auto object-cover w-[400px] h-[250px] mb-2"}
+            ></Image>
+        </div>
+        <div className={"text-center"}>{imageBlock.title}</div>
+    </div>
 );
 
 export default ImageBlock;

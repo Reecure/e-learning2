@@ -7,9 +7,10 @@ import {useForm} from "react-hook-form";
 import {Module} from "@/enteties/Module";
 import {trpc} from "@/shared/utils/trpc";
 import {useRouter} from "next/router";
+import {CourseModules} from "@/enteties/Course/model/types/course";
 
 interface Props {
-    item: Module
+    item: CourseModules
     visibilityLoading: boolean
     updateVisibleHandler: () => void
     deleteOpen: () => void
@@ -85,7 +86,7 @@ const ModuleAuthorEditableSide: FC<Props> = ({
                 <form onSubmit={handleSubmit((data, event) => {
                     updateModuleTitle.mutate({
                         id: item.module_id,
-                        course_id: router.query.id ,
+                        course_id: router.query.id as string,
                         title: data.title
                     });
                 })}>

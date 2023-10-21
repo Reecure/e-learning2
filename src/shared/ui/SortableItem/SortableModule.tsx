@@ -59,7 +59,9 @@ export const SortableModule: FC<Props<ModuleLesson | ICourseModules>> = ({
 
     const deleteModuleHandler = () => {
         try {
-            deleteModule.mutate({id: item.module_id, course_id: router.query.id});
+            /* eslint-disable */
+            // @ts-ignore
+            deleteModule.mutate({id: item.module_id, course_id: router.query.id as string});
             deleteOpenHandler();
         } catch (e) {
             console.log(e);

@@ -11,6 +11,7 @@ import News from "@/shared/ui/profile/ui/News/News";
 import ModuleProgress from "@/shared/ui/profile/ui/ModuleProgress/ModuleProgress";
 import {AiOutlineSelect} from "react-icons/ai";
 import {trpc} from "@/shared/utils/trpc";
+import {Course} from "@/enteties/Course";
 
 type Props = {
     user: User;
@@ -54,11 +55,11 @@ const UserProfileComponent: FC<Props> = ({user}) => {
                 <div className={"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-2"}>
                     <div className={"mx-auto md:mx-0"}>
                         <h4 className={"text-neutral-300 text-lg indent-2 mb-2 font-extrabold"} >Last Course</h4>
-                        <SmallCard course={course.data} />
+                        <SmallCard course={course.data as Course} />
                     </div>
                     <div className={"mx-auto md:mx-0"}>
                         <h4 className={"text-neutral-300 text-lg indent-2 mb-2 font-extrabold"} >Recommendation</h4>
-                        <SmallCard course={course.data} />
+                        <SmallCard course={course.data as Course} />
                     </div>
 
                 </div>
@@ -73,7 +74,7 @@ const UserProfileComponent: FC<Props> = ({user}) => {
                             <div className={"flex justify-between mb-2"}>
                                 <h4 className={"text-neutral-300 text-lg indent-2  font-extrabold"} >Favorite Course</h4>
                             </div>
-                            <FavoriteCourse course={course.data} />
+                            <FavoriteCourse course={course.data as Course} />
                         </div>
                         <div className={"mx-auto md:mx-0"}>
                             <h4 className={"text-neutral-300 text-lg indent-2 mb-2 font-extrabold"} >Complete Info</h4>

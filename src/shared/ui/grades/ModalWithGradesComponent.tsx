@@ -6,11 +6,11 @@ interface Props {
 
 const ModalWithGradesComponent: FC<Props> = () => {
 
-	return (
-		<>
+    return (
+        <>
             InfoForUser
-		</>
-	);
+        </>
+    );
 };
 
 export default ModalWithGradesComponent;
