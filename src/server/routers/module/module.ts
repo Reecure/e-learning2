@@ -77,7 +77,6 @@ export const moduleRouter = router({
                 course_id: input.course_id,
                 is_visible: input.is_visible,
                 lessons: [],
-                order: input.order,
             },
         });
         const additionalMessage = "Module create success";
