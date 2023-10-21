@@ -19,10 +19,6 @@ const CourseLessons: FC<Props> = ({
         id: moduleId,
     });
 
-    useEffect(()=>{
-        console.log(lessonsQuery.data?.lessons);
-    },[lessonsQuery.isLoading]);
-
     if (lessonsQuery.isLoading) {
         return <Loader/>;
     }

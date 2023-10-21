@@ -1,5 +1,4 @@
 import {type FC, useEffect, useState} from "react";
-import {type Module} from "@/enteties/Module";
 import {
     closestCenter,
     DndContext,
@@ -16,6 +15,7 @@ import {ButtonThemes} from "@/shared/ui/Button/Button";
 import {trpc} from "@/shared/utils/trpc";
 import {ModuleLesson} from "@/enteties/Module/model/types/module";
 import {useRouter} from "next/router";
+import {ICourseModules} from "@/enteties/Course";
 
 interface Props<T> {
     items: T[]
@@ -26,14 +26,14 @@ interface Props<T> {
 
 export const sortByOrder = <T extends { order: number }>(items: T[]): T[] => items.sort((a, b) => a.order - b.order);
 
-const DragAndDrop: FC<Props<ModuleLesson | Module>> = ({
+const DragAndDrop: FC<Props<ModuleLesson | ICourseModules>> = ({
     canEdit,
     isUserAuthor,
     items,
     isModule,
 }) => {
     const utils = trpc.useContext();
-    const [propsItems, setPropsItems] = useState<Array<ModuleLesson | Module>>(items);
+    const [propsItems, setPropsItems] = useState<Array<ModuleLesson | ICourseModules>>(items);
     const [orderChange, setOrderChange] = useState(false);
 
     const router = useRouter();
@@ -132,7 +132,7 @@ const DragAndDrop: FC<Props<ModuleLesson | Module>> = ({
                     ))}
             </div>
             {
-                propsItems.length === 0
+                propsItems.length === 0 || propsItems === undefined
                     ? <div className={"w-full h-full flex justify-center items-center"}>
                         <h3 className={"text-5xl"}>There are no lessons</h3>
                     </div>

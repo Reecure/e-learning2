@@ -1,13 +1,16 @@
 import {FC} from "react";
+import {SmallCard} from "@/shared/ui";
+import {Course} from "@/enteties/Course";
 
 interface Props {
+    course: Course
 }
 
-const FavoriteCourse: FC<Props> = () => {
+const FavoriteCourse: FC<Props> = ({course}) => {
 
     return (
-        <div className={"w-[470px] h-[250px] border-2 border-dark-primary-main rounded-md"}>
-            <p>Favorite course</p>
+        <div className={"min-w-[250px] max-w-[470px] sm:w-[340px] h-[310px"}>
+            <SmallCard course={course} />
         </div>
     );
 };

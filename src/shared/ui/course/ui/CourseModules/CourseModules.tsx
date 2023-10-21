@@ -2,7 +2,7 @@ import {type FC} from "react";
 import DragAndDrop from "@/shared/ui/DragAndDrop/DragAndDrop";
 import {trpc} from "@/shared/utils/trpc";
 import {Loader} from "@/shared/ui";
-import {Module} from "@/enteties/Module";
+import {ICourseModules} from "@/enteties/Course";
 
 type Props = {
     courseId: string;
@@ -15,7 +15,7 @@ const CourseModules: FC<Props> = ({
     courseModulesEdit,
     isUserAuthor,
 }) => {
-    const modulesQuery = trpc.module.byCourseId.useQuery({
+    const modulesQuery = trpc.course.courseById.useQuery({
         id: courseId,
     });
 
@@ -26,7 +26,7 @@ const CourseModules: FC<Props> = ({
     return (
         <div className={"mt-5"}>
             <DragAndDrop
-                items={modulesQuery.data as Module[]}
+                items={modulesQuery.data?.modules as ICourseModules[]}
                 canEdit={courseModulesEdit}
                 isModule
                 isUserAuthor={isUserAuthor}

@@ -6,6 +6,7 @@ import {BsTrash} from "react-icons/bs";
 import {useForm} from "react-hook-form";
 import {Module} from "@/enteties/Module";
 import {trpc} from "@/shared/utils/trpc";
+import {useRouter} from "next/router";
 
 interface Props {
     item: Module
@@ -21,9 +22,10 @@ const ModuleAuthorEditableSide: FC<Props> = ({
     const utils = trpc.useContext();
     const [renameOpen, setRenameOpen] = useState(false);
 
+    const router = useRouter();
     const updateModuleTitle = trpc.module.updateInfo.useMutation({
         async onSuccess() {
-            await utils.module.byCourseId.invalidate();
+            await utils.course.courseById.invalidate();
         }
     });
 
@@ -82,7 +84,8 @@ const ModuleAuthorEditableSide: FC<Props> = ({
             <Modal isOpen={renameOpen} setIsOpen={renameOpenHandler} classname={"max-w-[350px] w-full"}>
                 <form onSubmit={handleSubmit((data, event) => {
                     updateModuleTitle.mutate({
-                        id: item.id,
+                        id: item.module_id,
+                        course_id: router.query.id ,
                         title: data.title
                     });
                 })}>

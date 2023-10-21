@@ -48,10 +48,6 @@ const CourseLessonForm: FC<Props> = ({
         }
     });
 
-    useEffect(()=>{
-        console.log("updateLesson", updateLesson.data);
-    },[updateLesson.isLoading]);
-
     useEffect(() => {
         if (startLessonType !== lessonType) {
             setVisibleMessage(true);

@@ -36,10 +36,11 @@ const CreateCourse: FC<Props> = () => {
     };
 
     return (
-        <div>
+        <div className={"w-full"}>
             <Button
                 theme={ButtonThemes.OUTLINED}
                 onClick={openModalCreateCourseHandler}
+                className={"w-full whitespace-nowrap"}
             >
                 Create course
             </Button>

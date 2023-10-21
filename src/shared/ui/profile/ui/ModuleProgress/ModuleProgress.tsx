@@ -29,18 +29,18 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 const ModuleProgress: FC<Props> = () => {
 
     return (
-        <div className={"w-[520px] h-[230px] border-2 rounded-md border-dark-primary-main px-5"}>
+        <div className={"flex justify-center w-full min-h-[200px]  h-[310px]"}>
             <Bar options={options} data={{
-                labels: ["Lesson 1", "Lesson 2", "Lesson 3",  "Lesson 4", "Lesson 5"],
+                labels: ["Monday", "Tuesday", "Wednesday",  "Thursday", "Friday", "Saturday", "Sunday"],
                 datasets: [
                     {
-                        label: "Grade",
+                        label: "Lessons",
                         barPercentage: 0.1,
-                        data: [2,4,3, 4,5],
+                        data: [1, 2,4,0,2,3,10],
                         backgroundColor: "rgba(153, 102, 255, 1)",
                     }
                 ],
-            }} className={"max-w-[500px] max-h-[200px]"}/>
+            }} className={""}/>
         </div>
     );
 };

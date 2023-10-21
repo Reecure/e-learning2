@@ -1,15 +1,16 @@
 import React, {type FC, useEffect, useState} from "react";
 import {useAppDispatch} from "@/app/ReduxProvider/config/hooks";
-import {type Module} from "@/enteties/Module";
 import Link from "next/link";
 import {Routes} from "@/shared/config/routes";
 import {setPreviewVisible} from "@/shared/ui/course/model";
 import {useSession} from "next-auth/react";
 import {trpc} from "@/shared/utils/trpc";
 import ModuleAuthorEditableSide from "@/shared/ui/SortableItem/SortableModuleItem/ModuleAuthorEditableSide";
+import {ICourseModules} from "@/enteties/Course";
+import {useRouter} from "next/router";
 
 type Props = {
-    item: Module;
+    item: ICourseModules;
     disabled: boolean;
     deleteOpen: () => void;
 };
@@ -18,11 +19,12 @@ const SortableModuleItem: FC<Props> = ({item, disabled, deleteOpen}) => {
     const utils = trpc.useContext();
     const [visibilityLoading, setVisibilityLoading] = useState(false);
     const session = useSession();
+    const router = useRouter();
 
     const updateModuleProgress = trpc.progress.updateUserModulesProgress.useMutation();
     const updateModuleVisibility = trpc.module.updateVisibility.useMutation({
         async onSuccess() {
-            await utils.module.byCourseId.invalidate();
+            await utils.course.courseById.invalidate();
         }
     });
 
@@ -41,6 +43,7 @@ const SortableModuleItem: FC<Props> = ({item, disabled, deleteOpen}) => {
         try {
             updateModuleVisibility.mutate({
                 id: item.id,
+                course_id: router.query.id as string,
                 is_visible: !item.is_visible
             });
         } catch (e) {
@@ -49,11 +52,11 @@ const SortableModuleItem: FC<Props> = ({item, disabled, deleteOpen}) => {
     };
 
     return (
-        <div className={"flex justify-between items-center"}>
+        <div className={"flex justify-between items-center px-2 py-3 w-full rounded-md  bg-dark-primary-container/50"}>
             {disabled ? (
                 <Link
-                    href={`${Routes.USER_COURSE_PAGE_LESSONS}/${item.id}`}
-                    className={"cursor-pointer "}
+                    href={`${Routes.USER_COURSE_PAGE_LESSONS}/${item.module_id}`}
+                    className={"cursor-pointer text-neutral-100"}
                     onClick={() => {
                         dispatch(setPreviewVisible(true));
                         updateModuleProgress.mutate({

@@ -59,6 +59,7 @@ export const courseRouter = router({
                 rating: input.rating,
                 creation_date: input.creation_date,
                 is_visible: input.isVisible,
+                modules: [],
                 author_id: input.author_id,
                 category_id: input.category_id,
                 difficulty_level: input.difficulty_level,

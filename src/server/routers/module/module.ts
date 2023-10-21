@@ -1,6 +1,7 @@
 import {procedure, router} from "@/server/trpc";
 import {z} from "zod";
 import {TRPCError} from "@trpc/server";
+import {ObjectId} from "bson";
 
 export const moduleRouter = router({
     byId: procedure.input(z.object({
@@ -46,8 +47,31 @@ export const moduleRouter = router({
             order: z.number(),
         }),
     ).mutation(async ({ctx, input}) => {
+
+        const MODULE_ID = new ObjectId().toHexString();
+
+        const custom_module = {
+            id: new ObjectId().toHexString(),
+            module_id: MODULE_ID,
+            is_visible: input.is_visible ,
+            title: input.title ,
+            order: input.order ,
+            author_id: input.author_id
+        };
+        await ctx.course.update({
+            where: {
+                id: input.course_id
+            },
+            data: {
+                modules: {
+                    push: custom_module
+                }
+            }
+        });
+
         const createdModule = await ctx.modules.create({
             data: {
+                id: MODULE_ID,
                 title: input.title,
                 author_id: input.author_id,
                 course_id: input.course_id,
@@ -79,33 +103,97 @@ export const moduleRouter = router({
         z.object({
             id: z.string(),
             title: z.string(),
+            course_id: z.string()
         }),
-    ).mutation(async ({ctx, input}) => ctx.modules.update({
-        where: {
-            id: input.id,
-        },
-        data: {
-            title: input.title,
-        },
-    })),
+    ).mutation(async ({ctx, input}) =>{
+        const course = await ctx.course.findUnique({
+            where: {
+                id: input.course_id
+            }
+        });
+
+        if (!course) {
+            throw new Error();
+        }
+
+        const newModules = [...course.modules].map(module => {
+            if (module.module_id === input.id){
+                return {
+                    ...module,
+                    title: input.title,
+                };
+            }
+            return module;
+        });
+
+        await ctx.course.update({
+            where: {
+                id: input.course_id
+            },
+            data: {
+                modules: newModules
+            }
+        });
+
+        await ctx.modules.update({
+            where: {
+                id: input.id,
+            },
+            data: {
+                title: input.title,
+            },
+        });
+    }),
     updateVisibility: procedure.input(
         z.object({
             id: z.string(),
+            course_id: z.string(),
             is_visible: z.boolean(),
         }),
-    ).mutation(async ({ctx,input}) => ctx.modules.update({
-        where: {
-            id: input.id,
-        },
-        data: {
-            is_visible: input.is_visible,
-        },
-    })),
+    ).mutation(async ({ctx,input}) => {
+        await ctx.course.update({
+            where: {
+                id: input.course_id,
+            },
+            data: {
+                modules: {
+                    updateMany: {
+                        where: {
+                            id: input.id
+                        },
+                        data: {
+                            is_visible: input.is_visible
+                        }
+                    }
+                }
+            },
+        });
+    }),
     delete: procedure.input(
         z.object({
             id: z.string(),
+            course_id: z.string()
         }),
     ).mutation(async ({ctx, input}) => {
+        const course = await ctx.course.findUnique({
+            where: {
+                id: input.course_id,
+            },
+        });
+
+        if (course !== null) {
+            const courseModulesUpdate = [...course.modules].filter(module => module.module_id !== input.id);
+
+            await ctx.course.update({
+                where: {
+                    id: input.course_id
+                },
+                data: {
+                    modules: courseModulesUpdate
+                }
+            });
+        }
+
         await ctx.modules.delete({
             where: {
                 id: input.id,

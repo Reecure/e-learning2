@@ -22,6 +22,15 @@ type ModuleLessons {
   author_id   String
 }
 
+type CourseModules {
+  id         String
+  module_id  String
+  is_visible Boolean
+  title      String
+  order      Int
+  author_id  String
+}
+
 type LessonsLessonContentBlocks {
   /// Multiple data types found: String: 40%, Array(LessonsLessonContentBlocksAnswer): 60% out of 5 sampled entries
   answer        Json?
@@ -74,12 +83,13 @@ model course_categories {
 }
 
 model courses {
-  id                String   @id @default(auto()) @map("_id") @db.ObjectId
-  author_id         String   @db.ObjectId
+  id                String          @id @default(auto()) @map("_id") @db.ObjectId
+  author_id         String          @db.ObjectId
   category_id       String
   cover_description String
+  modules           CourseModules[]
   cover_image       String
-  creation_date     DateTime @db.Date
+  creation_date     DateTime        @db.Date
   description       String
   difficulty_level  String
   duration          String
@@ -115,7 +125,6 @@ model modules {
   course_id  String          @map(" course_id") @db.ObjectId
   author_id  String          @db.ObjectId
   lessons    ModuleLessons[]
-  order      Int
   is_visible Boolean
   title      String
 }

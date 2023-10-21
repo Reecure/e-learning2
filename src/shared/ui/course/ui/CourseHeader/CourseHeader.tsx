@@ -8,6 +8,9 @@ import {useRouter} from "next/router";
 import CourseForm from "@/shared/ui/course/ui/CourseForms/CourseForm";
 import {Button, ButtonThemes, DeleteModal, Modal} from "@/shared/ui";
 import {Routes} from "@/shared/config/routes";
+import {LuUsers2} from "react-icons/lu";
+import {BsClock} from "react-icons/bs";
+import {AiOutlineCalendar} from "react-icons/ai";
 
 type Props = {
     course: Course;
@@ -92,25 +95,50 @@ const CourseHeader: FC<Props> = ({course, isUserCourse}) => {
 
     return (
         <div className={"flex justify-between mb-14"}>
+
             <div className={"flex flex-col justify-between"}>
-                <div>
-                    {difficultLevelBadgeHelper(course?.difficulty_level)}
-                    <div className={"max-w-[400px] mb-5"}>
-                        <h3 className={"text-3xl font-extrabold"}>{course?.title}</h3>
+                <div className={""}>
+                    <div className={"flex items-start justify-between flex-row-reverse "}>
+                        {difficultLevelBadgeHelper(course?.difficulty_level)}
+                        <div className={"max-w-[400px] mb-5"}>
+                            <h3 className={"text-3xl font-extrabold"}>{course?.title}</h3>
+                        </div>
                     </div>
+                    <Image
+                        src={course?.cover_image}
+                        alt={"image"}
+                        className={"md:hidden max-w-[300px] rounded-md mx-auto mb-5 object-cover"}
+                        width={500}
+                        height={350}
+                    />
+
                     <div className={"max-w-[600px] mb-5"}>
                         <p>{course?.cover_description}</p>
                     </div>
                 </div>
+
+
                 <div className={"flex justify-center flex-col gap-3"}>
-                    <div className={"flex flex-col sm:flex-row justify-between gap-2 sm:gap-10"}>
-                        <p>
-                            {/* eslint no-constant-condition: "off" */}
-                            <span>{1}</span> {1 !== 1 ? "students" : "student"}
-                        </p>
-                        <p>{course?.duration}</p>
-                        <p>Created at 27.03.23</p>
-                        <p>Last update at 27.03.23</p>
+                    <div className={"grid grid-cols-2 gap-3"}>
+                        <div className={"flex items-center gap-2"}>
+                            <LuUsers2 />
+                            <p>
+                                {/* eslint no-constant-condition: "off" */}
+                                <span>{1}</span> {1 !== 1 ? "students" : "student"}
+                            </p>
+                        </div>
+                        <div className={"flex items-center gap-2"}>
+                            <BsClock />
+                            <p>{course?.duration}</p>
+                        </div>
+                        <div className={"flex items-center gap-2"}>
+                            <AiOutlineCalendar/>
+                            <p>Created at 27.03.23</p>
+                        </div>
+                        <div className={"flex items-center gap-2"}>
+                            <AiOutlineCalendar/>
+                            <p>Last update at 27.03.23</p>
+                        </div>
                     </div>
                     <>
                         <div className={"flex flex-col sm:flex-row gap-2"}>
@@ -183,12 +211,13 @@ const CourseHeader: FC<Props> = ({course, isUserCourse}) => {
                     </Modal>
                 </div>
             </div>
-            <div>
+
+            <div className={"ml-5"}>
                 <Image
                     src={course?.cover_image}
                     alt={"image"}
-                    className={"hidden sm:block max-w-[550px]  object-cover"}
-                    width={700}
+                    className={"hidden md:block md:max-w-[320px] lg:max-w-[430px] xl:lg:max-w-[550px] object-cover"}
+                    width={500}
                     height={350}
                 />
             </div>

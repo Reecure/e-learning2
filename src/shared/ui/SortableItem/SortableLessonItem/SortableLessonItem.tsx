@@ -91,7 +91,7 @@ const SortableLessonItem: FC<Props> = ({item, deleteOpen, disabled}) => {
     };
 
     return (
-        <div className={"flex justify-between items-center"}>
+        <div className={`flex justify-between items-center px-2 py-3 w-full rounded-md ${item?.lesson_type === LessonType.TEXT ? "bg-blue-300/30 hover:bg-blue-300/20" : "bg-red-300/30 hover:bg-red-300/20"} duration-100 cursor-pointer`}>
             <div className={`flex items-center gap-1 ${userProgressOnLesson.data?.is_completed && "duration-300 opacity-30"}`}>
 
                 {item?.lesson_type === LessonType.TEXT ? (

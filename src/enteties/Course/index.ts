@@ -1,3 +1,3 @@
-import {type Course} from "./model/types/course";
+import {type Course, CourseModules} from "./model/types/course";
 
-export type {Course};
+export type {Course,CourseModules as ICourseModules};

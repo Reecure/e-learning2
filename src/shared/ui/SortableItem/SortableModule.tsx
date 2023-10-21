@@ -1,7 +1,6 @@
 import React, {type FC, useState} from "react";
 import {useSortable} from "@dnd-kit/sortable";
 import {CSS} from "@dnd-kit/utilities";
-import {type Module} from "@/enteties/Module";
 import {trpc} from "@/shared/utils/trpc";
 import SortableModuleItem from "./SortableModuleItem/SortableModuleItem";
 import SortableLessonItem from "./SortableLessonItem/SortableLessonItem";
@@ -11,6 +10,7 @@ import {useRouter} from "next/router";
 import {useSession} from "next-auth/react";
 import {useAppDispatch} from "@/app/ReduxProvider/config/hooks";
 import {setPreviewVisible} from "@/shared/ui/course/model";
+import {ICourseModules} from "@/enteties/Course";
 
 type Props<T> = {
     item: T;
@@ -18,7 +18,7 @@ type Props<T> = {
     isModule: boolean;
 };
 
-export const SortableModule: FC<Props<ModuleLesson | Module>> = ({
+export const SortableModule: FC<Props<ModuleLesson | ICourseModules>> = ({
     item,
     disabled,
     isModule,
@@ -39,7 +39,7 @@ export const SortableModule: FC<Props<ModuleLesson | Module>> = ({
     const dispatch = useAppDispatch();
 
     const deleteModule = trpc.module.delete.useMutation({ async onSuccess(){
-        await utils.module.byCourseId.invalidate();
+        await utils.course.courseById.invalidate();
 
     }});
     const deleteLesson = trpc.lesson.delete.useMutation({ async onSuccess(){
@@ -59,7 +59,7 @@ export const SortableModule: FC<Props<ModuleLesson | Module>> = ({
 
     const deleteModuleHandler = () => {
         try {
-            deleteModule.mutate({id: item.id});
+            deleteModule.mutate({id: item.module_id, course_id: router.query.id});
             deleteOpenHandler();
         } catch (e) {
             console.log(e);
@@ -93,13 +93,13 @@ export const SortableModule: FC<Props<ModuleLesson | Module>> = ({
             style={style}
             {...attributes}
             {...listeners}
-            className={`px-2 py-3 w-full border-2 border-light-primary-main dark:border-dark-primary-main rounded-md mb-2  cursor-default touch-manipulation ${
+            className={`mb-2  cursor-default touch-manipulation ${
                 !disabled && "cursor-grab"
             } `}
         >
             {isModule ? (
             // Module
-                <SortableModuleItem  item={item as Module} disabled={disabled}
+                <SortableModuleItem  item={item as ICourseModules} disabled={disabled}
                     deleteOpen={deleteOpenHandler}/>
             ) : (
             // Lesson

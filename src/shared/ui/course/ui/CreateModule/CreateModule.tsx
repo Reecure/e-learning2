@@ -21,17 +21,17 @@ const CreateModule: FC<Props> = ({courseId}) => {
 
     const createModules = trpc.module.create.useMutation({
         async onSuccess() {
-            await utils.module.byCourseId.invalidate();
+            await utils.course.courseById.invalidate();
         }
     });
-    const getModules = trpc.module.byCourseId.useQuery({
+    const modulesQuery = trpc.course.courseById.useQuery({
         id: courseId,
     });
 
     const {register, handleSubmit} = useForm<Module>({
         defaultValues: {
             course_id: "",
-            order: getModules.data?.length,
+            order: 0,
             is_visible: true,
             title: "",
         },
@@ -76,6 +76,7 @@ const CreateModule: FC<Props> = ({courseId}) => {
                             await createModules.mutate({
                                 ...data,
                                 course_id: courseId,
+                                order: modulesQuery.data?.modules.length || 0,
                                 author_id: session.data?.user.id || "",
                             });
                             setSubmitError({isError: false, error: ""});
