@@ -88,16 +88,18 @@ export const moduleRouter = router({
     updateOrder: procedure.input(
         z.object({
             id: z.string(),
-            order: z.number(),
+            modules: z.any(),
         }),
-    ).mutation(async ({ctx, input}) => ctx.modules.update({
-        where: {
-            id: input.id,
-        },
-        data: {
-            order: input.order,
-        },
-    })),
+    ).mutation(async ({ctx, input}) => {
+        await ctx.course.update({
+            where: {
+                id: input.id,
+            },
+            data: {
+                modules: input.modules
+            },
+        });
+    }),
     updateInfo: procedure.input(
         z.object({
             id: z.string(),

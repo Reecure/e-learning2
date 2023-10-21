@@ -87,20 +87,10 @@ const DragAndDrop: FC<Props<ModuleLesson | ICourseModules>> = ({
     };
 
     const saveModules = async () => {
-        try {
-            await Promise.all(
-                propsItems.map(async item => {
-                    await updateModulesOrder.mutate({
-                        id: item.id,
-                        order: item.order
-                    });
-                    return item;
-                })
-            );
-            setOrderChange(false);
-        } catch (e) {
-            console.log(e);
-        }
+        await updateModulesOrder.mutate({
+            id: router.query.id as string || "",
+            modules: propsItems
+        });
     };
 
     return (
