@@ -34,9 +34,6 @@ export const progressRouter = router({
         const courseProgress = userForProgress.courses_progress.findIndex(item => item.course_id === input.course_id
         );
 
-        // const lessonsProgress = userForProgress.lessons_progress.findIndex(item => item.lesson_id === input.course_id
-        // );
-
         if (courseProgress === -1) {
             throw new Error("User have not course");
         }
@@ -69,6 +66,68 @@ export const progressRouter = router({
             courseProgress: {userProgress: userForProgress.courses_progress[courseProgress]},
             totalLessons: {TOTAL_LESSONS}
         };
+    }),
+    getLast7DaysLesson: procedure.input(z.object({
+        id: z.string()
+    })).query(async ({ctx, input}) => {
+        const user = await ctx.user.findUnique({
+            where: {
+                id: input.id,
+            },
+            select: {
+                lessons_progress: true,
+            },
+        });
+
+        if (user !== null) {
+            const currentDate = new Date();
+
+            // Создаем массив для последних 7 дней с начальными значениями 0
+            const lessonsByDay = Array.from({ length: 7 }, (_, index) => ({
+                date: new Date(currentDate.getTime() - index * 24 * 60 * 60 * 1000),
+                lessonCount: 0,
+            }));
+
+            // Заполняем массив данными из lessons_progress
+            user.lessons_progress.forEach(lesson => {
+                const lessonDate = new Date(lesson.complete_date);
+                const daysDiff = Math.floor((currentDate.getTime() - lessonDate.getTime()) / (24 * 60 * 60 * 1000));
+
+                if (daysDiff < 7) {
+                    // Находим соответствующий день в массиве и увеличиваем значение lessonCount
+                    const dayIndex = 6 - daysDiff;
+                    lessonsByDay[dayIndex].lessonCount += 1;
+                }
+            });
+
+            return lessonsByDay.reverse();
+        } else {
+            throw new TRPCError({ message: "user doesnt exist", code: "NOT_FOUND" });
+        }
+    }),
+    getCompleteCount: procedure.input(z.object({
+        id: z.string()
+    })).query(async ({ctx, input}) => {
+        const user = await ctx.user.findUnique({
+            where: {
+                id: input.id,
+            },
+            select: {
+                courses_progress: true,
+                lessons_progress: true,
+                modules_progress: true
+            },
+        });
+
+        if (user !== null) {
+            return {
+                courses_progress_length: user.courses_progress.length,
+                modules_progress_length: user.modules_progress.length,
+                lessons_progress_length: user.lessons_progress.length,
+            };
+        } else {
+            throw new TRPCError({ message: "user doesnt exist", code: "NOT_FOUND" });
+        }
     }),
     updateUserCourseProgress: procedure.input(z.object({
         id: z.string(),
@@ -144,6 +203,7 @@ export const progressRouter = router({
         lesson_progress: z.object({
             lesson_name: z.string(),
             module_id: z.string(),
+            complete_date: z.date(),
             lesson_id: z.string(),
             lessonType: z.string(),
             quizScore: z.number(),

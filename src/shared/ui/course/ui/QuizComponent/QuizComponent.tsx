@@ -97,6 +97,7 @@ const QuizComponent: FC<Props> = ({blocks, lesson_id, updateInfo}) => {
                     lesson_progress: {
                         lesson_id: lesson_id,
                         lesson_name: getLessonInfoById.data?.title || "",
+                        complete_date: new Date(),
                         module_id: getLessonInfoById.data?.module_id || "",
                         is_completed: true,
                         quizScore: score,

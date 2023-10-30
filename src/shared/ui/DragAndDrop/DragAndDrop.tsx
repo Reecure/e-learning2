@@ -123,8 +123,8 @@ const DragAndDrop: FC<Props<ModuleLesson | ICourseModules>> = ({
             </div>
             {
                 propsItems.length === 0 || propsItems === undefined
-                    ? <div className={"w-full h-full flex justify-center items-center"}>
-                        <h3 className={"text-5xl"}>There are no lessons</h3>
+                    ? <div className={"w-full h-full"}>
+                        <h3 className={"text-3xl"}>There are no lessons</h3>
                     </div>
                     : <DndContext
                         sensors={sensors}

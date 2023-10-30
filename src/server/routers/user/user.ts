@@ -1,5 +1,5 @@
-import { z } from "zod";
-import { router, procedure } from "../../trpc";
+import {z} from "zod";
+import {procedure, router} from "../../trpc";
 import {TRPCError} from "@trpc/server";
 import {UserRoles} from "@/enteties/User";
 import bcrypt from "bcrypt";
@@ -65,6 +65,20 @@ export const userRouter = router({
         }
         return user;
     }),
+    getFavoriteCourse: procedure.input(z.object({
+        id: z.string(),
+        course_id: z.string()
+    }),
+    ).query(async ({ctx, input}) => {
+        return await ctx.user.findUnique({
+            where: {
+                id: input.id
+            },
+            select: {
+                favorite_course: true
+            }
+        });
+    }),
     createUser: procedure.input(z.object({
         email: z.string(),
         firstname: z.string(),
@@ -96,6 +110,8 @@ export const userRouter = router({
                     courses: [],
                     is_new_user: true,
                     registration_date: new Date().toISOString(),
+                    favorite_course: "",
+                    last_course: "",
                     courses_progress: [],
                     modules_progress: [],
                     lessons_progress: [],
@@ -170,6 +186,38 @@ export const userRouter = router({
             },
         });
         return customCourse;
+    }),
+    updateLastVisitCourse: procedure.input(
+        z.object({
+            id: z.string(),
+            course_id: z.string(),
+        }),
+    ).mutation(async ({ctx, input}) => {
+        const user = await ctx.user.update({
+            where: {
+                id: input.id,
+            },
+            data: {
+                last_course: input.course_id
+            },
+        });
+        return user;
+    }),
+    updateFavoriteCourse: procedure.input(
+        z.object({
+            id: z.string(),
+            course_id: z.string(),
+        }),
+    ).mutation(async ({ctx, input}) => {
+        const user = await ctx.user.update({
+            where: {
+                id: input.id,
+            },
+            data: {
+                favorite_course: input.course_id
+            },
+        });
+        return user;
     }),
     updateUserCourses: procedure.input(
         z.object({

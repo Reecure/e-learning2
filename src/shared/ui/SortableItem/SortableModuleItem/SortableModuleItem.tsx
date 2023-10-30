@@ -62,13 +62,11 @@ const SortableModuleItem: FC<Props> = ({item, disabled, deleteOpen}) => {
                         updateModuleProgress.mutate({
                             id: session.data?.user.id || "",
                             module_progress: {
-                                module_id: item.id,
-                                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                                //@ts-ignore
-                                course_id: item.course_id,
+                                module_id: item.module_id,
+                                course_id: router.query.id as string,
                                 module_name: item.title,
-                                is_completed: true,
-                            },
+                                is_completed: false,
+                            }
                         });
                     }}
                 >

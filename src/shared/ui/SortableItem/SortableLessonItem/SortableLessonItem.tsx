@@ -67,6 +67,7 @@ const SortableLessonItem: FC<Props> = ({item, deleteOpen, disabled}) => {
                 lesson_progress: {
                     lesson_id: item.id,
                     module_id: router.query.id as string,
+                    complete_date: new Date(),
                     lesson_name: item.title,
                     is_completed: userProgressOnLesson && userProgressOnLesson.data?.is_completed !== true || false,
                     quizScore: userProgressOnLesson && userProgressOnLesson.data?.quizScore || 0,
@@ -112,6 +113,7 @@ const SortableLessonItem: FC<Props> = ({item, deleteOpen, disabled}) => {
                                 lesson_id: item.id,
                                 lesson_name: item.title,
                                 module_id: router.query.id as string || "",
+                                complete_date: new Date(),
                                 is_completed: userProgressOnLesson && userProgressOnLesson.data?.is_completed || false,
                                 quizScore: userProgressOnLesson && userProgressOnLesson.data?.quizScore || 0,
                                 lessonType: item.lesson_type,

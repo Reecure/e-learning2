@@ -57,30 +57,19 @@ const CourseModuleLessonsPage = () => {
                     <Button theme={ButtonThemes.CLEAR} onClick={setLessonSidebarOpenHandler}
                         className={"!p-0 md:hidden"}><AiOutlineClose/></Button>
 
-                    <div className={"flex justify-between items-center mb-5"}>
-                        <div className={"flex"}>
+                    <div className={" mb-5"}>
+                        <div className={"flex items-center whitespace-nowrap mb-5"}>
                             <Button theme={ButtonThemes.TEXT} className={"!px-2 !py-1 !h-8 rounded-md"} onClick={() => router.push(`${Routes.USER_COURSE_PAGE}/${moduleQuery.data?.course_id}`)}><BiLeftArrow /></Button>
-                            <p className={"text-xl mb-5"}>Lessons</p>
+                            <p className={"text-lg ml-1"}>Back to Modules</p>
                         </div>
 
-                        {isUserCourse && (!canLessonEdit
-                            ? (
-                                <Button
-                                    theme={ButtonThemes.FILLED}
-                                    onClick={CanLessonEditHandler}
-                                    className={"p-1!"}
-                                >
-                                    Edit
-                                </Button>
-                            )
-                            : (
-                                <Button
-                                    theme={ButtonThemes.FILLED}
-                                    onClick={CanLessonEditHandler}
-                                >
-                                    Close
-                                </Button>
-                            ))}
+                        {isUserCourse &&
+                            <Button theme={ButtonThemes.FILLED}
+                                onClick={CanLessonEditHandler}
+                                className={"w-full !py-1"}>
+                                {!canLessonEdit ? "Edit" : "Close"}
+                            </Button>
+                        }
                     </div>
                     {isUserCourse && canLessonEdit && (
                         <CreateLesson moduleId={router.query.id as string}/>

@@ -61,12 +61,13 @@ type UsersCoursesProgress {
 }
 
 type UsersLessonsProgress {
-  lesson_name  String
-  is_completed Boolean
-  lessonType   String
-  module_id    String
-  lesson_id    String
-  quizScore    Int
+  lesson_name   String
+  complete_date DateTime @db.Date
+  is_completed  Boolean
+  lessonType    String
+  module_id     String
+  lesson_id     String
+  quizScore     Int
 }
 
 type UsersModulesProgress {
@@ -142,6 +143,8 @@ model users {
   firstname         String
   is_new_user       Boolean
   lastname          String
+  favorite_course   String?
+  last_course       String?
   lessons_progress  UsersLessonsProgress[]
   modules_progress  UsersModulesProgress[]
   password          String
