@@ -1,6 +1,7 @@
 import {FC, useEffect} from "react";
 import {trpc} from "@/shared/utils/trpc";
 import {Loader, SmallCard} from "@/shared/ui";
+import {Course} from "@/enteties/Course";
 
 interface Props {
     course_id: string
@@ -19,7 +20,7 @@ const LastCourse: FC<Props> = ({course_id}) => {
 
     useEffect(() => {
         console.log(courseQuery.data);
-    },[courseQuery.isLoading])
+    },[courseQuery.isLoading]);
 
     if (courseQuery.isLoading){
         return  <div className={" flex justify-center items-center min-w-[250px] max-w-[470px] sm:w-[340px] h-[310px] rounded-md border-dashed border-2 border-dark-primary-main hover:border-dark-primary-main/30 duration-300"}>
@@ -29,7 +30,7 @@ const LastCourse: FC<Props> = ({course_id}) => {
 
     return (
         <div className={"min-w-[250px] max-w-[470px] sm:w-[340px] h-[310px"}>
-            <SmallCard course={courseQuery.data} />
+            <SmallCard course={courseQuery.data as Course} />
         </div>
     );
 };

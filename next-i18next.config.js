@@ -1,29 +1,28 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires,no-undef
-const LocizeBackend = require('i18next-locize-backend/cjs');
-// eslint-disable-next-line @typescript-eslint/no-var-requires,no-undef
-const ChainedBackend= require('i18next-chained-backend').default;
-// eslint-disable-next-line @typescript-eslint/no-var-requires,no-undef
-const LocalStorageBackend = require('i18next-localstorage-backend').default;
+// @ts-check
 
-
-const isBrowser = typeof window !== 'undefined';
-
-// eslint-disable-next-line no-undef
+/**
+ * @type {import('next-i18next').UserConfig}
+ */
 module.exports = {
-    // debug: true,
+    // https://www.i18next.com/overview/configuration-options#logging
+    debug: process.env.NODE_ENV === 'development',
     i18n: {
         defaultLocale: 'en',
-        locales: ['en', 'de', 'it'],
+        locales: ['en', 'ua'],
     },
-    backend: {
-        backendOptions: [{
-            expirationTime: 60 * 60 * 1000 // 1 hour
-        }, {
-            projectId: 'd3b405cf-2532-46ae-adb8-99e88d876733',
-            version: 'latest'
-        }],
-        backends: isBrowser ? [LocalStorageBackend, LocizeBackend] : [],
-    },
-    serializeConfig: false,
-    use: isBrowser ? [ChainedBackend] : []
+    /** To avoid issues when deploying to some paas (vercel...) */
+    localePath:
+        typeof window === 'undefined'
+            ? require('path').resolve('./public/locales')
+            : '/locales',
+
+    reloadOnPrerender: process.env.NODE_ENV === 'development',
+
+    /**
+     * @link https://github.com/i18next/next-i18next#6-advanced-configuration
+     */
+    // saveMissing: false,
+    // strictMode: true,
+    // serializeConfig: false,
+    // react: { useSuspense: false }
 };

@@ -3,10 +3,14 @@ import {ReactElement} from "react";
 import {useTranslation} from "next-i18next";
 import {useRouter} from "next/router";
 import {Button, ButtonThemes} from "@/shared/ui";
+import {GetStaticProps, InferGetStaticPropsType} from "next";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 
-const Home = () => {
+type Props = {
+};
+
+const Home = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
     const { t, i18n } = useTranslation();
-
 
     const {locale, locales, push} = useRouter();
 
@@ -21,9 +25,6 @@ const Home = () => {
             {locales?.map(l => {
                 return <Button theme={ButtonThemes.TEXT} key={l} onClick={handleClick(l)}>{l}</Button>;
             })}
-
-            <p>{t('h1')}</p>
-
         </div>
     );
 };
@@ -32,4 +33,14 @@ Home.getLayout = function getLayout(page: ReactElement) {
     return <Layout>{page}</Layout>;
 };
 
+export const getStaticProps: GetStaticProps<Props> = async ({
+    locale,
+}) => ({
+    props: {
+        ...(await serverSideTranslations(locale ?? 'en', [
+            'common',
+            'navbar'
+        ])),
+    },
+});
 export default Home;

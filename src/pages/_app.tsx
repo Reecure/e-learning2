@@ -9,6 +9,7 @@ import {useRouter} from "next/router";
 import {Loader} from "@/shared/ui";
 import {appWithTranslation} from "next-i18next";
 
+
 export type NextPageWithLayout<P = Record<string, unknown>, IP = P> = NextPage<P, IP> & {
     getLayout?: (page: ReactElement) => ReactNode;
 };

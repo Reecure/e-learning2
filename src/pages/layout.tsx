@@ -1,4 +1,4 @@
-import {type FC, type ReactNode, useEffect, useState} from "react";
+import {type FC, ReactNode, useEffect, useState} from "react";
 import {Roboto} from "next/font/google";
 import {Navbar} from "@/widgets/Navbar";
 import {Themes} from "@/widgets/ThemeTogler";
@@ -11,7 +11,7 @@ const roboto = Roboto({
 });
 
 type Props = {
-    children: ReactNode | ReactNode[];
+  children?: ReactNode | ReactNode[];
 };
 
 const Layout: FC<Props> = ({children}) => {

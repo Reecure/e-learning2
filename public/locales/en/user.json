@@ -1,0 +1,9 @@
+{
+  "edit": "Edit",
+  "close": "Close",
+  "profile": {
+    "completed_courses": "Completed Courses",
+    "completed_modules": "Completed Modules",
+    "completed_lessons": "Completed Lessons"
+  }
+}

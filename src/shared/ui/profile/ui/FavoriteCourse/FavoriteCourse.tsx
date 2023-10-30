@@ -1,6 +1,7 @@
-import {FC, useEffect} from "react";
+import {FC} from "react";
 import {Loader, SmallCard} from "@/shared/ui";
 import {trpc} from "@/shared/utils/trpc";
+import {Course} from "@/enteties/Course";
 
 interface Props {
     course_id: string
@@ -26,7 +27,7 @@ const FavoriteCourse: FC<Props> = ({course_id}) => {
 
     return (
         <div className={"min-w-[250px] max-w-[470px] sm:w-[340px] h-[310px"}>
-            <SmallCard course={courseQuery.data} />
+            <SmallCard course={courseQuery.data as Course} />
         </div>
     );
 };

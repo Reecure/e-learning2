@@ -25,7 +25,7 @@ const SmallCard: FC<Props> = ({course}) => {
             await utils.course.courseById.invalidate();
             await utils.user.getFavoriteCourse.invalidate();
         }});
-    const isFavoriteCourse = trpc.user.getFavoriteCourse.useQuery({id: user.data?.user.id, course_id: course.id});
+    const isFavoriteCourse = trpc.user.getFavoriteCourse.useQuery({id: user.data?.user.id as string, course_id: course.id});
 
     if (isFavoriteCourse.isLoading) {
         return <Loader/>;
@@ -39,12 +39,12 @@ const SmallCard: FC<Props> = ({course}) => {
                     if (isFavoriteCourse.data?.favorite_course === course.id) {
                         userFavoriteCourse.mutate({
                             course_id: "",
-                            id: user.data?.user.id
+                            id: user.data?.user.id as string
                         });
                     } else {
                         userFavoriteCourse.mutate({
                             course_id: course.id,
-                            id: user.data?.user.id
+                            id: user.data?.user.id as string
                         });
                     }
                 }}>

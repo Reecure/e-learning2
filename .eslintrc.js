@@ -28,7 +28,8 @@ module.exports = {
     },
     "plugins": [
         "@typescript-eslint",
-        "react"
+        "react",
+        // "i18next"
     ],
     "rules": {
         "indent": [
@@ -39,15 +40,14 @@ module.exports = {
             "warn",
             "windows"
         ],
-        "quotes": [
-            "error",
-            "double"
-        ],
+        "quotes": "off",
         "semi": [
             "error",
             "always"
         ],
         "react/react-in-jsx-scope": "off",
-        "@typescript-eslint/no-unused-vars": "off"
+        "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/ban-types": 'off',
+        "i18next/no-literal-string": 'off'
     }
 };
