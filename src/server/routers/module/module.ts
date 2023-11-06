@@ -21,6 +21,30 @@ export const moduleRouter = router({
         }
         return module;
     }),
+    lessonInfoByModuleId: procedure.input(z.object({
+        module_id: z.string(),
+        lesson_id: z.string(),
+    })).query(async ({ctx, input}) => {
+        const modules = await ctx.modules.findUnique({
+            where: {
+                id: input.module_id
+            },
+            select: {
+                lessons: true
+            }
+        });
+
+        if (!modules) {
+            throw new TRPCError({
+                code: "NOT_FOUND",
+                message: `No course with id '${input.module_id}'`,
+            });
+        }
+
+        const lesson = modules.lessons.filter(lessons => lessons.lesson_id === input.lesson_id);
+
+        return lesson[0];
+    }),
     byCourseId: procedure.input(z.object({
         id: z.string().min(24).max(24)
     })).query(async ({ctx, input}) => {

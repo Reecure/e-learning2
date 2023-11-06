@@ -6,15 +6,16 @@ export enum UserRoles {
     TEACHER = "teacher",
 }
 
-//Start course at 23.05.22
-// Avg quiz score: 4.3
-// Completed modules: 3
-// Completed lessons: 5
-// Complete percentage
+
 export type CourseProgress = {
     course_id: string;
     is_completed: boolean;
-    course_name: string
+    course_name: string;
+    start_course: string,
+    avg_quiz_score: number,
+    completed_modules: number,
+    completed_lessons: number,
+    complete_percentage: number
 };
 
 export type ModuleProgress = {

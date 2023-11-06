@@ -57,7 +57,7 @@ const CourseForm: FC<Props> = ({courseData, isCreating, onSubmit}) => {
     return (
         <>
             <form
-                className={"flex flex-col gap-2"}
+                className={"flex flex-col gap-2 w-[200px] sm:w-[300px] md:w-[350px] lg:w-[430px]"}
                 onSubmit={handleSubmit(submitHandler)}
             >
                 <p className={"text-3xl mb-5 text-center font-extrabold"}>
@@ -78,25 +78,27 @@ const CourseForm: FC<Props> = ({courseData, isCreating, onSubmit}) => {
                 <Label htmlFor={"duration"} labelText={"Duration"}>
                     <input className={"inputField"} {...register("duration")} />
                 </Label>
-                <select
-                    className={"inputField"}
-                    {...register("difficulty_level")}
-                    name='difficulty_level'
-                    defaultValue={DifficultLevels.EASY}
-                >
-                    <option className={"bg-light-background dark:bg-dark-background"} value={DifficultLevels.EASY}>
-                        Easy
-                    </option>
-                    <option
-                        className={"bg-dark-background"}
-                        value={DifficultLevels.MEDIUM}
+                <Label htmlFor={"difficulty_level"} labelText={"Difficult level"}>
+                    <select
+                        className={"inputField"}
+                        {...register("difficulty_level")}
+                        name='difficulty_level'
+                        defaultValue={DifficultLevels.EASY}
                     >
-                        Medium
-                    </option>
-                    <option className={"bg-light-background dark:bg-dark-background"} value={DifficultLevels.HARD}>
-                        Hard
-                    </option>
-                </select>
+                        <option className={"bg-light-background dark:bg-dark-background"} value={DifficultLevels.EASY}>
+                            Easy
+                        </option>
+                        <option
+                            className={"bg-dark-background"}
+                            value={DifficultLevels.MEDIUM}
+                        >
+                            Medium
+                        </option>
+                        <option className={"bg-light-background dark:bg-dark-background"} value={DifficultLevels.HARD}>
+                            Hard
+                        </option>
+                    </select>
+                </Label>
 
                 <div className={"flex items-center"}>
                     <label className={"relative"}>

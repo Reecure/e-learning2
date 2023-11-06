@@ -1,4 +1,5 @@
 import {type FC, useState} from "react";
+import {type Themes} from "@/widgets/ThemeTogler/ui/ThemeToggle";
 import Link from "next/link";
 import {ButtonThemes} from "@/shared/ui/Button/Button";
 import {GiHamburgerMenu} from "react-icons/gi";
@@ -9,8 +10,6 @@ import NavbarMenu from "@/widgets/Navbar/ui/NavbarComponents/NavbarMenu/NavbarMe
 import {useSession} from "next-auth/react";
 import NavbarHamburger from "@/widgets/Navbar/ui/NavbarComponents/NavbarHamburger/NavbarHamburger";
 import {Button} from "@/shared/ui";
-import {Themes} from "@/widgets/ThemeTogler";
-import {useTranslation} from "next-i18next";
 
 
 type Props = {
@@ -20,8 +19,6 @@ type Props = {
 };
 
 const Navbar: FC<Props> = ({className, theme, toggleTheme}) => {
-
-    const {t} = useTranslation('navbar');
 
     const [hamburgerOpen, setHamburgerOpen] = useState(false);
 
@@ -52,7 +49,7 @@ const Navbar: FC<Props> = ({className, theme, toggleTheme}) => {
                             {<Link
                                 href={item.link}
                             >
-                                {t(item.name)}
+                                {item.name}
                             </Link>}
                         </li>)
                     }
@@ -63,7 +60,7 @@ const Navbar: FC<Props> = ({className, theme, toggleTheme}) => {
 
             <div className={"flex items-center"}>
                 {status === "unauthenticated" ? (
-                    <Link href={"/auth/signin"}>{t('login')}</Link>
+                    <Link href={"/auth/signin"}>Log in</Link>
                 ) : null}
                 <NavbarMenu theme={theme} toggleTheme={toggleTheme}/>
             </div>

@@ -1,8 +1,4 @@
-import {type FC, FormEvent, type ReactNode, useEffect} from "react";
-import Link from "next/link";
-import {Routes} from "@/shared/config/routes";
-import {Button} from "@/shared/ui";
-import {ButtonThemes} from "@/shared/ui/Button/Button";
+import {type FC, type ReactNode, useEffect} from "react";
 import {Themes} from "@/widgets/ThemeTogler";
 
 type Props = {

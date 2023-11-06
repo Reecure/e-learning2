@@ -52,7 +52,7 @@ const UserProfileComponent: FC<Props> = ({user}) => {
 
             <div className="grid grid-cols-1 lg:grid-cols-[350px_1fr] 2xl:grid-cols-[350px_1fr_350px] gap-4">
 
-                <div className={"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-2"}>
+                <div className={"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-5"}>
                     <div className={"mx-auto md:mx-0"}>
                         <h4 className={"text-neutral-300 text-lg indent-2 mb-2 font-extrabold"} >Last Course</h4>
                         <LastCourse course_id={user.last_course ?? ""} />

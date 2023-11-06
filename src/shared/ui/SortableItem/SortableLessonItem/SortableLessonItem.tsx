@@ -20,6 +20,7 @@ type Props = {
 
 const SortableLessonItem: FC<Props> = ({item, deleteOpen, disabled}) => {
     const utils = trpc.useContext();
+
     const [progressLoading, setProgressLoading] = useState(false);
     const [visibilityLoading, setVisibilityLoading] = useState(false);
 
@@ -28,13 +29,14 @@ const SortableLessonItem: FC<Props> = ({item, deleteOpen, disabled}) => {
 
     const updateLessonProgress = trpc.progress.updateUserLessonsProgress.useMutation({
         async onSuccess() {
-            await utils.progress.getUserLessonsProgressById.invalidate();
+            await utils.progress.getUserModulesProgressById.invalidate();
         }
     });
     const userProgressOnLesson = trpc.progress.getUserLessonsProgressById.useQuery({
         id: session.data?.user.id || "",
         lesson_id: item.id,
     });
+
     const updateVisibility = trpc.lesson.updateVisibility.useMutation({
         async onSuccess() {
             await utils.module.byId.invalidate();
@@ -44,7 +46,6 @@ const SortableLessonItem: FC<Props> = ({item, deleteOpen, disabled}) => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-
         if (updateLessonProgress.status === "loading") {
             setProgressLoading(true);
         } else {
@@ -142,7 +143,6 @@ const SortableLessonItem: FC<Props> = ({item, deleteOpen, disabled}) => {
                             onClick={() => {
                                 setIsCompletedHandler();
                             }}
-
                         >
                             <>
                                 {userProgressOnLesson.data?.is_completed ? (
@@ -151,7 +151,6 @@ const SortableLessonItem: FC<Props> = ({item, deleteOpen, disabled}) => {
                                     <AiOutlineCheck/>
                                 )}
                             </>
-
                         </Button>
                 )}
 

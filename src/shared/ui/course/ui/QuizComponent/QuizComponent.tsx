@@ -15,6 +15,7 @@ import {
     QuizContentType
 } from "@/enteties/Lesson";
 import InfoForUser from "@/shared/ui/InfoForUser/InfoForUser";
+import {useRouter} from "next/router";
 
 type Props = {
     updateInfo: {
@@ -34,13 +35,21 @@ const QuizComponent: FC<Props> = ({blocks, lesson_id, updateInfo}) => {
     const [submitValuesVisible, setSubmitValuesVisible] = useState(false);
 
     const session = useSession();
+    const router = useRouter();
 
     const updateLessonProgress = trpc.progress.updateUserLessonsProgress.useMutation();
-    const getLessonInfoById = trpc.lesson.byId.useQuery({id: lesson_id});
+    const getLessonInfoById = trpc.module.lessonInfoByModuleId.useQuery({
+        lesson_id: lesson_id,
+        module_id: router.query.id as string,
+    });
     const getLessonProgressById = trpc.progress.getUserLessonsProgressById.useQuery({
         lesson_id,
         id: session.data?.user.id || "",
     });
+
+    useEffect(()=>{
+        console.log(getLessonInfoById.data);
+    },[getLessonProgressById.isLoading]);
 
     const quizContentRender = (contentType: QuizContentType | string, block: QuizBlocks | LessonBlocks, handleAnswer: (arg1: string, arg2: string) => void) => {
         switch (contentType) {
@@ -95,10 +104,10 @@ const QuizComponent: FC<Props> = ({blocks, lesson_id, updateInfo}) => {
                 updateLessonProgress.mutate({
                     id: session.data?.user.id || "",
                     lesson_progress: {
-                        lesson_id: lesson_id,
-                        lesson_name: getLessonInfoById.data?.title || "",
+                        lesson_id: getLessonInfoById.data?.id || "",
+                        module_id: router.query.id as string,
                         complete_date: new Date(),
-                        module_id: getLessonInfoById.data?.module_id || "",
+                        lesson_name: getLessonInfoById.data?.title || "",
                         is_completed: true,
                         quizScore: score,
                         lessonType: getLessonInfoById.data?.lesson_type || "",

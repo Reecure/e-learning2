@@ -109,9 +109,9 @@ const CreateLesson: FC<Props> = ({moduleId}) => {
                             setButtonDisabled(true);
                         }
                     })}
-                    className={"flex flex-col gap-2 w-[300px]"}
+                    className={"flex flex-col gap-2 w-[200px] sm:w-[300px]"}
                 >
-                    <p className={"mb-5 text-center text-3xl"}>Create Lesson</p>
+                    <p className={"text-center text-3xl"}>Create Lesson</p>
                     <Label htmlFor={"title"} labelText={"Title"}>
                         <input
                             type='text'

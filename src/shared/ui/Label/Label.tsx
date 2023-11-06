@@ -10,7 +10,7 @@ const Label: FC<Props> = ({labelText, children, htmlFor}) => (
     <label htmlFor={htmlFor} className={"relative"}>
         <p
             className={
-                "mb-1 text-md  dark:text-neutral-300 whitespace-nowrap"
+                "mb-1 text-sm  dark:text-neutral-300 whitespace-nowrap"
             }
         >
             {labelText}

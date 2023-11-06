@@ -55,9 +55,11 @@ type LessonsLessonContentBlocksParagraphs {
 }
 
 type UsersCoursesProgress {
-  course_id    String
-  is_completed Boolean
-  course_name  String
+  course_id           String
+  is_completed        Boolean
+  course_name         String
+  start_course        String?
+  complete_percentage Int?
 }
 
 type UsersLessonsProgress {
@@ -71,10 +73,11 @@ type UsersLessonsProgress {
 }
 
 type UsersModulesProgress {
-  module_name  String
-  is_completed Boolean
-  module_id    String
-  course_id    String
+  real_module_id String?
+  module_name    String
+  is_completed   Boolean
+  module_id      String
+  course_id      String
 }
 
 model course_categories {

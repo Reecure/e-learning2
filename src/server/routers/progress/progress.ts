@@ -1,6 +1,7 @@
 import {procedure, router} from "@/server/trpc";
 import {z} from "zod";
 import {TRPCError} from "@trpc/server";
+import {LessonType} from "@/enteties/Lesson";
 
 export const progressRouter = router({
     getUserCoursesProgress: procedure.input(
@@ -46,7 +47,7 @@ export const progressRouter = router({
 
         const modulesIds = modulesOfCourseByCourseId.map(items => items.id);
 
-        const modulesProgress = userForProgress.modules_progress.filter(module => modulesIds.includes(module.module_id));
+        const modulesProgress = userForProgress.modules_progress.filter(module => module.course_id === input.course_id);
 
         const lessonsByModulesIds = await ctx.lessons.findMany({
             where: {
@@ -60,11 +61,24 @@ export const progressRouter = router({
 
         const TOTAL_LESSONS = lessonsByModulesIds.length;
 
+        const AVG_SCORE_QUIZ = lessonsProgress.filter(progress => progress.lessonType === LessonType.QUIZ);
+        const AVG_SCORE =  AVG_SCORE_QUIZ.reduce((acum, val) => acum + val.quizScore, 0) / AVG_SCORE_QUIZ.length;
+
+        const COMPLETED_LESSON = lessonsProgress.filter(progress => progress.is_completed).length;
+        const COMPLETED_MODULES = modulesProgress.filter(progress => progress.is_completed).length;
+
+        const PERCENTAGE = ((modulesProgress.length - COMPLETED_MODULES) / modulesProgress.length) * 100;
+
         return {
             lessonsProgress: {lessonsProgress},
             modulesProgress: {modulesProgress},
             courseProgress: {userProgress: userForProgress.courses_progress[courseProgress]},
-            totalLessons: {TOTAL_LESSONS}
+            totalLessons: {TOTAL_LESSONS},
+            avg_score: AVG_SCORE,
+
+            completed_modules: COMPLETED_MODULES,
+            completed_lessons: COMPLETED_LESSON,
+            percentage: PERCENTAGE
         };
     }),
     getLast7DaysLesson: procedure.input(z.object({
@@ -158,7 +172,10 @@ export const progressRouter = router({
             },
             data: {
                 courses_progress: {
-                    push: input.course_progress,
+                    push: {
+                        start_course: new Date().toISOString(),
+                        complete_percentage: 0,
+                        ...input.course_progress}
                 },
             },
         });
@@ -166,6 +183,7 @@ export const progressRouter = router({
     updateUserModulesProgress: procedure.input(z.object({
         id: z.string(),
         module_progress: z.object({
+            real_module_id: z.string(),
             module_name: z.string(),
             module_id: z.string(),
             course_id: z.string(),
@@ -173,30 +191,38 @@ export const progressRouter = router({
         }),
     }),
     ).mutation(async ({ctx, input}) => {
+        const {id, module_progress} = input;
+
         const user = await ctx.user.findUnique({
             where: {
-                id: input.id,
+                id,
             },
         });
 
-        const existingProgressIndex = user?.modules_progress.findIndex(
-            item => item?.module_id === input.module_progress.module_id,
+        if (!user) {
+            return null;
+        }
+
+        const existingProgressIndex = user.modules_progress.findIndex(
+            item => item?.module_id === module_progress.module_id,
         );
 
         if (existingProgressIndex !== -1) {
-            return 0;
+            user.modules_progress[existingProgressIndex] = module_progress;
+        } else {
+            user.modules_progress.push(module_progress);
         }
 
-        return ctx.user.update({
+        const updatedUserModuleProgress = await ctx.user.update({
             where: {
-                id: input.id,
+                id,
             },
             data: {
-                modules_progress: {
-                    push: input.module_progress,
-                },
+                modules_progress: user.modules_progress,
             },
         });
+
+        return updatedUserModuleProgress;
     }),
     updateUserLessonsProgress: procedure.input(z.object({
         id: z.string(),
@@ -271,6 +297,31 @@ export const progressRouter = router({
 
         return user.lessons_progress[existingProgressIndex];
     }),
+    getUserModulesProgressById: procedure.input(z.object({
+        id: z.string(),
+        module_id: z.string(),
+    }),
+    ).query(async ({ctx, input}) => {
+        const {id, module_id} = input;
 
+        const user = await ctx.user.findUnique({
+            where: {
+                id,
+            },
+        });
 
+        if (!user) {
+            return null;
+        }
+
+        const existingProgressIndex = user.modules_progress.findIndex(
+            item => item?.module_id === module_id,
+        );
+
+        if (existingProgressIndex === -1) {
+            return null;
+        }
+
+        return user.modules_progress[existingProgressIndex];
+    }),
 });

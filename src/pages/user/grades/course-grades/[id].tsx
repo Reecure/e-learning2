@@ -9,6 +9,10 @@ import {trpc} from "@/shared/utils/trpc";
 import {Button, Loader} from "@/shared/ui";
 import {ButtonThemes} from "@/shared/ui/Button/Button";
 import {LessonType} from "@/enteties/Lesson";
+import {MdIncompleteCircle} from "react-icons/md";
+import {BiSolidBarChartAlt2} from "react-icons/bi";
+import {BsCalendarDate} from "react-icons/bs";
+import Badge, {BadgeColors} from "../../../../shared/ui/Badge/Badge";
 
 ChartJS.register(
     CategoryScale,
@@ -34,22 +38,7 @@ export const options = {
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export const data = {
-    labels: [],
-    datasets: [
-        {
-            data: [80, 20],
-            backgroundColor: [
-                "rgba(255, 206, 86, 0.2)",
-                "rgba(153, 102, 255, 0.2)",
-            ],
-            borderColor: [
-                "rgba(255, 206, 86, 1)",
-                "rgba(153, 102, 255, 1)",
 
-            ],
-            borderWidth: 1,
-        },
-    ],
 };
 
 const CourseGradesPage = () => {
@@ -64,7 +53,6 @@ const CourseGradesPage = () => {
 
     useEffect(() => {
         console.log(courseInfo.data);
-        console.log(courseInfo.data?.lessonsProgress.lessonsProgress.filter(item => item.module_id === "652926c9f1e391d415df8874").map(lesson => Number(lesson.quizScore)));
     }, [courseInfo.isLoading]);
 
     if (courseInfo.isLoading) {
@@ -74,27 +62,48 @@ const CourseGradesPage = () => {
     return (
         <>
             <div className={"flex justify-between bg-neutral-200 dark:bg-neutral-800 p-5 rounded-md"}>
-                <div>
-                    <h5>{courseInfo.data?.courseProgress.userProgress.course_name}</h5>
-                    <div className={"flex gap-3"}>
-                        <div>
-                            Start course at 23.05.22
+                <div className={"flex flex-col justify-between"}>
+                    <h3 className={"text-3xl font-extrabold"}>{courseInfo.data?.courseProgress.userProgress.course_name}</h3>
+                    <div className={"grid grid-cols-2 gap-3"}>
+                        <div className={"flex gap-1 items-center"}>
+                            <BsCalendarDate />
+                            Start course at {courseInfo.data?.courseProgress.userProgress.start_course?.slice(0, 10)}
                         </div>
-                        <div>
-                            Avg quiz sccore: 4.3
+                        <div className={"flex gap-1 items-center"}>
+                            <BiSolidBarChartAlt2 />
+                            Avg quiz sccore: {courseInfo.data?.avg_score}
                         </div>
-                        <div>
-                            Completed modules: 3
+                        <div className={"flex gap-1 items-center"}>
+                            <MdIncompleteCircle />
+                            Completed modules: {courseInfo.data?.completed_modules}
                         </div>
-                        <div>
-                            Completed lessons: 5
+                        <div className={"flex gap-1 items-center"}>
+                            <MdIncompleteCircle />
+                            Completed lessons: {courseInfo.data?.completed_lessons}
                         </div>
                     </div>
                 </div>
                 <div className={"w-[150px] h-[150px]"}>
-                    <Pie data={data}/>
+                    <Pie data={
+                        {
+                            labels: ["completed", "uncompleted"],
+                            datasets: [
+                                {
+                                    data: [100 - (courseInfo.data?.percentage || 0), courseInfo.data?.percentage],
+                                    backgroundColor: [
+                                        "#264949",
+                                        "#68213c",
+                                    ],
+                                    borderColor: [
+                                        "#49d269",
+                                        "#e57165",
+                                    ],
+                                    borderWidth: 1,
+                                },
+                            ],
+                        }
+                    }/>
                 </div>
-
             </div>
 
             <div className={"mt-5"}>
@@ -104,25 +113,35 @@ const CourseGradesPage = () => {
                     return (
                         <div key={module.module_id} className={""}>
                             <div
-                                className={"flex justify-between px-4 py-2 border-light-primary-main dark:border-dark-primary-main border-2 mb-2 rounded-md"}>
+                                className={"flex justify-between items-center px-2 py-3 w-full rounded-md  bg-dark-primary-container/50 mb-2"}>
                                 <h6>{module.module_name}</h6>
-                                <Button
-                                    theme={ButtonThemes.TEXT}
-                                    className={"!px-2 !py-1 rounded-md"}
-                                    onClick={() => setOpenModuleId(isOpen ? null : module.module_id)}
-                                >
-                                    {isOpen ? "Close" : "Open"}
-                                </Button>
+                                <div className={"flex items-center"}>
+                                    <div className={""}>{module.is_completed ?
+                                        <Badge text={"completed"} color={BadgeColors.GREEN} className={"text-[12px] !mb-0"} />
+                                        :
+                                        <Badge text={"uncompleted"} color={BadgeColors.RED} className={"text-[12px] !mb-0"} />}</div>
+                                    <Button
+                                        theme={ButtonThemes.TEXT}
+                                        className={"!px-2 !py-1 rounded-md"}
+                                        onClick={() => setOpenModuleId(isOpen ? null : module.module_id)}
+                                    >
+                                        {isOpen ? "Close" : "Open"}
+                                    </Button>
+                                </div>
                             </div>
                             <div
                                 className={`${isOpen ? "" : "hidden"} px-4 py-2 border-light-primary-main dark:border-dark-primary-main border-2 mb-2 rounded-md mt-1`}>
                                 <Bar options={options} data={{
-                                    labels: courseInfo.data.lessonsProgress.lessonsProgress.filter((grade) => grade.module_id === module.module_id && grade.lessonType === LessonType.QUIZ).map(lesson => lesson.lesson_name),
+                                    labels: courseInfo.data?.lessonsProgress.lessonsProgress
+                                        .filter(lesson => lesson.lessonType === LessonType.QUIZ && lesson.module_id === module.real_module_id)
+                                        .map(les => les.lesson_name),
                                     datasets: [
                                         {
                                             label: "Grade",
                                             barPercentage: 0.1,
-                                            data: courseInfo.data.lessonsProgress.lessonsProgress.filter(item => item.module_id === module.module_id).map(lesson => Number(lesson.quizScore)),
+                                            data: courseInfo.data?.lessonsProgress.lessonsProgress
+                                                .filter(lesson => lesson.lessonType === LessonType.QUIZ && lesson.module_id === module.real_module_id)
+                                                .map(les => les.quizScore),
                                             backgroundColor: "rgba(153, 102, 255, 1)",
                                         }
                                     ],

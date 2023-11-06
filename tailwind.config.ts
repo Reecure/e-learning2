@@ -1,12 +1,16 @@
-import type { Config } from "tailwindcss";
+import type {Config} from "tailwindcss";
 
 const config: Config = {
     content: [
         "./src/**/*.{js,ts,jsx,tsx,mdx}"
     ],
     darkMode: "class",
+
     theme: {
         extend: {
+            gridTemplateColumns:{
+                "repeat-auto-custom": "repeat(auto-fit,minmax(340px,1fr))",
+            },
             colors: {
                 light: {
                     background: "#FEF7FF",
@@ -122,6 +126,14 @@ const config: Config = {
                         transform: "scale(1)",
                         opacity: "1"
                     }
+                },
+                "hero-letter": {
+                    "0%": {
+                        opacity: "0"
+                    },
+                    "100%": {
+                        opacity: "1"
+                    },
                 }
 
             },
@@ -129,7 +141,8 @@ const config: Config = {
                 "slide-from-top": "slide-from-top .4s ease-in-out forwards",
                 "slide-to-top": "slide-from-top reverse .4s ease-in-out forwards",
                 "open-modal": "open-modal .4s ease-in-out forwards",
-                "close-modal": "open-modal .4s reverse ease-in-out forwards"
+                "close-modal": "open-modal .4s reverse ease-in-out forwards",
+                "hero-letter": "hero-letter 2.4s ease-in-out forwards"
             }
 
         },

@@ -33,6 +33,7 @@ const CreateLessonContent: FC<Props> = ({
     const lessonUpdateContentQuery = trpc.lesson.updateContent.useMutation({
         async onSuccess(){
             await utils.module.byId.invalidate();
+            await utils.lesson.byId.invalidate();
         }
     });
 

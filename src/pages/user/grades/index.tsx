@@ -1,11 +1,11 @@
-import {type ReactElement, useEffect} from "react";
-import Layout from "@/pages/layout";
-import UserLayout from "@/pages/user/layout";
+import {ReactElement, useEffect} from "react";
 import {useSession} from "next-auth/react";
 import {trpc} from "@/shared/utils/trpc";
-import Link from "next/link";
+import {Button, ButtonThemes, Loader} from "@/shared/ui";
 import {Routes} from "@/shared/config/routes";
-import {Loader} from "@/shared/ui";
+import Link from "next/link";
+import Layout from "@/pages/layout";
+import UserLayout from "@/pages/user/layout";
 
 const UserGrades = () => {
     const session = useSession();
@@ -25,16 +25,26 @@ const UserGrades = () => {
     }
     return (
         <div>
-            {
-                coursesWithProgress.data.map((course) => {
-                    return <div key={course?.course_id} className={"p-4 border-2 border-amber-300 rounded-md"}>
-                        <Link href={`${Routes.USER_GRADES}/course-grades/${course.course_id}`}>
-                            {course?.course_name}
-                        </Link>
+            <h3 className={"text-3xl sm:text-5xl font-bold mb-10"}>Your Progress</h3>
+            <div className={"grid gap grid-cols-repeat-auto-custom"}>
+                {
+                    coursesWithProgress.data.map((course) => {
+                        return <div key={course?.course_id} className={"p-4 border-2 border-dark-primary-main rounded-md w-[250px] sm:w-[300px]"}>
+                            <div className={"flex flex-col gap-1 mb-5"} >
+                                <h5 className={"text-2xl"}>{course?.course_name}</h5>
+                            </div>
+                            <div className={"flex justify-end"}>
+                                <Link href={`${Routes.USER_GRADE_PAGE}/${course.course_id}`}>
+                                    <Button theme={ButtonThemes.FILLED}>
+                                        Progress
+                                    </Button>
+                                </Link>
+                            </div>
 
-                    </div>;
-                })
-            }
+                        </div>;
+                    })
+                }
+            </div>
         </div>
     );
 };

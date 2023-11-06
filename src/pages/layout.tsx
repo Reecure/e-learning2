@@ -23,6 +23,7 @@ const Layout: FC<Props> = ({children}) => {
         localStorage.setItem("themeElearning", JSON.stringify(newTheme));
     };
 
+
     useEffect(() => {
         const storedTheme = localStorage.getItem("themeElearning");
         if (storedTheme) {
@@ -42,7 +43,7 @@ const Layout: FC<Props> = ({children}) => {
                 toggleTheme={toggleTheme}
             />
             <main
-                className={`${roboto.className} h-[calc(100vh_-_58px)] overflow-y-auto max-w-[1920px] mx-auto
+                className={`${roboto.className} h-[calc(100vh-58px)] overflow-y-auto max-w-[1920px] mx-auto
               w-full bg-light-background  dark:bg-dark-background  text-light-text dark:text-dark-text`}
             >
                 {children}

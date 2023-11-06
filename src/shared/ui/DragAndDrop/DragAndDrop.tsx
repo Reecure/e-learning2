@@ -60,7 +60,7 @@ const DragAndDrop: FC<Props<ModuleLesson | ICourseModules>> = ({
     }, [items, updateModulesOrder.isLoading, updateLessonOrder.isLoading]);
 
     useEffect(() => {
-        propsItems.forEach((item, i) => (item.order = i));
+        propsItems?.forEach((item, i) => (item.order = i));
     }, [propsItems]);
 
     useEffect(() => {
@@ -93,6 +93,10 @@ const DragAndDrop: FC<Props<ModuleLesson | ICourseModules>> = ({
         });
     };
 
+    if (propsItems === undefined) {
+        return <>asf</>;
+    }
+
     return (
         <div className={"mt-5"}>
             <div className={"flex justify-center mb-2"}>
@@ -122,7 +126,7 @@ const DragAndDrop: FC<Props<ModuleLesson | ICourseModules>> = ({
                     ))}
             </div>
             {
-                propsItems.length === 0 || propsItems === undefined
+                propsItems === undefined || propsItems.length === 0
                     ? <div className={"w-full h-full"}>
                         <h3 className={"text-3xl"}>There are no lessons</h3>
                     </div>
