@@ -7,7 +7,7 @@ const Custom404 = () => {
     return(
         <div className="flex flex-col items-center justify-center h-screen text-center">
             <Link href="/" className="text-gray-300 underline">
-                {home}
+                home
             </Link>
             <div className="flex flex-col">
                 <h1 className="text-9xl font-bold">404</h1>

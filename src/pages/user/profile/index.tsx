@@ -6,14 +6,12 @@ import {UserProfileComponent} from "@/shared/ui/profile";
 import {useCurrentUser} from "@/shared/hooks";
 import {ErrorWidget} from "@/widgets/ErrorWidget";
 import {Loader} from "@/shared/ui";
-import {GetStaticProps, InferGetStaticPropsType} from "next";
-import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import {User} from "@/enteties/User";
 
 type Props = {
 }
 
-const UserProfile = (_props: InferGetStaticPropsType<typeof getStaticProps>) => {
+const UserProfile = () => {
     const currentUser = useCurrentUser();
 
     const user = trpc.user.userById.useQuery({
@@ -22,7 +20,7 @@ const UserProfile = (_props: InferGetStaticPropsType<typeof getStaticProps>) => 
 
     if (user.error) {
         return (
-            <ErrorWidget />
+            <ErrorWidget/>
         );
     }
 
@@ -40,16 +38,5 @@ UserProfile.getLayout = function getLayout(page: ReactElement) {
         </Layout>
     );
 };
-
-export const getStaticProps: GetStaticProps<Props> = async ({
-    locale,
-}) => ({
-    props: {
-        ...(await serverSideTranslations(locale ?? 'en', [
-            'user',
-            'navbar'
-        ])),
-    },
-});
 
 export default UserProfile;

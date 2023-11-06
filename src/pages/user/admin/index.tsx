@@ -1,24 +1,38 @@
-import {Fragment, type ReactElement, useEffect, useState} from "react";
+import {type ReactElement, useEffect, useState} from "react";
 import Layout from "@/pages/layout";
 import UserLayout from "@/pages/user/layout";
 import {useSession} from "next-auth/react";
-import {Button, ButtonThemes, Loader, UserRaw} from "@/shared/ui";
+import {Loader, UserRaw} from "@/shared/ui";
 import {User, UserRoles} from "@/enteties/User";
 import AccesDenied from "@/widgets/AccesDenied/ui/AccesDenied";
 import {trpc} from "@/shared/utils/trpc";
 import {ErrorWidget} from "@/widgets/ErrorWidget";
+import {useInfiniteScroll} from "@/shared/hooks/useInfiniteScroll/useInfiniteScroll";
 
 const rows = ["", "Firstname", "Lastname", "Email", "Role", ];
 
 const UserAdmin = () => {
     const [page, setPage] = useState(0);
+
+    const [containerRef, isVisible] = useInfiniteScroll({
+        root: null,
+        rootMargin: "0px",
+        threshold: 1.0
+    });
+
     const session = useSession();
 
+    useEffect(() => {
+        if (isVisible) {
+            handleFetchNextPage();
+        }
+    }, [isVisible]);
+
     const usersQuery = trpc.user.all.useInfiniteQuery({
-        limit: 5
+        limit: 10
     },
     {
-        getNextPageParam(lastPage){
+        getNextPageParam(lastPage) {
             return lastPage.nextCursor;
         }
     });
@@ -60,17 +74,14 @@ const UserAdmin = () => {
                 </thead>
                 <tbody>
                     {usersQuery.data?.pages.map((page, index) => {
-                        const indexNum = index * 5;
-                        return page.users.map((user,i) => {
-                            return <UserRaw user={user as User} index={indexNum + i} key={user.id} />;
+                        const indexNum = index * 10;
+                        return page.users.map((user, i) => {
+                            return <UserRaw user={user as User} index={indexNum + i} key={user.id}/>;
                         });
                     })}
                 </tbody>
             </table>
-            <div className={"flex justify-end"}>
-                <Button disabled={!usersQuery.hasNextPage} theme={ButtonThemes.TEXT} onClick={() => {
-                    handleFetchNextPage();
-                }}>More</Button>
+            <div className={"flex justify-end"} ref={containerRef}>
             </div>
         </>
     );

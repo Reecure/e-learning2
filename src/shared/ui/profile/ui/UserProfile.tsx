@@ -1,6 +1,6 @@
 import {type FC, useState} from "react";
 import {type User, UserRoles} from "@/enteties/User";
-import {Button, ButtonThemes, Loader, Modal} from "@/shared/ui";
+import {Button, ButtonThemes, Modal} from "@/shared/ui";
 import EditUserProfileModal from "./EditUserProfileModal/EditUserProfileModal";
 import CreateCourse from "@/shared/ui/course/ui/CreateCourse/CreateCourse";
 import UserAvatar from "./UserAvatar/UserAvatar";
@@ -9,7 +9,6 @@ import FavoriteCourse from "@/shared/ui/profile/ui/FavoriteCourse/FavoriteCourse
 import CompleteCountInfo from "@/shared/ui/profile/ui/CompleteCountInfo/CompleteCountInfo";
 import News from "@/shared/ui/profile/ui/News/News";
 import WeekProgress from "@/shared/ui/profile/ui/ModuleProgress/ModuleProgress";
-import {trpc} from "@/shared/utils/trpc";
 import LastCourse from "@/shared/ui/profile/ui/LastCourse/LastCourse";
 
 type Props = {
@@ -23,12 +22,6 @@ const UserProfileComponent: FC<Props> = ({user}) => {
     const openHandler = () => {
         setEditable(prev => !prev);
     };
-
-    const course = trpc.course.courseById.useQuery({id: "65326f1635c169828e650cf9"});
-
-    if (course.isLoading){
-        return <Loader />;
-    }
 
     return (
         <>
