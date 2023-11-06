@@ -2,7 +2,6 @@ import {type FC, useEffect, useState} from "react";
 import {Button, ButtonThemes, Label, Notification} from "@/shared/ui";
 import {Course, DifficultLevels} from "@/enteties/Course/model/types/course";
 import {useForm} from "react-hook-form";
-import {useTranslation} from "next-i18next";
 
 type Props = {
     courseData: Course;
@@ -13,7 +12,7 @@ type Props = {
 const TIMEOUT = 3000;
 
 const CourseForm: FC<Props> = ({courseData, isCreating, onSubmit}) => {
-    const {t} = useTranslation('my-courses');
+
 
     const [notificationOpen, setNotificationOpen] = useState(false);
     const [submitError, setSubmitError] = useState(false);

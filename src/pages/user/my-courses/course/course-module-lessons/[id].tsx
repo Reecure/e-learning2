@@ -14,10 +14,8 @@ import {isLessonPreviewVisible} from "@/shared/ui/course/model/selectors/current
 import {AiOutlineClose} from "react-icons/ai";
 import {BiLeftArrow} from "react-icons/bi";
 import {Routes} from "@/shared/config/routes";
-import {useTranslation} from "next-i18next";
 
 const CourseModuleLessonsPage = () => {
-    const {t} = useTranslation('my-courses');
     const [canLessonEdit, setCanLessonEdit] = useState(false);
     const [isUserCourse, setIsUserCourse] = useState(false);
     const [lessonSidebarOpen, setLessonSidebarOpen] = useState(true);
@@ -61,8 +59,9 @@ const CourseModuleLessonsPage = () => {
 
                     <div className={" mb-5"}>
                         <div className={"flex items-center whitespace-nowrap mb-5"}>
-                            <Button theme={ButtonThemes.TEXT} className={"!px-2 !py-1 !h-8 rounded-md"} onClick={() => router.push(`${Routes.USER_COURSE_PAGE}/${moduleQuery.data?.course_id}`)}><BiLeftArrow /></Button>
-                            <p className={"text-lg ml-1"}>{t('back_to_modules')}</p>
+                            <Button theme={ButtonThemes.TEXT} className={"!px-2 !py-1 !h-8 rounded-md"}
+                                onClick={() => router.push(`${Routes.USER_COURSE_PAGE}/${moduleQuery.data?.course_id}`)}><BiLeftArrow/></Button>
+                            <p className={"text-lg ml-1"}>Go back</p>
                         </div>
 
                         {isUserCourse &&

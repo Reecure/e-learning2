@@ -21,7 +21,7 @@ const UserLayout: FC<Props> = ({children, contentClassName}) => {
     });
 
     if (session.status === "loading") {
-        return <p>Loading</p>;
+        return <Loader/>;
     }
 
     return (

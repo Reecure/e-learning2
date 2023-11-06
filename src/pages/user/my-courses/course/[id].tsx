@@ -13,7 +13,7 @@ import CourseAboutTab from "@/shared/ui/course/ui/CourseTabs/CourseAboutTab";
 import CourseReviewsTab from "@/shared/ui/course/ui/CourseTabs/CourseReviewsTab";
 import CourseContentTab from "@/shared/ui/course/ui/CourseTabs/CourseContentTab";
 import {ErrorWidget} from "@/widgets/ErrorWidget";
-import {useTranslation} from "next-i18next";
+
 
 export enum Tabs {
     ABOUT = "About",
@@ -22,7 +22,6 @@ export enum Tabs {
 }
 
 const CoursePage = () => {
-    const {t} = useTranslation('user');
 
 
     const [currentTab, setCurrentTab] = useState<Tabs>(Tabs.ABOUT);
@@ -76,7 +75,7 @@ const CoursePage = () => {
                             onClick={courseModuleEditHandler}
                             className={"ml-5"}
                         >
-                            {t('edit')}
+                            Edit
                         </Button>
                     ) : (
                         <div className={"flex gap-x-2"}>
@@ -85,7 +84,7 @@ const CoursePage = () => {
                                 onClick={courseModuleEditHandler}
                                 className={"ml-5"}
                             >
-                                {t('close')}
+                                Close
                             </Button>
                         </div>
                     ))}
