@@ -20,9 +20,14 @@ type Props = {
 
 const UserProfileComponent: FC<Props> = ({user}) => {
     const [isEditable, setEditable] = useState(false);
+    const [excursionOpen, setExcursionOpen] = useState(false);
 
     const openHandler = () => {
         setEditable(prev => !prev);
+    };
+
+    const excursionOpenHandler = () => {
+        setExcursionOpen(prev => !prev);
     };
 
     return (
@@ -30,16 +35,21 @@ const UserProfileComponent: FC<Props> = ({user}) => {
             <div className={"mb-10 sm:flex sm:justify-between bg-neutral-200 dark:bg-neutral-800/50 p-5 rounded-md"}>
                 <div className={"sm:flex items-center "}>
                     <div className={"flex justify-center mb-3"}>
-                        <UserAvatar user={user} />
+                        <UserAvatar user={user}/>
                     </div>
 
                     <UserInfo user={user}/>
                 </div>
 
                 <div className={"flex flex-col md:flex-row gap-4 items-start mt-5 sm:mt-0 sm:items-end gap-x-2"}>
-                    <Button className={"w-full"} theme={ButtonThemes.FILLED} onClick={openHandler}>
-                        Edit
-                    </Button>
+                    <div className={"flex flex-col gap-3 w-full"}>
+                        <Button className={"w-full"} theme={ButtonThemes.FILLED} onClick={excursionOpenHandler}>
+                            How to
+                        </Button>
+                        <Button className={"w-full"} theme={ButtonThemes.FILLED} onClick={openHandler}>
+                            Edit
+                        </Button>
+                    </div>
                     {(user.role === UserRoles.ADMIN
                         || user.role === UserRoles.TEACHER) && <div className={"flex flex-col gap-3 w-full"}>
                         <CreateNews/>
@@ -86,11 +96,14 @@ const UserProfileComponent: FC<Props> = ({user}) => {
                 </div>
 
                 <div className={"flex "}>
-                    <News />
+                    <News/>
                 </div>
             </div>
             <Modal isOpen={isEditable} setIsOpen={openHandler}>
                 <EditUserProfileModal user={user}/>
+            </Modal>
+            <Modal isOpen={excursionOpen} setIsOpen={excursionOpenHandler}>
+                <div></div>
             </Modal>
         </>
     );
