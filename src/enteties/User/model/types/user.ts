@@ -8,49 +8,47 @@ export enum UserRoles {
 
 
 export type CourseProgress = {
-    course_id: string;
-    is_completed: boolean;
-    course_name: string;
-    start_course: string,
-    avg_quiz_score: number,
-    completed_modules: number,
-    completed_lessons: number,
-    complete_percentage: number
+    course_id: string
+    is_completed: boolean
+    course_name: string
+    start_course?: string
+    complete_percentage?: number
 };
 
 export type ModuleProgress = {
-    module_id: string;
-    course_id: string;
-    is_completed: boolean;
+    real_module_id?: string
     module_name: string
+    is_completed: boolean
+    module_id: string
+    course_id: string
 };
 
 export type LessonProgress = {
-    lesson_id: string;
-    module_id: string;
-    lesson_name: string;
-    complete_date: Date;
-    lessonType: LessonType | string;
-    quizScore?: number;
-    is_completed: boolean;
+    lesson_name: string
+    complete_date: Date
+    read_later?: boolean
+    is_completed: boolean
+    lessonType: LessonType
+    module_id: string
+    lesson_id: string
+    quizScore: number
 };
 
-
 export type User = {
-    id: string;
-    courses: string[];
-    avatar: string;
-    email: string;
-    firstname: string;
-    is_new_user: boolean;
-    lastname: string;
-    password: string;
-    favorite_course: string;
-    last_course: string;
-    registration_date: Date;
-    role: string;
-    modules_progress: ModuleProgress[];
-    courses_progress: CourseProgress[];
-    lessons_progress: LessonProgress[];
+    id: string
+    avatar: string
+    courses: string[]
+    courses_progress: CourseProgress[]
+    email: string
+    firstname: string
+    is_new_user: boolean
+    lastname: string
+    favorite_course: string
+    last_course: string
+    lessons_progress: LessonProgress[]
+    modules_progress: ModuleProgress[]
+    password: string
+    registration_date: Date
+    role: UserRoles
 
 };

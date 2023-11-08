@@ -3,13 +3,8 @@ import {Button, ButtonThemes, Modal} from "@/shared/ui";
 import CreateNewsForm from "@/shared/ui/News/CreateNewsForm";
 import {trpc} from "@/shared/utils/trpc";
 import {useSession} from "next-auth/react";
+import {News} from "@/enteties/News/model/types/module";
 
-export interface News {
-    author_id: string;
-    title: string;
-    description: string;
-    creation_date: string;
-}
 
 interface Props {
 }

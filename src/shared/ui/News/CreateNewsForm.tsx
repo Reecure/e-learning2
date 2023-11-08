@@ -1,7 +1,7 @@
 import {FC, useEffect, useState} from "react";
 import {Button, ButtonThemes, Label} from "@/shared/ui";
 import {useForm} from "react-hook-form";
-import {News} from "@/shared/ui/course/ui/CreateNews/CreateNews";
+import {News} from "@/enteties/News/model/types/module";
 
 
 interface Props {
@@ -20,7 +20,7 @@ const CreateNewsForm: FC<Props> = ({onSubmit}) => {
         handleSubmit,
         reset,
         formState: {errors},
-    } = useForm<Pick<News, "title" | "description">>();
+    } = useForm<News>();
 
     useEffect(() => {
         const disableButtonTimeout = setTimeout(() => {

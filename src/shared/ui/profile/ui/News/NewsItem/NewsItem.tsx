@@ -1,5 +1,5 @@
 import {FC} from "react";
-import {News} from "@/shared/ui/course/ui/CreateNews/CreateNews";
+import {News} from "@/enteties/News/model/types/module";
 
 interface Props {
     className?: string;

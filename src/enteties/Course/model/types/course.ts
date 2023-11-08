@@ -29,4 +29,3 @@ export type Course = {
     difficulty_level: string;
     rating: number;
 };
-

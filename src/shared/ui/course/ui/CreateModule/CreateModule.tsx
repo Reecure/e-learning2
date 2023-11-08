@@ -31,7 +31,6 @@ const CreateModule: FC<Props> = ({courseId}) => {
     const {register, handleSubmit} = useForm<Module>({
         defaultValues: {
             course_id: "",
-            order: 0,
             is_visible: true,
             title: "",
         },

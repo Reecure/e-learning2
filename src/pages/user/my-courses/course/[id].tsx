@@ -14,6 +14,7 @@ import CourseReviewsTab from "@/shared/ui/course/ui/CourseTabs/CourseReviewsTab"
 import CourseContentTab from "@/shared/ui/course/ui/CourseTabs/CourseContentTab";
 import {ErrorWidget} from "@/widgets/ErrorWidget";
 import {BiErrorCircle} from "react-icons/bi";
+import {Course} from "@/enteties/Course";
 
 
 export enum Tabs {
@@ -37,8 +38,8 @@ const CoursePage = () => {
     });
 
     const userHaveProgress = trpc.progress.getUserProgressOnCourse.useQuery({
-        user_id: session.data?.user.id,
-        course_id: router.query.id
+        user_id: session.data?.user.id as string,
+        course_id: router.query.id as string
     });
 
     useEffect(() => {
@@ -70,7 +71,7 @@ const CoursePage = () => {
     return (
         <div>
             <CourseHeader
-                course={courseQuery.data}
+                course={courseQuery.data as Course}
                 isUserCourse={isUserCourse}
             />
             <div className={""}>
