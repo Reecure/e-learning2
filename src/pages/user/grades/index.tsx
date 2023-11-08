@@ -10,7 +10,6 @@ import UserLayout from "@/pages/user/layout";
 const UserGrades = () => {
     const session = useSession();
     const coursesWithProgress = trpc.progress.getUserCoursesProgress.useQuery({user_id: session.data?.user.id || ""});
-    // const user = trpc.progress.getUserProgressOnCourse.useQuery({user_id: session.data?.user.id || "", course_id: });
 
     useEffect(() => {
         console.log(coursesWithProgress.data);
@@ -32,6 +31,7 @@ const UserGrades = () => {
                         return <div key={course?.course_id} className={"p-4 border-2 border-dark-primary-main rounded-md w-[250px] sm:w-[300px]"}>
                             <div className={"flex flex-col gap-1 mb-5"} >
                                 <h5 className={"text-2xl"}>{course?.course_name}</h5>
+                                <p>{course?.is_completed ? "completed" : "uncompleted"}</p>
                             </div>
                             <div className={"flex justify-end"}>
                                 <Link href={`${Routes.USER_GRADE_PAGE}/${course.course_id}`}>

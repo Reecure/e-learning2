@@ -23,6 +23,7 @@ export type Course = {
     cover_description: string;
     cover_image: string;
     creation_date: Date;
+    update_date: Date;
     duration: string;
     is_visible: boolean;
     difficulty_level: string;

@@ -96,7 +96,22 @@ const CourseModuleLessonsPage = () => {
 
             <div className={"ml-5 w-full overflow-y-auto mr-5 md:mr-10 xl:mr-20"}>
                 {
-                    isVisiblePreview ? <>preview</> : <LessonContent lesson_id={currentLesson}/>
+                    isVisiblePreview ? <div className={"p-5"}>
+                        <h3 className={"text-5xl mb-5 font-bold"}>{moduleQuery.data?.title}</h3>
+                        {
+                            moduleQuery.data?.lessons.length === 0 ? <div>
+                                    there are no lessons
+                            </div> :
+
+                                <ul className={"list-disc flex flex-col gap-2 list-inside"}>
+                                    {
+                                        moduleQuery.data?.lessons.map(lesson => (
+                                            lesson.is_visible && <li key={lesson.id}>{lesson.title}</li>
+                                        ))
+                                    }
+                                </ul>
+                        }
+                    </div> : <LessonContent lesson_id={currentLesson}/>
                 }
             </div>
         </div>

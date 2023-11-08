@@ -1,4 +1,4 @@
-import {FC} from "react";
+import {FC, useEffect} from "react";
 import {Bar} from "react-chartjs-2";
 import {ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip} from "chart.js";
 import {trpc} from "@/shared/utils/trpc";
@@ -27,8 +27,12 @@ const WeekProgress: FC<Props> = ({user_id}) => {
 
     const last7dayLesson = trpc.progress.getLast7DaysLesson.useQuery({id: user_id});
 
+    useEffect(() => {
+        console.log(last7dayLesson.data);
+    }, [last7dayLesson.isLoading]);
+
     if (last7dayLesson.isLoading) {
-        return <Loader />;
+        return <Loader/>;
     }
 
     return (
@@ -41,6 +45,7 @@ const WeekProgress: FC<Props> = ({user_id}) => {
                     {
                         label: "Lessons Complete",
                         barPercentage: 0.3,
+                        minBarLength: 4,
                         data: last7dayLesson.data?.map(lesson => lesson.lessonCount),
                         backgroundColor: "rgba(153, 102, 255, 1)",
                     }

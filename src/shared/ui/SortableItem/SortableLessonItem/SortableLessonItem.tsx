@@ -1,5 +1,5 @@
-import React, {type FC, useEffect, useState} from "react";
-import {AiOutlineCheck, AiOutlineClose, AiOutlineFileText} from "react-icons/ai";
+import React, {type FC, useEffect, useRef, useState} from "react";
+import {AiOutlineCheck, AiOutlineClose, AiOutlineDown, AiOutlineFileText} from "react-icons/ai";
 import {MdOutlineQuiz} from "react-icons/md";
 import {setCurrentLessonId, setPreviewVisible} from "@/shared/ui/course/model";
 import {Button, Loader} from "@/shared/ui";
@@ -9,8 +9,8 @@ import {useAppDispatch} from "@/app/ReduxProvider/config/hooks";
 import {trpc} from "@/shared/utils/trpc";
 import {useSession} from "next-auth/react";
 import {ModuleLesson} from "@/enteties/Module/model/types/module";
-import LessonAuthorEditableSide from "@/shared/ui/SortableItem/SortableLessonItem/LessonAuthorEditableSide";
 import {useRouter} from "next/router";
+import LessonAuthorEditableSide from "@/shared/ui/SortableItem/SortableLessonItem/LessonAuthorEditableSide";
 
 type Props = {
     item: ModuleLesson;
@@ -23,15 +23,34 @@ const SortableLessonItem: FC<Props> = ({item, deleteOpen, disabled}) => {
 
     const [progressLoading, setProgressLoading] = useState(false);
     const [visibilityLoading, setVisibilityLoading] = useState(false);
+    const [menuOpen, setMenuOpen] = useState(false);
 
     const session = useSession();
     const router = useRouter();
 
+    const menuRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const outsideClickHandle = (e: MouseEvent) => {
+            if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+                setMenuOpen(false);
+            }
+        };
+
+        window.addEventListener("click", outsideClickHandle);
+
+        return () => {
+            window.removeEventListener("click", outsideClickHandle);
+        };
+    }, []);
+
+
     const updateLessonProgress = trpc.progress.updateUserLessonsProgress.useMutation({
         async onSuccess() {
-            await utils.progress.getUserModulesProgressById.invalidate();
+            await utils.progress.getUserLessonsProgressById.invalidate();
         }
     });
+
     const userProgressOnLesson = trpc.progress.getUserLessonsProgressById.useQuery({
         id: session.data?.user.id || "",
         lesson_id: item.id,
@@ -73,11 +92,36 @@ const SortableLessonItem: FC<Props> = ({item, deleteOpen, disabled}) => {
                     is_completed: userProgressOnLesson && userProgressOnLesson.data?.is_completed !== true || false,
                     quizScore: userProgressOnLesson && userProgressOnLesson.data?.quizScore || 0,
                     lessonType: item.lesson_type,
+                    read_later: userProgressOnLesson && userProgressOnLesson.data?.read_later !== true || false
                 },
             });
         } catch (e) {
             console.log(e);
         }
+    };
+
+    const setReadLaterHandler = () => {
+        try {
+            updateLessonProgress.mutate({
+                id: session.data?.user.id || "",
+                lesson_progress: {
+                    lesson_id: item.id,
+                    module_id: router.query.id as string,
+                    complete_date: userProgressOnLesson && userProgressOnLesson.data?.complete_date || new Date(),
+                    lesson_name: item.title,
+                    is_completed: userProgressOnLesson && userProgressOnLesson.data?.is_completed || false,
+                    quizScore: userProgressOnLesson && userProgressOnLesson.data?.quizScore || 0,
+                    lessonType: item.lesson_type,
+                    read_later: userProgressOnLesson && userProgressOnLesson.data?.read_later !== true || false
+                },
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    const setMenuOpenVisibleHandler = () => {
+        setMenuOpen(prev => !prev);
     };
 
     const updateVisibleHandler = () => {
@@ -118,11 +162,12 @@ const SortableLessonItem: FC<Props> = ({item, deleteOpen, disabled}) => {
                                 is_completed: userProgressOnLesson && userProgressOnLesson.data?.is_completed || false,
                                 quizScore: userProgressOnLesson && userProgressOnLesson.data?.quizScore || 0,
                                 lessonType: item.lesson_type,
+                                read_later: userProgressOnLesson && userProgressOnLesson.data?.read_later !== true || false
                             },
                         });
                     }}
                 >
-                    {item.title}
+                    {item.title.length > 13 ? item.title.slice(0, 12) + "..." : item.title}
                 </p>
             </div>
 
@@ -130,7 +175,7 @@ const SortableLessonItem: FC<Props> = ({item, deleteOpen, disabled}) => {
             <div className={"flex items-center"}>
                 {disabled
                     && item?.lesson_type === LessonType.TEXT && (
-                    progressLoading ? <span className={"!p-1"}><Loader className={"!w-4 !h-4 "}/></span>
+                    progressLoading ? <span className={"!p-1 sm:!p-2"}><Loader className={"!w-4 !h-4 "}/></span>
                         : <Button
                             type={"submit"}
 
@@ -154,11 +199,33 @@ const SortableLessonItem: FC<Props> = ({item, deleteOpen, disabled}) => {
                         </Button>
                 )}
 
-                {session.data?.user.id === item.author_id && disabled &&
-                    <LessonAuthorEditableSide visibilityLoading={visibilityLoading}
-                        updateVisibleHandler={updateVisibleHandler} is_visible={item.is_visible}
-                        deleteOpen={deleteOpen}/>
-                }
+
+                {disabled && <div className={"relative"} ref={menuRef}>
+                    <Button
+                        type={"submit"}
+                        className={`!p-1 sm:!p-2 !rounded-md`}
+                        theme={ButtonThemes.TEXT}
+                        onClick={setMenuOpenVisibleHandler}
+                    >
+                        <>
+                            <AiOutlineDown/>
+                        </>
+                    </Button>
+                    {
+                        menuOpen && <div
+                            className={"absolute top-10 right-2 bg-dark-primary-container p-3 rounded-md w-40 text-sm z-10"}>
+                            {(session.data?.user.id === item.author_id && disabled &&
+                                <LessonAuthorEditableSide visibilityLoading={visibilityLoading}
+                                    updateVisibleHandler={updateVisibleHandler}
+                                    is_visible={item.is_visible}
+                                    read_later_Loading={progressLoading}
+                                    deleteOpen={deleteOpen}
+                                    read_later={userProgressOnLesson.data?.read_later || false}
+                                    updateReadLaterHandler={setReadLaterHandler}
+                                />)}
+                        </div>
+                    }
+                </div>}
             </div>
         </div>
     );

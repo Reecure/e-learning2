@@ -6,6 +6,7 @@ export interface ModuleLesson {
     lesson_type: string
     order: number;
     author_id: string;
+    read_later: boolean;
 }
 
 export type Module = {

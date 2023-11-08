@@ -1,6 +1,6 @@
 import * as trpc from "@trpc/server";
 import * as trpcNext from "@trpc/server/adapters/next";
-import { prisma } from "@/shared/utils/prisma";
+import {prisma} from "@/shared/utils/prisma";
 import {CreateContextOptions} from "vm";
 
 // create context based of incoming request
@@ -14,6 +14,7 @@ export const createContext = async (
         course: prisma.courses,
         modules: prisma.modules,
         lessons: prisma.lessons,
+        news: prisma.news
     };
 };
 export type Context = trpc.inferAsyncReturnType<typeof createContext>;

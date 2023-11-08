@@ -52,7 +52,7 @@ const CourseGradesPage = () => {
     });
 
     useEffect(() => {
-        console.log(courseInfo.data);
+        console.log(courseInfo.data?.lessonsProgress.lessonsProgress);
     }, [courseInfo.isLoading]);
 
     if (courseInfo.isLoading) {
@@ -131,21 +131,24 @@ const CourseGradesPage = () => {
                             </div>
                             <div
                                 className={`${isOpen ? "" : "hidden"} px-4 py-2 border-light-primary-main dark:border-dark-primary-main border-2 mb-2 rounded-md mt-1`}>
-                                <Bar options={options} data={{
-                                    labels: courseInfo.data?.lessonsProgress.lessonsProgress
-                                        .filter(lesson => lesson.lessonType === LessonType.QUIZ && lesson.module_id === module.real_module_id)
-                                        .map(les => les.lesson_name),
-                                    datasets: [
-                                        {
-                                            label: "Grade",
-                                            barPercentage: 0.1,
-                                            data: courseInfo.data?.lessonsProgress.lessonsProgress
-                                                .filter(lesson => lesson.lessonType === LessonType.QUIZ && lesson.module_id === module.real_module_id)
-                                                .map(les => les.quizScore),
-                                            backgroundColor: "rgba(153, 102, 255, 1)",
-                                        }
-                                    ],
-                                }} className={"max-w-[500px] max-h-[200px]"}/>
+                                {courseInfo.data?.lessonsProgress.lessonsProgress
+                                    .filter(lesson => lesson.lessonType === LessonType.QUIZ && lesson.module_id === module.real_module_id).length === 0 ?
+                                    <div>You doesnt complete any Quiz lessons yet</div> :
+                                    <Bar options={options} data={{
+                                        labels: courseInfo.data?.lessonsProgress.lessonsProgress
+                                            .filter(lesson => lesson.lessonType === LessonType.QUIZ && lesson.module_id === module.real_module_id)
+                                            .map(les => les.lesson_name),
+                                        datasets: [
+                                            {
+                                                label: "Grade",
+                                                barPercentage: 0.1,
+                                                data: courseInfo.data?.lessonsProgress.lessonsProgress
+                                                    .filter(lesson => lesson.lessonType === LessonType.QUIZ && lesson.module_id === module.real_module_id)
+                                                    .map(les => les.quizScore),
+                                                backgroundColor: "rgba(153, 102, 255, 1)",
+                                            }
+                                        ],
+                                    }} className={"max-w-[500px] max-h-[200px]"}/>}
                             </div>
                         </div>
                     );

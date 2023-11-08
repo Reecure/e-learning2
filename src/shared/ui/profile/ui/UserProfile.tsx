@@ -10,6 +10,8 @@ import CompleteCountInfo from "@/shared/ui/profile/ui/CompleteCountInfo/Complete
 import News from "@/shared/ui/profile/ui/News/News";
 import WeekProgress from "@/shared/ui/profile/ui/ModuleProgress/ModuleProgress";
 import LastCourse from "@/shared/ui/profile/ui/LastCourse/LastCourse";
+import CompleteLater from "@/shared/ui/profile/ui/CompleteLater/CompleteLater";
+import CreateNews from "@/shared/ui/course/ui/CreateNews/CreateNews";
 
 type Props = {
     user: User;
@@ -39,7 +41,10 @@ const UserProfileComponent: FC<Props> = ({user}) => {
                         Edit
                     </Button>
                     {(user.role === UserRoles.ADMIN
-                        || user.role === UserRoles.TEACHER) && <CreateCourse/>}
+                        || user.role === UserRoles.TEACHER) && <div className={"flex flex-col gap-3 w-full"}>
+                        <CreateNews/>
+                        <CreateCourse/>
+                    </div>}
                 </div>
             </div>
 
@@ -47,12 +52,12 @@ const UserProfileComponent: FC<Props> = ({user}) => {
 
                 <div className={"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-5"}>
                     <div className={"mx-auto md:mx-0"}>
-                        <h4 className={"text-neutral-300 text-lg indent-2 mb-2 font-extrabold"} >Last Course</h4>
-                        <LastCourse course_id={user.last_course ?? ""} />
+                        <h4 className={"text-neutral-300 text-lg indent-2 mb-2 font-extrabold"}>Last Course</h4>
+                        <LastCourse course_id={user.last_course ?? ""}/>
                     </div>
                     <div className={"mx-auto md:mx-0"}>
-                        <h4 className={"text-neutral-300 text-lg indent-2 mb-2 font-extrabold"} >Recommendation</h4>
-                        <FavoriteCourse course_id={user.favorite_course ?? ""} />
+                        <h4 className={"text-neutral-300 text-lg indent-2 mb-2 font-extrabold"}>Complete later</h4>
+                        <CompleteLater user_id={user.id}/>
                     </div>
 
                 </div>

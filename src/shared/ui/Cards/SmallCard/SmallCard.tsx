@@ -16,16 +16,20 @@ type Props = {
 
 const SmallCard: FC<Props> = ({course}) => {
     const utils = trpc.useContext();
-    const user = useSession();
-
+    const session = useSession();
 
     const userLastCourse = trpc.user.updateLastVisitCourse.useMutation();
     const userFavoriteCourse = trpc.user.updateFavoriteCourse.useMutation({
         async onSuccess() {
             await utils.course.courseById.invalidate();
             await utils.user.getFavoriteCourse.invalidate();
-        }});
-    const isFavoriteCourse = trpc.user.getFavoriteCourse.useQuery({id: user.data?.user.id as string, course_id: course.id});
+        }
+    });
+
+    const isFavoriteCourse = trpc.user.getFavoriteCourse.useQuery({
+        id: session.data?.user.id as string,
+        course_id: course.id
+    });
 
     if (isFavoriteCourse.isLoading) {
         return <Loader/>;
@@ -33,30 +37,31 @@ const SmallCard: FC<Props> = ({course}) => {
 
     return (
         <div className={"relative min-w-[250px] max-w-[340px] sm:w-[340px] h-[310px]"}>
-            <div className={"absolute text-yellow-400 top-5 right-5 text-3xl z-[2] cursor-pointer hover:text-yellow-400/30"}
+            <div
+                className={"absolute text-yellow-400 top-5 right-5 text-3xl z-[2] cursor-pointer hover:text-yellow-400/30"}
                 onClick={(e) => {
                     e.stopPropagation();
                     if (isFavoriteCourse.data?.favorite_course === course.id) {
                         userFavoriteCourse.mutate({
                             course_id: "",
-                            id: user.data?.user.id as string
+                            id: session.data?.user.id as string
                         });
                     } else {
                         userFavoriteCourse.mutate({
                             course_id: course.id,
-                            id: user.data?.user.id as string
+                            id: session.data?.user.id as string
                         });
                     }
                 }}>
-                {isFavoriteCourse.data?.favorite_course === course.id ? <AiFillStar /> : <AiOutlineStar />}
+                {isFavoriteCourse.data?.favorite_course === course.id ? <AiFillStar/> : <AiOutlineStar/>}
             </div>
             <Link href={`${Routes.USER_COURSE_PAGE}/${course?.id}`}
                 className={
                     "flex flex-col bg-dark-neutral-100 rounded-2xl  p-5 hover:bg-dark-neutral-100/70 cursor-pointer"
                 }
-                onClick={() => {
-                    userLastCourse.mutate({
-                        id: user.data?.user.id || "",
+                onClick={async () => {
+                    await userLastCourse.mutate({
+                        id: session.data?.user.id || "",
                         course_id: course.id
                     });
                 }}>

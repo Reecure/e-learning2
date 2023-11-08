@@ -65,6 +65,7 @@ type UsersCoursesProgress {
 type UsersLessonsProgress {
   lesson_name   String
   complete_date DateTime @db.Date
+  read_later    Boolean?
   is_completed  Boolean
   lessonType    String
   module_id     String
@@ -86,6 +87,14 @@ model course_categories {
   @@map("course-categories")
 }
 
+model news {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  author_id     String   @db.ObjectId
+  title         String
+  description   String
+  creation_date DateTime @db.Date
+}
+
 model courses {
   id                String          @id @default(auto()) @map("_id") @db.ObjectId
   author_id         String          @db.ObjectId
@@ -94,6 +103,7 @@ model courses {
   modules           CourseModules[]
   cover_image       String
   creation_date     DateTime        @db.Date
+  update_date       DateTime?       @db.Date
   description       String
   difficulty_level  String
   duration          String

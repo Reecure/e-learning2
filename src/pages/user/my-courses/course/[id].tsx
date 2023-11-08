@@ -13,6 +13,7 @@ import CourseAboutTab from "@/shared/ui/course/ui/CourseTabs/CourseAboutTab";
 import CourseReviewsTab from "@/shared/ui/course/ui/CourseTabs/CourseReviewsTab";
 import CourseContentTab from "@/shared/ui/course/ui/CourseTabs/CourseContentTab";
 import {ErrorWidget} from "@/widgets/ErrorWidget";
+import {BiErrorCircle} from "react-icons/bi";
 
 
 export enum Tabs {
@@ -34,6 +35,15 @@ const CoursePage = () => {
     const courseQuery = trpc.course.courseById.useQuery({
         id: router.query.id as string,
     });
+
+    const userHaveProgress = trpc.progress.getUserProgressOnCourse.useQuery({
+        user_id: session.data?.user.id,
+        course_id: router.query.id
+    });
+
+    useEffect(() => {
+        console.log(userHaveProgress.data);
+    }, [userHaveProgress.isLoading]);
 
     useEffect(() => {
         if (session.data?.user.id === courseQuery.data?.author_id) {
@@ -101,6 +111,14 @@ const CoursePage = () => {
                 <div>
                     {currentTab === Tabs.COURSE_CONTENT && (
                         <>
+                            {
+                                userHaveProgress.data === undefined &&
+                                <div
+                                    className={" flex items-center text-sm rounded-md text-dark-neutral-800 gap-3 w-full bg-dark-primary-container/20 py-1 px-2 border-2 border-dark-primary-container"}>
+                                    <BiErrorCircle/>
+                                    Add to your courses to check your statistic
+                                </div>
+                            }
                             {isUserCourse && courseModulesEdit && (
                                 <CreateModule
                                     courseId={router.query.id as string}

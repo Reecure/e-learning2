@@ -89,7 +89,12 @@ export const progressRouter = router({
                 id: input.id,
             },
             select: {
-                lessons_progress: true,
+                lessons_progress: {
+                    select: {
+                        is_completed: true,
+                        complete_date: true,
+                    }
+                }
             },
         });
 
@@ -103,14 +108,13 @@ export const progressRouter = router({
             }));
 
             // Заполняем массив данными из lessons_progress
-            user.lessons_progress.forEach(lesson => {
+            user.lessons_progress.filter(lesson => lesson.is_completed).forEach(lesson => {
                 const lessonDate = new Date(lesson.complete_date);
+                lessonDate.setHours(0, 0, 0, 0); // Установим время в полночь
                 const daysDiff = Math.floor((currentDate.getTime() - lessonDate.getTime()) / (24 * 60 * 60 * 1000));
 
-                if (daysDiff < 7) {
-                    // Находим соответствующий день в массиве и увеличиваем значение lessonCount
-                    const dayIndex = 6 - daysDiff;
-                    lessonsByDay[dayIndex].lessonCount += 1;
+                if (daysDiff < 7 && daysDiff >= 0) {
+                    lessonsByDay[daysDiff].lessonCount += 1;
                 }
             });
 
@@ -135,9 +139,9 @@ export const progressRouter = router({
 
         if (user !== null) {
             return {
-                courses_progress_length: user.courses_progress.length,
-                modules_progress_length: user.modules_progress.length,
-                lessons_progress_length: user.lessons_progress.length,
+                courses_progress_length: user.courses_progress.filter(course => course.is_completed).length,
+                modules_progress_length: user.modules_progress.filter(module => module.is_completed).length,
+                lessons_progress_length: user.lessons_progress.filter(lesson => lesson.is_completed).length,
             };
         } else {
             throw new TRPCError({ message: "user doesnt exist", code: "NOT_FOUND" });
@@ -234,6 +238,7 @@ export const progressRouter = router({
             lessonType: z.string(),
             quizScore: z.number(),
             is_completed: z.boolean(),
+            read_later: z.boolean(),
         }),
     }),
     ).mutation(async ({ctx, input}) => {
@@ -323,5 +328,58 @@ export const progressRouter = router({
         }
 
         return user.modules_progress[existingProgressIndex];
+    }),
+    getUserReadLaterLessons: procedure.input(
+        z.object({
+            user_id: z.string(),
+        })).query(async ({ctx, input}) => {
+        const user = await ctx.user.findUnique({
+            where: {
+                id: input.user_id
+            }
+        });
+        if (user === null) {
+            throw new Error("user not found");
+        }
+
+        return user.lessons_progress.filter(lesson => lesson.read_later);
+    }),
+    updateIsCompletedCourse: procedure.input(
+        z.object({
+            user_id: z.string(),
+            course_id: z.string()
+        })).mutation(async ({ctx, input}) => {
+        const user = await ctx.user.findUnique({
+            where: {
+                id: input.user_id
+            }
+        });
+        if (user === null) {
+            throw new Error("user not found");
+        }
+        const modulesProgress = user.modules_progress.filter(module => module.course_id === input.course_id);
+
+        const COMPLETED_MODULES = modulesProgress.filter(progress => progress.is_completed).length;
+
+        const PERCENTAGE = ((modulesProgress.length - COMPLETED_MODULES) / modulesProgress.length) * 100;
+
+        return await ctx.user.update({
+            where: {
+                id: input.user_id
+            },
+            data: {
+                courses_progress: {
+                    updateMany: {
+                        where: {
+                            course_id: input.course_id
+                        },
+                        data: {
+                            complete_percentage: 100 - PERCENTAGE,
+                            is_completed: PERCENTAGE === 0,
+                        }
+                    }
+                }
+            }
+        });
     }),
 });

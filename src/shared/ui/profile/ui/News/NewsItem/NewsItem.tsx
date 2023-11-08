@@ -1,14 +1,16 @@
 import {FC} from "react";
+import {News} from "@/shared/ui/course/ui/CreateNews/CreateNews";
 
 interface Props {
-    className?: string
+    className?: string;
+    item: News;
 }
 
-const NewsItem: FC<Props> = ({className}) => {
+const NewsItem: FC<Props> = ({className, item}) => {
 
     return (
         <div className={`${className} w-full rounded-md px-2 py-4 mb-2`}>
-            <p>We add new Course!!!</p>
+            <p>{item.title}</p>
         </div>
     );
 };

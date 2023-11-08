@@ -8,9 +8,6 @@ import {ErrorWidget} from "@/widgets/ErrorWidget";
 import {Loader} from "@/shared/ui";
 import {User} from "@/enteties/User";
 
-type Props = {
-}
-
 const UserProfile = () => {
     const currentUser = useCurrentUser();
 

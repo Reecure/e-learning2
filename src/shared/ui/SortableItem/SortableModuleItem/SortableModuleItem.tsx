@@ -26,10 +26,16 @@ const SortableModuleItem: FC<Props> = ({item, disabled, deleteOpen}) => {
     const session = useSession();
     const router = useRouter();
 
+    const checkOnComplete = trpc.progress.updateIsCompletedCourse.useMutation();
+
     const updateModuleProgress = trpc.progress.updateUserModulesProgress.useMutation(
         {
             async onSuccess() {
                 await utils.progress.getUserModulesProgressById.invalidate();
+                await checkOnComplete.mutate({
+                    course_id: router.query.id as string,
+                    user_id: session.data?.user.id || ""
+                });
             }
         }
     );
@@ -75,9 +81,9 @@ const SortableModuleItem: FC<Props> = ({item, disabled, deleteOpen}) => {
         }
     };
 
-    const setIsCompletedHandler = () => {
+    const setIsCompletedHandler = async () => {
         try {
-            updateModuleProgress.mutate({
+            await updateModuleProgress.mutate({
                 id: session.data?.user.id || "",
                 module_progress: {
                     real_module_id: item.module_id,

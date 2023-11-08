@@ -111,6 +111,7 @@ const QuizComponent: FC<Props> = ({blocks, lesson_id, updateInfo}) => {
                         is_completed: true,
                         quizScore: score,
                         lessonType: getLessonInfoById.data?.lesson_type || "",
+                        read_later: getLessonProgressById.data?.read_later || false,
                     },
                 });
             } catch (e) {

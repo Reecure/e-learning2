@@ -8,7 +8,6 @@ import {useRouter} from "next/router";
 import CourseForm from "@/shared/ui/course/ui/CourseForms/CourseForm";
 import {Button, ButtonThemes, DeleteModal, Modal} from "@/shared/ui";
 import {Routes} from "@/shared/config/routes";
-import {LuUsers2} from "react-icons/lu";
 import {BsClock} from "react-icons/bs";
 import {AiOutlineCalendar} from "react-icons/ai";
 
@@ -42,6 +41,7 @@ const CourseHeader: FC<Props> = ({course, isUserCourse}) => {
         async onSuccess() {
             // refetches user
             await utils.user.userById.invalidate();
+            await utils.progress.getUserProgressOnCourse.invalidate();
         },
     });
 
@@ -121,23 +121,16 @@ const CourseHeader: FC<Props> = ({course, isUserCourse}) => {
                 <div className={"flex justify-center flex-col gap-3"}>
                     <div className={"grid grid-cols-2 gap-3"}>
                         <div className={"flex items-center gap-2"}>
-                            <LuUsers2 />
-                            <p>
-                                {/* eslint no-constant-condition: "off" */}
-                                <span>{1}</span> {1 !== 1 ? "students" : "student"}
-                            </p>
-                        </div>
-                        <div className={"flex items-center gap-2"}>
                             <BsClock />
                             <p>{course?.duration}</p>
                         </div>
                         <div className={"flex items-center gap-2"}>
                             <AiOutlineCalendar/>
-                            <p>Created at 27.03.23</p>
+                            <p>Created at {course?.creation_date.toISOString().slice(0, 10)}</p>
                         </div>
                         <div className={"flex items-center gap-2"}>
                             <AiOutlineCalendar/>
-                            <p>Last update at 27.03.23</p>
+                            <p>Last update at {course?.update_date.toISOString().slice(0, 10)}</p>
                         </div>
                     </div>
                     <>
@@ -175,7 +168,7 @@ const CourseHeader: FC<Props> = ({course, isUserCourse}) => {
                                                 course_progress: {
                                                     course_name: course.title,
                                                     course_id: course?.id,
-                                                    is_completed: false,
+                                                    is_completed: false
                                                 },
                                             });
                                         } catch (e) {
