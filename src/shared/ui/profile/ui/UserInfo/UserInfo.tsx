@@ -8,7 +8,7 @@ interface Props {
 const UserInfo: FC<Props> = ({user}) => {
     return (
         <div className={"flex flex-col gap-2"}>
-            <div className={"text-2xl mx-auto"}>
+            <div className={"text-2xl mx-auto md:ml-5"}>
                 <span className={"mr-2"}>{user.firstname}</span>
                 <span className={""}>{user.lastname}</span>
             </div>

@@ -95,17 +95,12 @@ model news {
   creation_date DateTime @db.Date
 }
 
-model CourseReviews {
+model reviews {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  course_id     String   @unique
   user_id       String
   text          String
-  creation_date DateTime        @db.Date
-  answers       CourseReviews[]
-}
-
-model reviews {
-  id        String          @id @default(auto()) @map("_id") @db.ObjectId
-  course_id String          @unique
-  reviews   CourseReviews[]
+  creation_date DateTime @db.Date
 }
 
 model courses {
@@ -154,10 +149,6 @@ model modules {
   lessons    ModuleLessons[]
   is_visible Boolean
   title      String
-}
-
-model reviews {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
 }
 
 model users {
