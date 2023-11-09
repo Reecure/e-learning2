@@ -65,6 +65,20 @@ export const userRouter = router({
         }
         return user;
     }),
+    updateAvatar: procedure.input(z.object({
+        id: z.string(),
+        image_url: z.string()
+    }),
+    ).mutation(async ({ctx, input}) => {
+        return await ctx.user.update({
+            where: {
+                id: input.id
+            },
+            data: {
+                avatar: input.image_url
+            }
+        });
+    }),
     getFavoriteCourse: procedure.input(z.object({
         id: z.string(),
         course_id: z.string()

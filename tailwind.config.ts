@@ -1,6 +1,7 @@
 import type {Config} from "tailwindcss";
+import {withUt} from "uploadthing/tw";
 
-const config: Config = {
+const config: Config = withUt({
     content: [
         "./src/**/*.{js,ts,jsx,tsx,mdx}"
     ],
@@ -8,7 +9,7 @@ const config: Config = {
 
     theme: {
         extend: {
-            gridTemplateColumns:{
+            gridTemplateColumns: {
                 "repeat-auto-custom": "repeat(auto-fit,minmax(340px,1fr))",
             },
             colors: {
@@ -148,5 +149,5 @@ const config: Config = {
         },
     },
     plugins: [],
-};
+});
 export default config;
