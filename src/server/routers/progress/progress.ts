@@ -255,7 +255,7 @@ export const progressRouter = router({
         }
 
         const existingProgressIndex = user.lessons_progress.findIndex(
-            item => item?.lesson_id === lesson_progress.lesson_id,
+            item => item.lesson_id === lesson_progress.lesson_id,
         );
 
         if (existingProgressIndex !== -1) {

@@ -1,7 +1,7 @@
 import {type FC, useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import {type Module} from "@/enteties/Module";
-import {Button, ButtonThemes, Label, Modal, Notification} from "@/shared/ui";
+import {Button, ButtonThemes, Label, Modal, Notification, Text} from "@/shared/ui";
 import {trpc} from "@/shared/utils/trpc";
 import {useSession} from "next-auth/react";
 
@@ -28,10 +28,10 @@ const CreateModule: FC<Props> = ({courseId}) => {
         id: courseId,
     });
 
-    const {register, handleSubmit} = useForm<Module>({
+    const {register, handleSubmit, formState: {errors},} = useForm<Module>({
         defaultValues: {
             course_id: "",
-            is_visible: true,
+            is_visible: false,
             title: "",
         },
     });
@@ -92,10 +92,15 @@ const CreateModule: FC<Props> = ({courseId}) => {
                     <p className={"text-center text-3xl"}>Create Module</p>
                     <Label htmlFor={"title"} labelText={"Title"}>
                         <input
-                            type='text'
-                            {...register("title")}
+                            type="text"
+                            {...register("title", {
+                                required: {value: true, message: "Title is required"},
+                                minLength: {value: 3, message: "Min length is 3 letters"},
+                                maxLength: {value: 25, message: "Max length is 25 letters"}
+                            })}
                             className={"inputField"}
                         />
+                        {(errors.title != null) && <Text error text={errors.title.message || "Error"}/>}
                     </Label>
                     <Button
                         type={"submit"}

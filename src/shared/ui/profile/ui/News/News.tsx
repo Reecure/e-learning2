@@ -1,19 +1,24 @@
-import {FC} from "react";
-import NewsItem from "@/shared/ui/profile/ui/News/NewsItem/NewsItem";
+import React, {FC} from "react";
 import {trpc} from "@/shared/utils/trpc";
-import {Loader} from "@/shared/ui";
+import Skeleton from "@/shared/ui/Skeleton/Skeleton";
+import NewsItem from "@/shared/ui/profile/ui/News/NewsItem/NewsItem";
 
 
 interface Props {
 }
+
+const emptyNews = <div className={"flex justify-center items-center w-full h-full text-2xl font-bold"}>
+    There are no news
+</div>;
 
 const News: FC<Props> = () => {
 
     const news = trpc.news.getNews.useQuery();
 
     if (news.isLoading) {
-        return <Loader/>;
+        return <Skeleton width={350}/>;
     }
+
 
     return (
         <div className={"w-[350px] h-full"}>
@@ -24,11 +29,12 @@ const News: FC<Props> = () => {
             <div
                 className={"px-2 py-3  h-[655px]  overflow-y-auto border-[1px] border-dark-primary-main/20 rounded-b-md"}>
                 {
-                    news.data?.map((item, i) => {
-                        return <NewsItem item={item}
-                            className={"odd:bg-dark-primary-main/30 even:bg-dark-primary-main/20"}
-                            key={i}/>;
-                    })
+                    news.data?.length === 0 ? emptyNews :
+                        news.data?.map((item, i) => {
+                            return <NewsItem item={item}
+                                className={"odd:bg-dark-primary-main/30 even:bg-dark-primary-main/20"}
+                                key={i}/>;
+                        })
                 }
             </div>
         </div>

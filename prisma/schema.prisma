@@ -95,6 +95,19 @@ model news {
   creation_date DateTime @db.Date
 }
 
+model CourseReviews {
+  user_id       String
+  text          String
+  creation_date DateTime        @db.Date
+  answers       CourseReviews[]
+}
+
+model reviews {
+  id        String          @id @default(auto()) @map("_id") @db.ObjectId
+  course_id String          @unique
+  reviews   CourseReviews[]
+}
+
 model courses {
   id                String          @id @default(auto()) @map("_id") @db.ObjectId
   author_id         String          @db.ObjectId

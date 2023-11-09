@@ -36,15 +36,13 @@ const SignUpForm: FC<Props> = () => {
     const mutation = trpc.user.createUser.useMutation({
         async onError(error) {
             console.log("error", error);
-            setError(error.message);
+            setError(error.message === "User with this email exist" ? error.message : "Some server error try later");
         },
         async onSuccess() {
             setError("");
             await router.push(Routes.LOGIN);
         }
     });
-
-
 
     if (mutation.isLoading) {
         return <Loader/>;

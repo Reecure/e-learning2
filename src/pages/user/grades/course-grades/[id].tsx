@@ -59,6 +59,10 @@ const CourseGradesPage = () => {
         return <Loader/>;
     }
 
+    if (courseInfo.error) {
+        router.push("/404");
+    }
+
     return (
         <>
             <div className={"flex justify-between bg-neutral-200 dark:bg-neutral-800 p-5 rounded-md"}>
@@ -66,7 +70,7 @@ const CourseGradesPage = () => {
                     <h3 className={"text-3xl font-extrabold"}>{courseInfo.data?.courseProgress.userProgress.course_name}</h3>
                     <div className={"grid grid-cols-2 gap-3"}>
                         <div className={"flex gap-1 items-center"}>
-                            <BsCalendarDate />
+                            <BsCalendarDate/>
                             Start course at {courseInfo.data?.courseProgress.userProgress.start_course?.slice(0, 10)}
                         </div>
                         <div className={"flex gap-1 items-center"}>

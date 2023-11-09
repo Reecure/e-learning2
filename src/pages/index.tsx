@@ -9,10 +9,10 @@ import statistic from "@/shared/assets/statistic.png";
 import study from "@/shared/assets/study.png";
 import study2 from "@/shared/assets/study2.png";
 
+
 const Home = () => {
     return (
         <div className={"bg-dark-background"}>
-
             <Parallax pages={5} className={"bg-dark-background"}>
                 <ParallaxLayer
                     offset={0}

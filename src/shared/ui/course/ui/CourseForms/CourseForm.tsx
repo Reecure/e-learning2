@@ -1,5 +1,5 @@
 import {type FC, useEffect, useState} from "react";
-import {Button, ButtonThemes, Label, Notification} from "@/shared/ui";
+import {Button, ButtonThemes, Label, Notification, Text} from "@/shared/ui";
 import {Course, DifficultLevels} from "@/enteties/Course/model/types/course";
 import {useForm} from "react-hook-form";
 
@@ -63,25 +63,50 @@ const CourseForm: FC<Props> = ({courseData, isCreating, onSubmit}) => {
                     {isCreating ? "Create Course" : "Edit Course"}
                 </p>
                 <Label htmlFor={"title"} labelText={"Title"}>
-                    <input className={"inputField"} {...register("title")} />
+                    <input className={"inputField"} {...register("title", {
+                        required: {value: true, message: "Title is required"},
+                        minLength: {value: 3, message: "Min length is 3 letters"},
+                        maxLength: {value: 25, message: "Max length is 25 letters"}
+                    })} />
+                    {(errors.title != null) && <Text error text={errors.title.message || "Error"}/>}
                 </Label>
                 <Label htmlFor={"cover_description"} labelText={"Cover description"}>
-                    <input className={"inputField"} {...register("cover_description")} />
+                    <input className={"inputField"} {...register("cover_description", {
+                        required: {value: true, message: "Cover description is required"},
+                        minLength: {value: 3, message: "Min length is 3 letters"},
+                        maxLength: {value: 155, message: "Max length is 155 letters"}
+                    })} />
+                    {(errors.cover_description != null) &&
+                        <Text error text={errors.cover_description.message || "Error"}/>}
                 </Label>
                 <Label htmlFor={"description"} labelText={"Description"}>
-                    <input className={"inputField"} {...register("description")} />
+                    <input className={"inputField"} {...register("description", {
+                        required: {value: true, message: "Description is required"},
+                        minLength: {value: 3, message: "Min length is 3 letters"},
+                    })} />
+                    {(errors.description != null) && <Text error text={errors.description.message || "Error"}/>}
                 </Label>
                 <Label htmlFor={"cover_image"} labelText={"Cover Image"}>
-                    <input className={"inputField"} {...register("cover_image")} />
+                    <input className={"inputField"} {...register("cover_image", {
+                        required: {value: true, message: "Image is required"},
+                    })} />
+                    {(errors.cover_image != null) && <Text error text={errors.cover_image.message || "Error"}/>}
                 </Label>
                 <Label htmlFor={"duration"} labelText={"Duration"}>
-                    <input className={"inputField"} {...register("duration")} />
+                    <input className={"inputField"} {...register("duration", {
+                        required: {value: true, message: "Duration is required"},
+                        pattern: {
+                            value: /^(\d+)\s+(day|month|year|days|months|years)$/i,
+                            message: "Should be 3 day|month|year|days|months|years"
+                        }
+                    })} />
+                    {(errors.duration != null) && <Text error text={errors.duration.message || "Error"}/>}
                 </Label>
                 <Label htmlFor={"difficulty_level"} labelText={"Difficult level"}>
                     <select
                         className={"inputField"}
                         {...register("difficulty_level")}
-                        name='difficulty_level'
+                        name="difficulty_level"
                         defaultValue={DifficultLevels.EASY}
                     >
                         <option className={"bg-light-background dark:bg-dark-background"} value={DifficultLevels.EASY}>

@@ -12,6 +12,7 @@ import WeekProgress from "@/shared/ui/profile/ui/ModuleProgress/ModuleProgress";
 import LastCourse from "@/shared/ui/profile/ui/LastCourse/LastCourse";
 import CompleteLater from "@/shared/ui/profile/ui/CompleteLater/CompleteLater";
 import CreateNews from "@/shared/ui/course/ui/CreateNews/CreateNews";
+import InstructionForUser from "@/shared/ui/InstructionForUser/InstructionForUser";
 
 type Props = {
     user: User;
@@ -103,7 +104,7 @@ const UserProfileComponent: FC<Props> = ({user}) => {
                 <EditUserProfileModal user={user}/>
             </Modal>
             <Modal isOpen={excursionOpen} setIsOpen={excursionOpenHandler}>
-                <div></div>
+                <InstructionForUser/>
             </Modal>
         </>
     );

@@ -1,4 +1,4 @@
-import {type FC, useEffect, useState} from "react";
+import {type FC, useState} from "react";
 import {trpc} from "@/shared/utils/trpc";
 import Badge, {BadgeColors} from "@/shared/ui/Badge/Badge";
 import {Button, Loader,} from "@/shared/ui";
@@ -11,12 +11,16 @@ import CreateLessonContent from "@/shared/ui/course/ui/CreateLessonContent/Creat
 import QuizComponent from "@/shared/ui/course/ui/QuizComponent/QuizComponent";
 import InfoForUser from "@/shared/ui/InfoForUser/InfoForUser";
 import LessonComponent from "@/shared/ui/course/ui/LessonComponent/LessonComponent";
+import {ErrorWidget} from "@/widgets/ErrorWidget";
 
 type Props = {
-    lesson_id: string;
+    currentLessonId: {
+        lesson_id: string,
+        progress_lesson_id: string
+    },
 };
 
-const LessonContent: FC<Props> = ({lesson_id}) => {
+const LessonContent: FC<Props> = ({currentLessonId}) => {
     const [lessonContentEditable, setLessonContentEditable] = useState(false);
     const [quizContentEditable, setQuizContentEditable] = useState(false);
     const [editableLesson, setLessonEditable] = useState(false);
@@ -27,13 +31,9 @@ const LessonContent: FC<Props> = ({lesson_id}) => {
         isSuccess: false,
         error: ""
     });
-    const lessonQuery = trpc.lesson.byId.useQuery({id: lesson_id});
+    const lessonQuery = trpc.lesson.byId.useQuery({id: currentLessonId.lesson_id});
 
     const session = useSession();
-
-    useEffect(() => {
-        console.log(lessonQuery.data);
-    }, [lessonContentEditable, quizContentEditable]);
 
     const editableLessonHandle = () => {
         setLessonEditable(prev => !prev);
@@ -56,7 +56,7 @@ const LessonContent: FC<Props> = ({lesson_id}) => {
     }
 
     if (lessonQuery.error) {
-        return <>Something went wrong</>;
+        return <ErrorWidget/>;
     }
 
     return (
@@ -98,7 +98,7 @@ const LessonContent: FC<Props> = ({lesson_id}) => {
                 lessonContentEditable ? (
                     <>
                         <CreateLessonContent
-                            lessonId={lesson_id}
+                            lessonId={currentLessonId.lesson_id}
                             setLessonContentEditable={LessonContentEditableHandler}
                             setIsSuccessVisible={setIsLessonUpdateSuccessHandler}
                             initialData={lessonQuery.data?.lesson_content.blocks as LessonBlocks[]}
@@ -107,7 +107,7 @@ const LessonContent: FC<Props> = ({lesson_id}) => {
                 ) : (
                     <>
                         <div className={"mb-5 w-full"}>
-                            {isLessonUpdateSuccess.id === lesson_id && isLessonUpdateSuccess.visible && (isLessonUpdateSuccess.isSuccess ?
+                            {isLessonUpdateSuccess.id === currentLessonId.lesson_id && isLessonUpdateSuccess.visible && (isLessonUpdateSuccess.isSuccess ?
                                 <InfoForUser isSuccess text={"Success"}/> :
                                 <InfoForUser isSuccess={false} text={"Error"}/>)}
                         </div>
@@ -117,7 +117,7 @@ const LessonContent: FC<Props> = ({lesson_id}) => {
             ) : quizContentEditable ? (
 
                 <CreateLessonQuizContent
-                    lessonId={lesson_id}
+                    lessonId={currentLessonId.lesson_id}
                     setQuizContentEditable={QuizContentEditableHandler}
                     setIsSuccessVisible={setIsLessonUpdateSuccessHandler}
                     initialData={lessonQuery.data?.lesson_content.blocks as QuizBlocks[]}
@@ -126,13 +126,13 @@ const LessonContent: FC<Props> = ({lesson_id}) => {
                 <>
                     <QuizComponent
                         updateInfo={isLessonUpdateSuccess}
-                        lesson_id={lesson_id}
+                        currentLessonId={currentLessonId}
                         blocks={lessonQuery.data?.lesson_content.blocks as QuizBlocks[]}
                     />
                 </>
             )}
             <CourseLessonForm
-                lessonId={lesson_id}
+                lessonId={currentLessonId.lesson_id}
                 title={lessonQuery.data?.title || ""}
                 type={lessonQuery.data?.lesson_type as LessonType}
                 openModal={editableLesson}

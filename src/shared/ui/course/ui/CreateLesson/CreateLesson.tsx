@@ -2,7 +2,7 @@ import {type FC, useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
 import {type Lesson, LessonType} from "@/enteties/Lesson";
 import {trpc} from "@/shared/utils/trpc";
-import {Button, ButtonThemes, Label, Loader, Modal, Notification} from "@/shared/ui";
+import {Button, ButtonThemes, Label, Loader, Modal, Notification, Text} from "@/shared/ui";
 import {useSession} from "next-auth/react";
 
 type Props = {
@@ -26,7 +26,7 @@ const CreateLesson: FC<Props> = ({moduleId}) => {
     });
     const session = useSession();
 
-    const {register, handleSubmit} = useForm<Lesson>({
+    const {register, handleSubmit, formState: {errors}} = useForm<Lesson>({
         defaultValues: {
             title: "",
             lesson_type: LessonType.TEXT,
@@ -114,10 +114,15 @@ const CreateLesson: FC<Props> = ({moduleId}) => {
                     <p className={"text-center text-3xl"}>Create Lesson</p>
                     <Label htmlFor={"title"} labelText={"Title"}>
                         <input
-                            type='text'
-                            {...register("title")}
+                            type="text"
+                            {...register("title", {
+                                required: {value: true, message: "Title is required"},
+                                minLength: {value: 3, message: "Min length is 3 letters"},
+                                maxLength: {value: 25, message: "Max length is 25 letters"}
+                            })}
                             className={"inputField"}
                         />
+                        {(errors.title != null) && <Text error text={errors.title.message || "Error"}/>}
                     </Label>
                     <Label htmlFor={"lesson_type"} labelText={"Lesson Type"}>
                         <select className={"inputField"} {...register("lesson_type")}>
@@ -148,7 +153,7 @@ const CreateLesson: FC<Props> = ({moduleId}) => {
             >
                 {submitError.isError
                     ? "Some server error try later"
-                    : "Lesson create success. Reload page."}
+                    : "Lesson create success."}
             </Notification>
         </div>
     );

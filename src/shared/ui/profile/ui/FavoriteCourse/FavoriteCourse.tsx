@@ -1,17 +1,21 @@
-import {FC} from "react";
-import {Loader, SmallCard} from "@/shared/ui";
+import React, {FC} from "react";
 import {trpc} from "@/shared/utils/trpc";
+import Skeleton from "@/shared/ui/Skeleton/Skeleton";
+import {SmallCard} from "@/shared/ui";
 import {Course} from "@/enteties/Course";
+import StubText from "@/shared/ui/StubText/StubText";
 
 interface Props {
-    course_id: string
+    course_id: string;
 }
 
 const FavoriteCourse: FC<Props> = ({course_id}) => {
 
     if (course_id === "") {
-        return <div className={" flex justify-center items-center min-w-[250px] max-w-[470px] sm:w-[340px] h-[310px] rounded-md border-dashed border-2 border-dark-primary-main"}>
-            You have not favorite course
+        return <div
+            className={"flex flex-col justify-center items-center min-w-[250px] max-w-[470px] sm:w-[340px] h-[310px] rounded-md border-dashed border-2 border-dark-primary-main"}>
+            <StubText title={`You haven't favorite course`} link={"Find your perfect course!"}/>
+
         </div>;
     }
 
@@ -20,9 +24,7 @@ const FavoriteCourse: FC<Props> = ({course_id}) => {
     });
 
     if (courseQuery.isLoading){
-        return  <div className={" flex justify-center items-center min-w-[250px] max-w-[470px] sm:w-[340px] h-[310px] rounded-md border-dashed border-2 border-dark-primary-main"}>
-            <Loader />
-        </div>;
+        return <Skeleton width={340} height={310}/>;
     }
 
     return (

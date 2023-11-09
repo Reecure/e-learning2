@@ -150,7 +150,12 @@ const SortableLessonItem: FC<Props> = ({item, deleteOpen, disabled}) => {
                 <p
                     className={"cursor-pointer"}
                     onClick={() => {
-                        dispatch(setCurrentLessonId(item.lesson_id));
+                        dispatch(setCurrentLessonId({
+                            currentLessonId: {
+                                lesson_id: item.lesson_id,
+                                progress_lesson_id: item.id
+                            }
+                        }));
                         dispatch(setPreviewVisible(false));
                         updateLessonProgress.mutate({
                             id: session.data?.user.id || "",
@@ -162,7 +167,7 @@ const SortableLessonItem: FC<Props> = ({item, deleteOpen, disabled}) => {
                                 is_completed: userProgressOnLesson && userProgressOnLesson.data?.is_completed || false,
                                 quizScore: userProgressOnLesson && userProgressOnLesson.data?.quizScore || 0,
                                 lessonType: item.lesson_type,
-                                read_later: userProgressOnLesson && userProgressOnLesson.data?.read_later !== true || false
+                                read_later: userProgressOnLesson && userProgressOnLesson.data?.read_later || false
                             },
                         });
                     }}
@@ -214,7 +219,7 @@ const SortableLessonItem: FC<Props> = ({item, deleteOpen, disabled}) => {
                     {
                         menuOpen && <div
                             className={"absolute top-10 right-2 bg-dark-primary-container p-3 rounded-md w-40 text-sm z-10"}>
-                            {(session.data?.user.id === item.author_id && disabled &&
+                            {(disabled &&
                                 <LessonAuthorEditableSide visibilityLoading={visibilityLoading}
                                     updateVisibleHandler={updateVisibleHandler}
                                     is_visible={item.is_visible}
@@ -222,6 +227,7 @@ const SortableLessonItem: FC<Props> = ({item, deleteOpen, disabled}) => {
                                     deleteOpen={deleteOpen}
                                     read_later={userProgressOnLesson.data?.read_later || false}
                                     updateReadLaterHandler={setReadLaterHandler}
+                                    author_id={item.author_id}
                                 />)}
                         </div>
                     }

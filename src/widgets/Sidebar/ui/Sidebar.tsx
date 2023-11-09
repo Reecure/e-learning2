@@ -24,7 +24,7 @@ const Sidebar = () => {
                         if (link.role === UserRoles.USER) {
                             return <Link href={link.href} key={link.href}
                                 className={"hover:opacity-70 hover:scale-[1.2]"}>{sidebarIconRenderHelper(link.icon)}</Link>;
-                        } else if (link.role === session.data?.user.role || UserRoles.ADMIN) {
+                        } else if (link.role === session.data?.user.role && session.data?.user.role === UserRoles.ADMIN) {
                             return <Link href={link.href} key={link.href}
                                 className={"hover:opacity-70 hover:scale-[1.2]"}>{sidebarIconRenderHelper(link.icon)}</Link>;
                         } else {

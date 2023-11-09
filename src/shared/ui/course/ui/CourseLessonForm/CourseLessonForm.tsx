@@ -1,6 +1,6 @@
 import {type FC, useEffect, useState} from "react";
 import {useForm} from "react-hook-form";
-import {Button, ButtonThemes, Label, Modal, Notification} from "@/shared/ui";
+import {Button, ButtonThemes, Label, Modal, Notification, Text} from "@/shared/ui";
 import {trpc} from "@/shared/utils/trpc";
 import {LessonType} from "@/enteties/Lesson";
 import {AiOutlineQuestionCircle} from "react-icons/ai";
@@ -30,7 +30,7 @@ const CourseLessonForm: FC<Props> = ({
     const [isOpenNotification, setIsOpenNotification] = useState(false);
     const [buttonIsDisabled, setButtonIsDisabled] = useState(false);
 
-    const {register, handleSubmit, watch} = useForm({
+    const {register, handleSubmit, formState: {errors}, watch} = useForm({
         values: {
             lessonTitle: title,
             lesson_type: type,
@@ -101,10 +101,15 @@ const CourseLessonForm: FC<Props> = ({
                     <p className={"mb-5 text-center text-3xl"}>Update Lesson</p>
                     <Label htmlFor={"title"} labelText={"Title"}>
                         <input
-                            type='text'
-                            {...register("lessonTitle")}
+                            type="text"
+                            {...register("lessonTitle", {
+                                required: {value: true, message: "Title is required"},
+                                minLength: {value: 3, message: "Min length is 3 letters"},
+                                maxLength: {value: 25, message: "Max length is 25 letters"}
+                            })}
                             className={"inputField"}
                         />
+                        {(errors.lessonTitle != null) && <Text error text={errors.lessonTitle.message || "Error"}/>}
                     </Label>
                     <Label htmlFor={"lesson_type"} labelText={"Lesson Type"}>
                         <select className={"inputField"} {...register("lesson_type")}>

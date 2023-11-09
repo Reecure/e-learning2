@@ -14,6 +14,7 @@ import {isLessonPreviewVisible} from "@/shared/ui/course/model/selectors/current
 import {AiOutlineClose} from "react-icons/ai";
 import {BiLeftArrow} from "react-icons/bi";
 import {Routes} from "@/shared/config/routes";
+import StubText from "@/shared/ui/StubText/StubText";
 
 const CourseModuleLessonsPage = () => {
     const [canLessonEdit, setCanLessonEdit] = useState(false);
@@ -44,6 +45,10 @@ const CourseModuleLessonsPage = () => {
     const setLessonSidebarOpenHandler = () => {
         setLessonSidebarOpen(prev => !prev);
     };
+
+    if (moduleQuery.error) {
+        router.push("/404");
+    }
 
 
     return (
@@ -99,9 +104,10 @@ const CourseModuleLessonsPage = () => {
                     isVisiblePreview ? <div className={"p-5"}>
                         <h3 className={"text-5xl mb-5 font-bold"}>{moduleQuery.data?.title}</h3>
                         {
-                            moduleQuery.data?.lessons.length === 0 ? <div>
-                                    there are no lessons
-                            </div> :
+                            moduleQuery.data?.lessons.length === 0 ?
+                                <div className={"w-full flex justify-center items-center"}>
+                                    <StubText title={"There are no lessons"}/>
+                                </div> :
 
                                 <ul className={"list-disc flex flex-col gap-2 list-inside"}>
                                     {
@@ -111,7 +117,7 @@ const CourseModuleLessonsPage = () => {
                                     }
                                 </ul>
                         }
-                    </div> : <LessonContent lesson_id={currentLesson}/>
+                    </div> : <LessonContent currentLessonId={currentLesson}/>
                 }
             </div>
         </div>

@@ -9,6 +9,7 @@ import TextForm from "@/shared/ui/course/ui/CourseForms/TextForm";
 import ImageForm from "@/shared/ui/course/ui/CourseForms/ImageForm";
 import VideoForm from "@/shared/ui/course/ui/CourseForms/VideoForm";
 import {LessonBlocks, LessonContentType} from "@/enteties/Lesson";
+import {AiOutlineClose} from "react-icons/ai";
 
 type FormData = {
     blocks: LessonBlocks[];
@@ -113,7 +114,7 @@ const CreateLessonContent: FC<Props> = ({
                                             remove(index);
                                         }}
                                     >
-                                        x
+                                        <AiOutlineClose/>
                                     </Button>
                                 </div>
                             ) : field.type === LessonContentType.IMAGE ? (
@@ -127,7 +128,7 @@ const CreateLessonContent: FC<Props> = ({
                                             remove(index);
                                         }}
                                     >
-                                        x
+                                        <AiOutlineClose/>
                                     </Button>
                                 </div>
                             ) : field.type === LessonContentType.CODE ? (
@@ -141,7 +142,7 @@ const CreateLessonContent: FC<Props> = ({
                                             remove(index);
                                         }}
                                     >
-                                        x
+                                        <AiOutlineClose/>
                                     </Button>
                                 </div>
                             ) : field.type === LessonContentType.VIDEO ? (
@@ -155,7 +156,7 @@ const CreateLessonContent: FC<Props> = ({
                                             remove(index);
                                         }}
                                     >
-                                        x
+                                        <AiOutlineClose/>
                                     </Button>
                                 </div>
                             ) : null}

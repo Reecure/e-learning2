@@ -8,6 +8,7 @@ import QuestionAnswerForm from "@/shared/ui/course/ui/CourseQuizForms/QuestionAn
 import QuestionAnswerFormWithFixedLettersAnswer
     from "@/shared/ui/course/ui/CourseQuizForms/QuestionAnswerFormWithFixedLettersAnswer";
 import {QuizBlocks, QuizContentType} from "@/enteties/Lesson";
+import {AiOutlineClose} from "react-icons/ai";
 
 
 export type FormData = {
@@ -100,7 +101,7 @@ const CreateLessonQuizContent: FC<Props> = ({initialData, setQuizContentEditable
                                         remove(index);
                                     }}
                                 >
-                                    x
+                                    <AiOutlineClose/>
                                 </Button>
                             </div>
                         ) : field.type === QuizContentType.ANSWER_WITH_FIXED_LETTERS ? (
@@ -114,7 +115,7 @@ const CreateLessonQuizContent: FC<Props> = ({initialData, setQuizContentEditable
                                         remove(index);
                                     }}
                                 >
-                                    x
+                                    <AiOutlineClose/>
                                 </Button>
                             </div>
                         ) : null}

@@ -14,7 +14,8 @@ export const createContext = async (
         course: prisma.courses,
         modules: prisma.modules,
         lessons: prisma.lessons,
-        news: prisma.news
+        news: prisma.news,
+        reviews: prisma.reviews
     };
 };
 export type Context = trpc.inferAsyncReturnType<typeof createContext>;

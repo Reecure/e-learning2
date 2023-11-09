@@ -20,7 +20,14 @@ const UserGrades = () => {
     }
 
     if (coursesWithProgress.data?.length === 0) {
-        return <div>You have not course</div>;
+        return <div className="flex flex-col items-center justify-center h-screen text-center">
+            <Link href={Routes.COURSES} className="text-blue-600 underline">
+                Find your course and watch your statistic
+            </Link>
+            <div className="flex flex-col mt-5">
+                <h5 className="text-4xl font-bold">You haven&apos;t course with progress</h5>
+            </div>
+        </div>;
     }
     return (
         <div>

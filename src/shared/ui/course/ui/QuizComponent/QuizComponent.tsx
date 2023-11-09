@@ -24,11 +24,14 @@ type Props = {
         isSuccess: boolean,
         error?: string
     }
-    lesson_id: string;
+    currentLessonId: {
+        lesson_id: string,
+        progress_lesson_id: string
+    },
     blocks: QuizBlocks[];
 };
 
-const QuizComponent: FC<Props> = ({blocks, lesson_id, updateInfo}) => {
+const QuizComponent: FC<Props> = ({blocks, currentLessonId, updateInfo}) => {
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [showScore, setShowScore] = useState(false);
     const [score, setScore] = useState(0);
@@ -39,17 +42,17 @@ const QuizComponent: FC<Props> = ({blocks, lesson_id, updateInfo}) => {
 
     const updateLessonProgress = trpc.progress.updateUserLessonsProgress.useMutation();
     const getLessonInfoById = trpc.module.lessonInfoByModuleId.useQuery({
-        lesson_id: lesson_id,
+        lesson_id: currentLessonId.lesson_id,
         module_id: router.query.id as string,
     });
     const getLessonProgressById = trpc.progress.getUserLessonsProgressById.useQuery({
-        lesson_id,
+        lesson_id: currentLessonId.progress_lesson_id,
         id: session.data?.user.id || "",
     });
 
-    useEffect(()=>{
-        console.log(getLessonInfoById.data);
-    },[getLessonProgressById.isLoading]);
+    useEffect(() => {
+        console.log(getLessonProgressById.data);
+    }, [getLessonProgressById.isLoading]);
 
     const quizContentRender = (contentType: QuizContentType | string, block: QuizBlocks | LessonBlocks, handleAnswer: (arg1: string, arg2: string) => void) => {
         switch (contentType) {
@@ -149,7 +152,7 @@ const QuizComponent: FC<Props> = ({blocks, lesson_id, updateInfo}) => {
     return (
         <div className={"flex flex-col items-center justify-center "}>
             <div className={"mb-5 w-full"}>
-                {lesson_id === updateInfo.id && updateInfo.visible && (updateInfo.isSuccess ?
+                {currentLessonId.lesson_id === updateInfo.id && updateInfo.visible && (updateInfo.isSuccess ?
                     <InfoForUser isSuccess text={"Success"}/> :
                     <InfoForUser isSuccess={false} text={"Error"}/>)}
             </div>

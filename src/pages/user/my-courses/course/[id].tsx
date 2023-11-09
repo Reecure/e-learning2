@@ -12,7 +12,6 @@ import CourseHeader from "@/shared/ui/course/ui/CourseHeader/CourseHeader";
 import CourseAboutTab from "@/shared/ui/course/ui/CourseTabs/CourseAboutTab";
 import CourseReviewsTab from "@/shared/ui/course/ui/CourseTabs/CourseReviewsTab";
 import CourseContentTab from "@/shared/ui/course/ui/CourseTabs/CourseContentTab";
-import {ErrorWidget} from "@/widgets/ErrorWidget";
 import {BiErrorCircle} from "react-icons/bi";
 import {Course} from "@/enteties/Course";
 
@@ -24,8 +23,6 @@ export enum Tabs {
 }
 
 const CoursePage = () => {
-
-
     const [currentTab, setCurrentTab] = useState<Tabs>(Tabs.ABOUT);
     const [courseModulesEdit, setCourseModuleEdit] = useState(false);
     const [isUserCourse, setIsUserCourse] = useState(false);
@@ -41,10 +38,6 @@ const CoursePage = () => {
         user_id: session.data?.user.id as string,
         course_id: router.query.id as string
     });
-
-    useEffect(() => {
-        console.log(userHaveProgress.data);
-    }, [userHaveProgress.isLoading]);
 
     useEffect(() => {
         if (session.data?.user.id === courseQuery.data?.author_id) {
@@ -65,7 +58,7 @@ const CoursePage = () => {
     }
 
     if (courseQuery.error) {
-        return <ErrorWidget />;
+        router.push("/404");
     }
 
     return (

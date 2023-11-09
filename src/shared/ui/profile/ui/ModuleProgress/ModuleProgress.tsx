@@ -2,7 +2,7 @@ import {FC, useEffect} from "react";
 import {Bar} from "react-chartjs-2";
 import {ArcElement, BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip} from "chart.js";
 import {trpc} from "@/shared/utils/trpc";
-import {Loader} from "@/shared/ui";
+import Skeleton from "@/shared/ui/Skeleton/Skeleton";
 
 ChartJS.register(
     CategoryScale,
@@ -32,7 +32,7 @@ const WeekProgress: FC<Props> = ({user_id}) => {
     }, [last7dayLesson.isLoading]);
 
     if (last7dayLesson.isLoading) {
-        return <Loader/>;
+        return <Skeleton height={310}/>;
     }
 
     return (

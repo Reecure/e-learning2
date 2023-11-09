@@ -1,16 +1,19 @@
-import {FC, useEffect} from "react";
+import React, {FC} from "react";
 import {trpc} from "@/shared/utils/trpc";
-import {Loader, SmallCard} from "@/shared/ui";
+import {SmallCard} from "@/shared/ui";
+import Skeleton from "@/shared/ui/Skeleton/Skeleton";
 import {Course} from "@/enteties/Course";
+import StubText from "@/shared/ui/StubText/StubText";
 
 interface Props {
-    course_id: string
+    course_id: string;
 }
 
 const LastCourse: FC<Props> = ({course_id}) => {
     if (course_id === "") {
-        return <div className={"flex justify-center items-center min-w-[250px] max-w-[470px] sm:w-[340px] h-[310px] rounded-md border-dashed border-2 border-dark-primary-main hover:border-dark-primary-main/30 hover:cursor-pointer duration-300"}>
-            You don&apos;t visit courses yet
+        return <div
+            className={"flex flex-col justify-center items-center min-w-[250px] max-w-[470px] sm:w-[340px] h-[310px] rounded-md border-dashed border-2 border-dark-primary-main"}>
+            <StubText link={"Dive into the world of learning!"} title={`You don't visit courses yet`}/>
         </div>;
     }
 
@@ -18,14 +21,8 @@ const LastCourse: FC<Props> = ({course_id}) => {
         id: course_id
     });
 
-    useEffect(() => {
-        console.log(courseQuery.data);
-    },[courseQuery.isLoading]);
-
     if (courseQuery.isLoading){
-        return  <div className={" flex justify-center items-center min-w-[250px] max-w-[470px] sm:w-[340px] h-[310px] rounded-md border-dashed border-2 border-dark-primary-main hover:border-dark-primary-main/30 duration-300"}>
-            <Loader />
-        </div>;
+        return <Skeleton width={340} height={310}/>;
     }
 
     return (
