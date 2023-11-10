@@ -22,6 +22,7 @@ const CourseHeader: FC<Props> = ({course, isUserCourse}) => {
     const [userHaveCourse, setUserHaveCourse] = useState(false);
     const [editModalOpen, setEditModalOpen] = useState(false);
     const [deleteCourseModalOpen, setDeleteCourseModalOpen] = useState(false);
+    const [imageUrl, setImageUrl] = useState("");
 
     const router = useRouter();
     const session = useSession();
@@ -91,6 +92,10 @@ const CourseHeader: FC<Props> = ({course, isUserCourse}) => {
             title: data.title,
             id: data.id
         });
+    };
+
+    const setImageUrlHandler = (url: string) => {
+        setImageUrl(prev => prev = url);
     };
 
     return (
@@ -200,6 +205,8 @@ const CourseHeader: FC<Props> = ({course, isUserCourse}) => {
                             courseData={course}
                             onSubmit={updateCourseHandler}
                             isCreating={false}
+                            imageUrl={imageUrl}
+                            setImageUrl={setImageUrlHandler}
                         />
                     </Modal>
                 </div>

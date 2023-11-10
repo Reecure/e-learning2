@@ -4,7 +4,7 @@ import InstructionDesctiption from "@/shared/ui/InstructionForUser/InstructionDe
 interface Props {
 }
 
-const currentTab = (tab: number, item: any) => {
+const currentTab = (tab: number, item: { title: string; paragraph: string[] }) => {
     switch (tab) {
     case 0:
         return <InstructionDesctiption key={tab} item={item}/>;
