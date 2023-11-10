@@ -6,6 +6,7 @@ import {Routes} from "@/shared/config/routes";
 import Link from "next/link";
 import Layout from "@/pages/layout";
 import UserLayout from "@/pages/user/layout";
+import Badge, {BadgeColors} from "../../../shared/ui/Badge/Badge";
 
 const UserGrades = () => {
     const session = useSession();
@@ -35,10 +36,16 @@ const UserGrades = () => {
             <div className={"grid gap grid-cols-repeat-auto-custom"}>
                 {
                     coursesWithProgress.data.map((course) => {
-                        return <div key={course?.course_id} className={"p-4 border-2 border-dark-primary-main rounded-md w-[250px] sm:w-[300px]"}>
-                            <div className={"flex flex-col gap-1 mb-5"} >
+                        return <div key={course?.course_id}
+                            className={"p-4 border-2 border-light-primary-main dark:border-dark-primary-main rounded-md w-[250px] sm:w-[300px]"}>
+                            <div className={"flex flex-col gap-1 mb-5"}>
                                 <h5 className={"text-2xl"}>{course?.course_name}</h5>
-                                <p>{course?.is_completed ? "completed" : "uncompleted"}</p>
+                                <div className={""}>{course?.is_completed ?
+                                    <Badge text={"completed"} color={BadgeColors.GREEN}
+                                        className={"text-[12px] !mb-0"}/>
+                                    :
+                                    <Badge text={"uncompleted"} color={BadgeColors.RED}
+                                        className={"text-[12px] !mb-0"}/>}</div>
                             </div>
                             <div className={"flex justify-end"}>
                                 <Link href={`${Routes.USER_GRADE_PAGE}/${course.course_id}`}>

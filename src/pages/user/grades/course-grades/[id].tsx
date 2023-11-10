@@ -117,13 +117,15 @@ const CourseGradesPage = () => {
                     return (
                         <div key={module.module_id} className={""}>
                             <div
-                                className={"flex justify-between items-center px-2 py-3 w-full rounded-md  bg-dark-primary-container/50 mb-2"}>
+                                className={"flex justify-between items-center px-2 py-3 w-full rounded-md bg-light-primary-container dark:bg-dark-primary-container/50 mb-2"}>
                                 <h6>{module.module_name}</h6>
                                 <div className={"flex items-center"}>
                                     <div className={""}>{module.is_completed ?
-                                        <Badge text={"completed"} color={BadgeColors.GREEN} className={"text-[12px] !mb-0"} />
+                                        <Badge text={"completed"} color={BadgeColors.GREEN}
+                                            className={"text-[12px] !mb-0"}/>
                                         :
-                                        <Badge text={"uncompleted"} color={BadgeColors.RED} className={"text-[12px] !mb-0"} />}</div>
+                                        <Badge text={"uncompleted"} color={BadgeColors.RED}
+                                            className={"text-[12px] !mb-0"}/>}</div>
                                     <Button
                                         theme={ButtonThemes.TEXT}
                                         className={"!px-2 !py-1 rounded-md"}

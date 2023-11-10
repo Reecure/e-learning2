@@ -99,11 +99,12 @@ const SortableModuleItem: FC<Props> = ({item, disabled, deleteOpen}) => {
     };
 
     return (
-        <div className={"flex justify-between items-center px-2 py-3 w-full rounded-md  bg-dark-primary-container/50"}>
+        <div
+            className={"flex justify-between items-center px-2 py-3 w-full rounded-md  bg-light-primary-container dark:bg-dark-primary-container/50"}>
             {disabled ? (
                 <Link
                     href={`${Routes.USER_COURSE_PAGE_LESSONS}/${item.module_id}`}
-                    className={"cursor-pointer text-neutral-100"}
+                    className={"cursor-pointer text-neutral-800 dark:text-neutral-100"}
                     onClick={() => {
                         dispatch(setPreviewVisible(true));
                         updateModuleProgress.mutate({

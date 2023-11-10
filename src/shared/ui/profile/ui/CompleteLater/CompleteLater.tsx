@@ -17,7 +17,7 @@ const CompleteLater: FC<Props> = ({user_id}) => {
 
     if (user_read_later.data?.length === 0) {
         return <div
-            className={" flex flex-col justify-center items-center min-w-[250px] max-w-[340px] sm:w-[340px] h-[310px] rounded-md border-dashed border-2 border-dark-primary-main"}>
+            className={" flex flex-col justify-center items-center min-w-[250px] max-w-[340px] sm:w-[340px] h-[310px] rounded-md border-dashed border-2 border-light-primary-main dark:border-dark-primary-main"}>
             <StubText title={`You haven't lessons`}/>
 
         </div>;
@@ -25,7 +25,7 @@ const CompleteLater: FC<Props> = ({user_id}) => {
 
     return (
         <div
-            className={"min-w-[250px] max-w-[470px] sm:w-[340px] h-[310px] border-[1px] border-dark-primary-container-hover/20 rounded-md flex flex-col gap-2 p-2 overflow-auto"}>
+            className={"min-w-[250px] max-w-[470px] sm:w-[340px] h-[310px] border-[1px]  border-light-primary-main dark:border-dark-primary-main rounded-md flex flex-col gap-2 p-2 overflow-auto"}>
             {
                 user_read_later.data?.map(item => {
                     return <div key={item.lesson_id}

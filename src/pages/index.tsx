@@ -12,8 +12,8 @@ import study2 from "@/shared/assets/study2.png";
 
 const Home = () => {
     return (
-        <div className={"bg-dark-background"}>
-            <Parallax pages={5} className={"bg-dark-background"}>
+        <div className={"bg-light-background dark:bg-dark-background"}>
+            <Parallax pages={5} className={"bg-light-background dark:bg-dark-background"}>
                 <ParallaxLayer
                     offset={0}
                     speed={0}
@@ -32,7 +32,7 @@ const Home = () => {
                     <div className={"block ml-[13%] w-[200px] h-[300px]"}>
                         <Image src={create} alt={"create"}
                             className={"object-cover rounded-md w-[200px] h-[200px] mb-4"} quality={100}/>
-                        <h4>Create</h4>
+                        <h4 className={"text-xl font-bold"}>Create</h4>
                         <p>Create your own project with our tools.And lorem ipsum sdkfj asriba fadyr rtsda</p>
                     </div>
                 </ParallaxLayer>
@@ -41,7 +41,7 @@ const Home = () => {
                     <div className={"block ml-[32%] w-[200px] h-[300px]"}>
                         <Image src={statistic} alt={"statistic"}
                             className={"object-cover rounded-md w-[200px] h-[200px] mb-4"} quality={100}/>
-                        <h4>Statistic</h4>
+                        <h4 className={"text-xl font-bold"}>Statistic</h4>
                         <p>Create your own project with our tools.And lorem ipsum sdkfj asriba fadyr rtsda</p>
                     </div>
                 </ParallaxLayer>
@@ -50,7 +50,7 @@ const Home = () => {
                     <div className={"block ml-[52%] w-[200px] h-[300px]"}>
                         <Image src={study} alt={"study"} className={"object-cover rounded-md w-[200px] h-[200px] mb-4"}
                             quality={100}/>
-                        <h4>Play</h4>
+                        <h4 className={"text-xl font-bold"}>Play</h4>
                         <p>Create your own project with our tools.And lorem ipsum sdkfj asriba fadyr rtsda</p>
                     </div>
                 </ParallaxLayer>
@@ -59,7 +59,7 @@ const Home = () => {
                     <div className={"block ml-[73%] w-[200px] h-[300px]"}>
                         <Image src={study2} alt={"study"} className={"object-cover rounded-md w-[200px] h-[200px] mb-4"}
                             quality={100}/>
-                        <h4>Study</h4>
+                        <h4 className={"text-xl font-bold"}>Study</h4>
                         <p>Create your own project with our tools.And lorem ipsum sdkfj asriba fadyr rtsda</p>
                     </div>
                 </ParallaxLayer>

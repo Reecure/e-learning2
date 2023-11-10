@@ -97,7 +97,7 @@ const InstructionForUser: FC<Props> = () => {
                                 setTabHandler(tab.id);
                             }}>
                                 <p className={"rounded-full border-2 border-dark-primary-container px-[6px] text-sm"}>{tab.id + 1}</p>
-                                <p className={"text-xl text-neutral-300"}>{tab.title}</p>
+                                <p className={"text-xl text-light-neutral-300 dark:text-neutral-300"}>{tab.title}</p>
                             </li>
                         ))
                     }

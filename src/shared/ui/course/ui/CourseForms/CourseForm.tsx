@@ -2,21 +2,28 @@ import {type FC, useEffect, useState} from "react";
 import {Button, ButtonThemes, Label, Notification, Text} from "@/shared/ui";
 import {Course, DifficultLevels} from "@/enteties/Course/model/types/course";
 import {useForm} from "react-hook-form";
+import {UploadButton} from "@/shared/utils/uploadthing";
+import Image from "next/image";
+import {AiOutlineClose} from "react-icons/ai";
 
 type Props = {
     courseData: Course;
     onSubmit: (data: Course) => void;
     isCreating: boolean;
+    setImageUrl: (url: string) => void
+    imageUrl: string
 };
 
 const TIMEOUT = 3000;
 
-const CourseForm: FC<Props> = ({courseData, isCreating, onSubmit}) => {
+const CourseForm: FC<Props> = ({imageUrl, setImageUrl, courseData, isCreating, onSubmit}) => {
 
 
     const [notificationOpen, setNotificationOpen] = useState(false);
     const [submitError, setSubmitError] = useState(false);
     const [disableButton, setButtonDisabled] = useState(false);
+    const [uploadNotificationOpen, setUploadNotificationOpen] = useState(false);
+    const [uploadError, setUploadError] = useState(false);
 
     const {
         register,
@@ -53,6 +60,10 @@ const CourseForm: FC<Props> = ({courseData, isCreating, onSubmit}) => {
         }
     };
 
+    const setUploadNotificationOpenHandler = () => {
+        setUploadNotificationOpen(prev => !prev);
+    };
+
     return (
         <>
             <form
@@ -86,12 +97,6 @@ const CourseForm: FC<Props> = ({courseData, isCreating, onSubmit}) => {
                     })} />
                     {(errors.description != null) && <Text error text={errors.description.message || "Error"}/>}
                 </Label>
-                <Label htmlFor={"cover_image"} labelText={"Cover Image"}>
-                    <input className={"inputField"} {...register("cover_image", {
-                        required: {value: true, message: "Image is required"},
-                    })} />
-                    {(errors.cover_image != null) && <Text error text={errors.cover_image.message || "Error"}/>}
-                </Label>
                 <Label htmlFor={"duration"} labelText={"Duration"}>
                     <input className={"inputField"} {...register("duration", {
                         required: {value: true, message: "Duration is required"},
@@ -123,8 +128,45 @@ const CourseForm: FC<Props> = ({courseData, isCreating, onSubmit}) => {
                         </option>
                     </select>
                 </Label>
+                <div className={"flex flex-col items-start"}>
+                    <p className={"mb-1 text-sm  dark:text-neutral-300 whitespace-nowrap"}>Cover Image</p>
+                    <div className={"flex gap-20"}>
+                        <UploadButton
+                            appearance={{
+                                button:
+                                    " bg-dark-primary-hover-second hover:opacity-70 duration-300  focus:outline-none",
+                                allowedContent: "display-none"
+                            }}
+                            endpoint="imageUploader"
+                            onClientUploadComplete={res => {
+                                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                // @ts-expect-error
+                                setImageUrl(res[0].fileUrl);
+                                console.log(res);
+                                setUploadError(false);
+                                setUploadNotificationOpenHandler();
+                            }}
+                            onUploadError={(error: Error) => {
+                                setUploadError(true);
+                                setUploadNotificationOpenHandler();
+                            }}
+                        />
+                        {
+                            imageUrl !== "" &&
+                            <div className={"flex items-start gap-2 justify-start"}>
+                                <Image src={imageUrl} alt={""} width={100} height={30} quality={100}
+                                    className={"object-cover"}/>
+                                <Button theme={ButtonThemes.TEXT} onClick={
+                                    () => setImageUrl("")
+                                } className={"rounded-md !p-1"}><AiOutlineClose/> </Button>
 
-                <div className={"flex items-center"}>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+
+                <div className={"flex items-center "}>
                     <label className={"relative"}>
                         <input
                             type={"checkbox"}
@@ -178,6 +220,14 @@ const CourseForm: FC<Props> = ({courseData, isCreating, onSubmit}) => {
                         <div>{isCreating ? <p>Create success</p> : <p>Update success</p>}</div>
                     )
                 }
+            </Notification>
+            <Notification
+                open={uploadNotificationOpen}
+                onClose={setUploadNotificationOpenHandler}
+                timeoutDelay={3000}
+                isSuccess={!uploadError}
+            >
+                {uploadError ? "error" : "success"}
             </Notification>
         </>
     );

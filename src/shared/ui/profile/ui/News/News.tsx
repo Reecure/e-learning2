@@ -23,7 +23,7 @@ const News: FC<Props> = () => {
     return (
         <div className={"w-[350px] h-full"}>
             <div
-                className={"px-3 py-2 text-lg text-center bg-dark-neutral-300 rounded-t-md text-neutral-300 font-extrabold"}>
+                className={"px-3 py-2 text-lg text-center bg-neutral-200 dark:bg-neutral-800 text-black rounded-t-md dark:text-neutral-300 font-extrabold"}>
                 News
             </div>
             <div

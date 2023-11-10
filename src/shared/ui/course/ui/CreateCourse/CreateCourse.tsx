@@ -10,6 +10,7 @@ type Props = Record<string, unknown>;
 
 const CreateCourse: FC<Props> = () => {
     const [createCourseModalOpen, setCreateCourseModalOpen] = useState(false);
+    const [imageUrl, setImageUrl] = useState("");
 
     const session = useSession();
 
@@ -23,7 +24,7 @@ const CreateCourse: FC<Props> = () => {
         await createCourse.mutate({
             title: data.title,
             cover_description: data.cover_description,
-            cover_image: data.cover_image,
+            cover_image: imageUrl,
             description: data.description,
             difficulty_level: data.difficulty_level,
             duration: data.duration,
@@ -33,6 +34,10 @@ const CreateCourse: FC<Props> = () => {
             category_id: "",
             author_id: session.data?.user.id || "",
         });
+    };
+
+    const setImageHandler = (url: string) => {
+        setImageUrl(prev => prev = url);
     };
 
     return (
@@ -53,6 +58,8 @@ const CreateCourse: FC<Props> = () => {
                         courseData={{} as Course}
                         onSubmit={createCourseHandler}
                         isCreating={true}
+                        setImageUrl={setImageHandler}
+                        imageUrl={imageUrl}
                     />
                 </div>
             </Modal>

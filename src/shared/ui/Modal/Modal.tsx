@@ -27,7 +27,8 @@ const Modal: FC<Props> = ({children, isOpen, setIsOpen, classname}) => {
                 <div
                     className={"fixed top-0 bottom-0 right-0 left-0 z-[100] flex justify-center items-center"}>
                     <Overlay onClick={setIsOpen}/>
-                    <div className={`bg-dark-background rounded-md p-10 z-[1000] ${classname}`}>
+                    <div
+                        className={`bg-light-neutral-900 dark:bg-dark-neutral-100 rounded-md p-10 z-[1000] ${classname}`}>
                         {children}
                     </div>
                 </div>

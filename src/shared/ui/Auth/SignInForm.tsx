@@ -52,7 +52,7 @@ const SignInForm: FC<Props> = () => {
                 }
             })}
             className={
-                "max-w-[500px] flex flex-col gap-2"
+                "max-w-[500px] flex flex-col gap-2 "
             }
         >
             {authError.isError && <Text error text={authError.message}/>}

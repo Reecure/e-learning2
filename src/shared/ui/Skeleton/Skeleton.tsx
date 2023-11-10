@@ -13,7 +13,7 @@ const Skeleton: FC<Props> = ({height = 0, width = 0}) => {
                 width: width !== 0 ? `${width}px` : "100%",
                 height: height !== 0 ? `${height}px` : "100%",
             }}
-            className={"bg-neutral-600 animate-pulse rounded-md"}
+            className={"bg-neutral-200 dark:bg-neutral-600 animate-pulse rounded-md"}
         ></div>
     );
 };

@@ -54,7 +54,7 @@ const SignUpForm: FC<Props> = () => {
                 await mutation.mutate(data);
             })}
             className={
-                "max-w-[500px] flex flex-col gap-2"
+                "max-w-[500px] flex flex-col gap-2 "
             }
         >
             {error !== "" && <Text error text={error}/>}

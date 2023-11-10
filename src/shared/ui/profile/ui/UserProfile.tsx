@@ -63,11 +63,13 @@ const UserProfileComponent: FC<Props> = ({user}) => {
 
                 <div className={"grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-5"}>
                     <div className={"mx-auto md:mx-0"}>
-                        <h4 className={"text-neutral-300 text-lg indent-2 mb-2 font-extrabold"}>Last Course</h4>
+                        <h4 className={"text-light-neutral-100 dark:text-neutral-300 text-lg indent-2 mb-2 font-extrabold"}>Last
+                            Course</h4>
                         <LastCourse course_id={user.last_course ?? ""}/>
                     </div>
                     <div className={"mx-auto md:mx-0"}>
-                        <h4 className={"text-neutral-300 text-lg indent-2 mb-2 font-extrabold"}>Complete later</h4>
+                        <h4 className={"text-light-neutral-100 dark:text-neutral-300 text-lg indent-2 mb-2 font-extrabold"}>Complete
+                            later</h4>
                         <CompleteLater user_id={user.id}/>
                     </div>
 
@@ -75,22 +77,25 @@ const UserProfileComponent: FC<Props> = ({user}) => {
 
                 <div className={"grid grid-cols-1 justify-center items-center gap-2"}>
                     <div className={""}>
-                        <h4 className={"text-neutral-300 text-lg indent-2 font-extrabold"}>Week Progress</h4>
-                        <WeekProgress user_id={user.id}  />
+                        <h4 className={"text-light-neutral-100 dark:text-neutral-300 text-lg indent-2 font-extrabold"}>Week
+                            Progress</h4>
+                        <WeekProgress user_id={user.id}/>
                     </div>
                     <div className={"grid grid-cols-1 md:grid-cols-2 justify-between  gap-3"}>
                         <div className={"w-full flex flex-col items-center"}>
                             <div>
                                 <div className={"flex items-center justify-between max-w-[330px]  mb-2"}>
-                                    <h4 className={"text-neutral-300 text-lg indent-2  font-extrabold"} >Favorite Course</h4>
+                                    <h4 className={"text-light-neutral-100 dark:text-neutral-300 text-lg indent-2  font-extrabold"}>Favorite
+                                        Course</h4>
                                 </div>
                                 <FavoriteCourse course_id={user.favorite_course ?? ""} />
                             </div>
                         </div>
                         <div className={"w-full flex flex-col items-center"}>
                             <div>
-                                <h4 className={"text-neutral-300 text-lg indent-2 mb-2 font-extrabold"} >Complete Info</h4>
-                                <CompleteCountInfo user_id={user.id} />
+                                <h4 className={"text-light-neutral-100 dark:text-neutral-300 text-lg indent-2 mb-2 font-extrabold"}>Complete
+                                    Info</h4>
+                                <CompleteCountInfo user_id={user.id}/>
                             </div>
                         </div>
                     </div>

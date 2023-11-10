@@ -22,18 +22,16 @@ const NewsItem: FC<Props> = ({className, item}) => {
                 <p className={"text-xl font-medium "}>{item.title}</p>
                 <Button
                     type={"submit"}
-                    className={`!p-1 sm:!p-2 !rounded-md`}
+                    className={`!p-1 sm:!p-2 !rounded-md -rotate-90 ${descriptionOpen && "-rotate-0"} duration-300`}
                     theme={ButtonThemes.TEXT}
                     onClick={opendescriptionHandler}
                 >
-                    <>
-                        <AiOutlineDown/>
-                    </>
+                    <AiOutlineDown/>
                 </Button>
             </div>
             {
                 descriptionOpen && <div>
-                    <p className={"text-neutral-300 text-md mt-3"}>{item.description}</p>
+                    <p className={"text-black/80 dark:text-neutral-300 text-md mt-3"}>{item.description}</p>
                 </div>
             }
         </div>

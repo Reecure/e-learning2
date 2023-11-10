@@ -137,8 +137,10 @@ const SortableLessonItem: FC<Props> = ({item, deleteOpen, disabled}) => {
     };
 
     return (
-        <div className={`flex justify-between items-center px-2 py-3 w-full rounded-md ${item?.lesson_type === LessonType.TEXT ? "bg-blue-300/30 hover:bg-blue-300/20" : "bg-red-300/30 hover:bg-red-300/20"} duration-100 cursor-pointer`}>
-            <div className={`flex items-center gap-1 ${userProgressOnLesson.data?.is_completed && "duration-300 opacity-30"}`}>
+        <div className={`flex justify-between items-center px-2 py-3 w-full rounded-md 
+        ${item?.lesson_type === LessonType.TEXT ? "bg-blue-300 dark:bg-blue-300/30 hover:bg-blue-300/60 dark:hover:bg-blue-300/20" : "bg-red-300 dark:bg-red-300/30 hover:bg-red-300/60 dark:hover:bg-red-300/20"} duration-100 cursor-pointer`}>
+            <div
+                className={`flex items-center gap-1 ${userProgressOnLesson.data?.is_completed && "duration-300 opacity-30"}`}>
 
                 {item?.lesson_type === LessonType.TEXT ? (
                     <span className={"text-md"}>
@@ -218,7 +220,7 @@ const SortableLessonItem: FC<Props> = ({item, deleteOpen, disabled}) => {
                     </Button>
                     {
                         menuOpen && <div
-                            className={"absolute top-10 right-2 bg-dark-primary-container p-3 rounded-md w-40 text-sm z-10"}>
+                            className={"absolute top-10 right-2 bg-light-primary-container dark:bg-dark-primary-container p-3 rounded-md w-40 text-sm z-10"}>
                             {(disabled &&
                                 <LessonAuthorEditableSide visibilityLoading={visibilityLoading}
                                     updateVisibleHandler={updateVisibleHandler}
