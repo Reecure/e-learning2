@@ -17,8 +17,6 @@ type Props = {
 const TIMEOUT = 3000;
 
 const CourseForm: FC<Props> = ({imageUrl, setImageUrl, courseData, isCreating, onSubmit}) => {
-
-
     const [notificationOpen, setNotificationOpen] = useState(false);
     const [submitError, setSubmitError] = useState(false);
     const [disableButton, setButtonDisabled] = useState(false);

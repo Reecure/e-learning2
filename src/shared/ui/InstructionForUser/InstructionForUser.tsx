@@ -88,16 +88,18 @@ const InstructionForUser: FC<Props> = () => {
     };
 
     return (
-        <div className={"flex w-[500px]"}>
-            <div className={"border-r-2 border-r-neutral-600 pr-10 py-10"}>
-                <ul className={"flex flex-col gap-5"}>
+        <div className={"flex flex-col md:flex-row max-w-[250px] md:max-w-[500px]"}>
+            <div
+                className={"border-b-2 md:border-b-0 md:border-r-2 border-neutral-600 mb-3 md:mb-0 py-3 md:pr-10 md:py-10"}>
+                <ul className={"flex md:flex-col justify-between md:gap-5"}>
                     {
                         tabs.map(tab => (
-                            <li key={tab.id} className={"flex gap-2 items-center cursor-pointer"} onClick={() => {
-                                setTabHandler(tab.id);
-                            }}>
-                                <p className={"rounded-full border-2 border-dark-primary-container px-[6px] text-sm"}>{tab.id + 1}</p>
-                                <p className={"text-xl text-light-neutral-300 dark:text-neutral-300"}>{tab.title}</p>
+                            <li key={tab.id} className={"flex flex-col md:flex-row gap-2 items-center cursor-pointer"}
+                                onClick={() => {
+                                    setTabHandler(tab.id);
+                                }}>
+                                <p className={"rounded-full border-2 border-dark-primary-container px-[6px] text-xs md:text-sm"}>{tab.id + 1}</p>
+                                <p className={"text-md md:text-xl text-light-neutral-300 dark:text-neutral-300"}>{tab.title}</p>
                             </li>
                         ))
                     }

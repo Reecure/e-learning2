@@ -12,7 +12,7 @@ const NewsItem: FC<Props> = ({className, item}) => {
 
     const [descriptionOpen, setDescriptionOpen] = useState(false);
 
-    const opendescriptionHandler = () => {
+    const openDescriptionHandler = () => {
         setDescriptionOpen(prev => !prev);
     };
 
@@ -22,9 +22,9 @@ const NewsItem: FC<Props> = ({className, item}) => {
                 <p className={"text-xl font-medium "}>{item.title}</p>
                 <Button
                     type={"submit"}
-                    className={`!p-1 sm:!p-2 !rounded-md -rotate-90 ${descriptionOpen && "-rotate-0"} duration-300`}
+                    className={`!p-1 sm:!p-2 !rounded-md ${descriptionOpen && "rotate-0"} duration-300`}
                     theme={ButtonThemes.TEXT}
-                    onClick={opendescriptionHandler}
+                    onClick={openDescriptionHandler}
                 >
                     <AiOutlineDown/>
                 </Button>

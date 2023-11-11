@@ -33,11 +33,11 @@ const UserGrades = () => {
     return (
         <div>
             <h3 className={"text-3xl sm:text-5xl font-bold mb-10"}>Your Progress</h3>
-            <div className={"grid gap grid-cols-repeat-auto-custom"}>
+            <div className={"grid gap-5 grid-cols-repeat-auto-progress-custom"}>
                 {
                     coursesWithProgress.data.map((course) => {
                         return <div key={course?.course_id}
-                            className={"p-4 border-2 border-light-primary-main dark:border-dark-primary-main rounded-md w-[250px] sm:w-[300px]"}>
+                            className={"p-4 border-2 border-light-primary-main dark:border-dark-primary-main rounded-md justify-center w-[300px]"}>
                             <div className={"flex flex-col gap-1 mb-5"}>
                                 <h5 className={"text-2xl"}>{course?.course_name}</h5>
                                 <div className={""}>{course?.is_completed ?

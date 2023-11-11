@@ -4,7 +4,6 @@ import {BiEdit} from "react-icons/bi";
 import {AiFillEye, AiFillEyeInvisible} from "react-icons/ai";
 import {BsTrash} from "react-icons/bs";
 import {useForm} from "react-hook-form";
-import {Module} from "@/enteties/Module";
 import {trpc} from "@/shared/utils/trpc";
 import {useRouter} from "next/router";
 import {CourseModules} from "@/enteties/Course/model/types/course";
@@ -57,7 +56,7 @@ const ModuleAuthorEditableSide: FC<Props> = ({
                     <BiEdit/>
                 </Button>
 
-                <div>
+                <>
                     {
                         visibilityLoading ?
                             <span className={""}><Loader className={"!w-4 !h-4 "}/></span>
@@ -70,7 +69,7 @@ const ModuleAuthorEditableSide: FC<Props> = ({
                                 {item.is_visible ? <AiFillEye/> : <AiFillEyeInvisible/>}
                             </Button>
                     }
-                </div>
+                </>
 
                 <Button
                     type={"submit"}

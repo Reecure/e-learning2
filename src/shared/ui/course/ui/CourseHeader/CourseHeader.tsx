@@ -10,6 +10,7 @@ import {Button, ButtonThemes, DeleteModal, Modal} from "@/shared/ui";
 import {Routes} from "@/shared/config/routes";
 import {BsClock} from "react-icons/bs";
 import {AiOutlineCalendar} from "react-icons/ai";
+import empty_image from "@/shared/assets/empty_image.png";
 
 type Props = {
     course: Course;
@@ -88,7 +89,7 @@ const CourseHeader: FC<Props> = ({course, isUserCourse}) => {
             duration: data.duration,
             description: data.description,
             difficulty_level: data.difficulty_level,
-            cover_image: data.cover_image,
+            cover_image: imageUrl,
             title: data.title,
             id: data.id
         });
@@ -97,6 +98,10 @@ const CourseHeader: FC<Props> = ({course, isUserCourse}) => {
     const setImageUrlHandler = (url: string) => {
         setImageUrl(prev => prev = url);
     };
+
+    useEffect(() => {
+        setImageUrl(prev => prev = course.cover_image);
+    }, [course]);
 
     return (
         <div className={"flex justify-between mb-14"}>
@@ -109,13 +114,23 @@ const CourseHeader: FC<Props> = ({course, isUserCourse}) => {
                             <h3 className={"text-3xl font-extrabold"}>{course?.title}</h3>
                         </div>
                     </div>
-                    <Image
-                        src={course?.cover_image}
-                        alt={"image"}
-                        className={"md:hidden max-w-[300px] rounded-md mx-auto mb-5 object-cover"}
-                        width={500}
-                        height={350}
-                    />
+                    {
+                        course?.cover_image !== "" ?
+                            <Image
+                                src={course?.cover_image}
+                                alt={"image"}
+                                className={"md:hidden max-w-[300px] rounded-md mx-auto mb-5 object-cover"}
+                                width={500}
+                                height={350}
+                            /> :
+                            <Image
+                                src={empty_image}
+                                alt={"image"}
+                                className={"md:hidden max-w-[300px] rounded-md mx-auto mb-5 object-cover"}
+                                width={500}
+                                height={350}
+                            />
+                    }
 
                     <div className={"max-w-[600px] mb-5"}>
                         <p>{course?.cover_description}</p>
@@ -213,13 +228,21 @@ const CourseHeader: FC<Props> = ({course, isUserCourse}) => {
             </div>
 
             <div className={"ml-5"}>
-                <Image
-                    src={course?.cover_image}
-                    alt={"image"}
-                    className={"hidden md:block md:max-w-[320px] lg:max-w-[430px] xl:lg:max-w-[550px] object-cover"}
-                    width={500}
-                    height={350}
-                />
+                {course?.cover_image !== "" ?
+                    <Image
+                        src={course?.cover_image}
+                        alt={"image"}
+                        className={"hidden md:block md:max-w-[320px] lg:max-w-[430px] xl:lg:max-w-[550px] h-[250px] object-cover"}
+                        width={500}
+                        height={350}
+                    /> :
+                    <Image
+                        src={empty_image}
+                        alt={"image"}
+                        className={"hidden md:block md:max-w-[320px] lg:max-w-[430px] xl:lg:max-w-[550px] h-[250px] object-cover"}
+                        width={500}
+                        height={350}
+                    />}
             </div>
         </div>
     );

@@ -8,7 +8,7 @@ import {CiBoxes} from "react-icons/ci";
 import {trpc} from "@/shared/utils/trpc";
 import {useSession} from "next-auth/react";
 import {AiFillStar, AiOutlineStar} from "react-icons/ai";
-import {Loader} from "@/shared/ui";
+import empty_image from "@/shared/assets/empty_image.png";
 
 type Props = {
     course: Course;
@@ -31,9 +31,7 @@ const SmallCard: FC<Props> = ({course}) => {
         course_id: course.id
     });
 
-    if (isFavoriteCourse.isLoading) {
-        return <Loader/>;
-    }
+
 
     return (
         <div className={"relative min-w-[250px] max-w-[340px] sm:w-[340px] h-[310px]"}>
@@ -57,7 +55,7 @@ const SmallCard: FC<Props> = ({course}) => {
             </div>
             <Link href={`${Routes.USER_COURSE_PAGE}/${course?.id}`}
                 className={
-                    "flex flex-col bg-light-neutral-900 dark:bg-dark-neutral-100 rounded-2xl  p-5 hover:bg-dark-neutral-900/70 dark:hover:bg-dark-neutral-100/70 cursor-pointer"
+                    "flex flex-col p-5 bg-light-neutral-900 dark:bg-dark-neutral-100 rounded-2xl hover:bg-dark-neutral-900/70 dark:hover:bg-dark-neutral-100/70 cursor-pointer"
                 }
                 onClick={async () => {
                     await userLastCourse.mutate({
@@ -66,13 +64,24 @@ const SmallCard: FC<Props> = ({course}) => {
                     });
                 }}>
                 <div className={""}>
-                    <Image
-                        src={course?.cover_image}
-                        width={300}
-                        height={300}
-                        alt={"card-image"}
-                        className={"max-w-[300px] max-h-[100px] w-full h-full object-cover rounded-2xl"}
-                    />
+                    {
+                        course?.cover_image !== "" ?
+                            <Image
+                                src={course?.cover_image}
+                                width={300}
+                                height={300}
+                                alt={"card-image"}
+                                className={"max-w-[300px] max-h-[100px] w-full h-full object-cover rounded-2xl"}
+                            /> :
+                            <Image
+                                src={empty_image}
+                                alt={"image"}
+                                className={"max-w-[300px] max-h-[100px] w-full h-full object-cover rounded-2xl"}
+                                width={500}
+                                height={350}
+                            />
+                    }
+
                 </div>
                 <div className={"max-w-[300px] flex flex-col justify-between"}>
                     <div className={"flex justify-between my-4 text-light-neutral-300 dark:text-neutral-400 text-sm"}>

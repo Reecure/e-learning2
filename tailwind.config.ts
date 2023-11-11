@@ -9,8 +9,12 @@ const config: Config = withUt({
 
     theme: {
         extend: {
+            screens: {
+                xs: "340px",
+            },
             gridTemplateColumns: {
                 "repeat-auto-custom": "repeat(auto-fit,minmax(340px,1fr))",
+                "repeat-auto-progress-custom": "repeat(auto-fit,minmax(280px,1fr))"
             },
             colors: {
                 light: {
