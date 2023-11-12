@@ -60,7 +60,7 @@ const LessonContent: FC<Props> = ({currentLessonId}) => {
     }
 
     return (
-        <div>
+        <div className={""}>
             <div className={"flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-5"}>
                 <div className={"flex gap-2 items-center"}>
                     <h4 className={"text-3xl sm:text-5xl font-extrabold my-3 sm:my-5"}>

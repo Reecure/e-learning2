@@ -1,21 +1,14 @@
 import {type FC, useEffect, useState} from "react";
-
-import CourseQuizGameQuestionWithAnswer from "@/shared/ui/course/ui/CourseQuizGames/CourseQuizGameQuestionWithAnswer";
-import CourseQuizGameAnswerWithFixedLetters
-    from "@/shared/ui/course/ui/CourseQuizGames/CourseQuizGameAnswerWithFixedLetters";
-import {Button, Loader} from "@/shared/ui";
-import {ButtonThemes} from "@/shared/ui/Button/Button";
+import {Loader} from "@/shared/ui";
 import {trpc} from "@/shared/utils/trpc";
 import {useSession} from "next-auth/react";
-import {
-    AnswerWithFixedLetters,
-    LessonBlocks,
-    QuestionAnswerBlock,
-    QuizBlocks,
-    QuizContentType
-} from "@/enteties/Lesson";
+import {QuizBlocks} from "@/enteties/Lesson";
 import InfoForUser from "@/shared/ui/InfoForUser/InfoForUser";
 import {useRouter} from "next/router";
+import QuizProgressBar from "@/shared/ui/Quiz/QuizProgressBar/QuizProgressBar";
+import QuizPreviousResult from "@/shared/ui/Quiz/QuizPreviousResult/QuizPreviousResult";
+import QuizShowScore from "@/shared/ui/Quiz/QuizShowScore/QuizShowScore";
+import QuizContent from "@/shared/ui/Quiz/QuizContent/QuizContent";
 
 type Props = {
     updateInfo: {
@@ -51,51 +44,6 @@ const QuizComponent: FC<Props> = ({blocks, currentLessonId, updateInfo}) => {
     });
 
     useEffect(() => {
-        console.log(getLessonProgressById.data);
-    }, [getLessonProgressById.isLoading]);
-
-    const quizContentRender = (contentType: QuizContentType | string, block: QuizBlocks | LessonBlocks, handleAnswer: (arg1: string, arg2: string) => void) => {
-        switch (contentType) {
-        case QuizContentType.QUESTION_ANSWER:
-            return (
-                <CourseQuizGameQuestionWithAnswer
-                    block={block as QuestionAnswerBlock}
-                    handleAnswer={handleAnswer}
-                    isLast={submitValuesVisible}
-                    submitHandler={submitHandler}
-                />
-            );
-        case QuizContentType.ANSWER_WITH_FIXED_LETTERS:
-            return (
-                <CourseQuizGameAnswerWithFixedLetters
-                    block={block as AnswerWithFixedLetters}
-                    handleAnswer={handleAnswer}
-                    isLast={submitValuesVisible}
-                    submitHandler={submitHandler}
-                />
-            );
-        case QuizContentType.DRAG_BLOCKS:
-            return (
-                <CourseQuizGameQuestionWithAnswer
-                    block={block as QuestionAnswerBlock}
-                    handleAnswer={handleAnswer}
-                    isLast={submitValuesVisible}
-                    submitHandler={submitHandler}
-                />
-            );
-        case QuizContentType.SORT_ANSWER:
-            return (
-                <CourseQuizGameQuestionWithAnswer
-                    block={block as QuestionAnswerBlock}
-                    handleAnswer={handleAnswer}
-                    isLast={submitValuesVisible}
-                    submitHandler={submitHandler}
-                />
-            );
-        }
-    };
-
-    useEffect(() => {
         if (blocks.length === 1) {
             setSubmitValuesVisible(true);
         }
@@ -128,7 +76,6 @@ const QuizComponent: FC<Props> = ({blocks, currentLessonId, updateInfo}) => {
         if (blockAnswer === answer) {
             updatedScore += 1;
         }
-
         const nextQuestion = currentQuestion + 1;
         if (nextQuestion < blocks.length) {
             setCurrentQuestion(nextQuestion);
@@ -136,7 +83,6 @@ const QuizComponent: FC<Props> = ({blocks, currentLessonId, updateInfo}) => {
                 setSubmitValuesVisible(true);
             }
         }
-
         setScore(updatedScore);
     };
 
@@ -150,7 +96,7 @@ const QuizComponent: FC<Props> = ({blocks, currentLessonId, updateInfo}) => {
     }
 
     return (
-        <div className={"flex flex-col items-center justify-center "}>
+        <div className={"flex flex-col items-center justify-center"}>
             <div className={"mb-5 w-full"}>
                 {currentLessonId.lesson_id === updateInfo.id && updateInfo.visible && (updateInfo.isSuccess ?
                     <InfoForUser isSuccess text={"Success"}/> :
@@ -158,50 +104,45 @@ const QuizComponent: FC<Props> = ({blocks, currentLessonId, updateInfo}) => {
             </div>
             <div>
                 {showScore ? (
-                    <div className={" flex flex-col gap-5"}>
-                        <div className={"text-5xl"}>Your score is {score}</div>
+                    <QuizShowScore
+                        score={score}
+                        setCurrentQuestion={(value: number) => setCurrentQuestion(value)}
+                        setScore={(value: number) => setScore(value)}
+                        setShowScore={(value: boolean) => setShowScore(value)}
+                        totalQuestions={blocks?.length}
+                    />
 
-                        <Button
-                            theme={ButtonThemes.FILLED}
-                            onClick={() => {
-                                setShowScore(false);
-                                setScore(0);
-                                setCurrentQuestion(0);
-                            }}
-                        >
-                            Try again
-                        </Button>
-                    </div>
                 ) : (
-                    <>
-                        <div>
+                    <div className={"flex flex-col w-[500px] gap-5"}>
+                        <div className={""}>
                             {blocks?.length && (
-                                <div>
-                                    Previous res = {getLessonProgressById.data?.quizScore || 0}
-                                </div>
+                                <QuizPreviousResult res={getLessonProgressById.data?.quizScore || 0}/>
                             )}
                         </div>
-                        <div className={"text-xl font-extrabold"}>
+                        <div className={"mx-auto"}>
                             {blocks?.length ? (
-                                <div>
-                                    {currentQuestion + 1} / {blocks?.length}
-                                </div>
+                                <QuizProgressBar totalQuestion={blocks?.length} currentQuestion={currentQuestion + 1}/>
                             ) : (
-                                <div>0/0</div>
+                                <QuizProgressBar totalQuestion={0} currentQuestion={0}/>
                             )}
                         </div>
-                        <div className={"flex mt-5"}>
+                        <div className={"flex"}>
                             {blocks?.length === 0 || blocks === undefined ? (
-                                <div>Empty</div>
+                                <div className={"text-xl font-bold"}>No questions yet</div>
                             ) : (
-                                quizContentRender(
-                                    blocks[currentQuestion].type,
-                                    blocks[currentQuestion],
-                                    handleAnswerOptionClick,
-                                )
+                                <div className={"flex flex-col gap-5 w-full"}>
+                                    <p className={"text-2xl text-blue-300"}>Question - {currentQuestion + 1}</p>
+                                    <QuizContent
+                                        currentQuestion={currentQuestion}
+                                        submitValuesVisible={submitValuesVisible}
+                                        submitHandler={submitHandler}
+                                        blocks={blocks}
+                                        handleAnswerOptionClick={(blockAnswer: string, answer: string) => handleAnswerOptionClick(blockAnswer, answer)}
+                                    />
+                                </div>
                             )}
                         </div>
-                    </>
+                    </div>
                 )}
             </div>
         </div>

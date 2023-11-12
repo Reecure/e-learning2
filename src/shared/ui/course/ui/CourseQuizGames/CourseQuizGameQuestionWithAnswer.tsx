@@ -41,44 +41,49 @@ const CourseQuizGameQuestionWithAnswer: FC<Props> = ({
     }, [block]);
 
     return (
-        <div className={"mb-5"}>
+        <div className={""}>
             <>
-                <h5 className={"text-lg font-extrabold"}>{block.question}</h5>
-                {answers.map((item, i) => (
-                    <div key={i} className={"flex gap-1 items-center"}>
-                        <div>{i + 1}.</div>
-                        <Button
-                            className={`!px-1 rounded-md ${
-                                isSelected?.selectedId === i
-                                    ? "bg-light-primary-main/10 dark:bg-dark-primary-main/10"
-                                    : ""
-                            }`}
-                            theme={ButtonThemes.TEXT}
-                            onClick={() => {
-                                setSelected({
-                                    selectedId: i,
-                                    value: item,
-                                });
-                            }}
-                        >
-                            {item}
-                        </Button>
-                    </div>
-                ))}
+                <h5 className={"text-lg font-extrabold mb-3 "}>{block.question}</h5>
+                <div className={"flex flex-col gap-2 mb-5"}>
+                    {answers.map((item, i) => (
+                        <div key={i} className={"flex gap-2 items-center"}>
+                            <div>{i + 1}.</div>
+                            <Button
+                                className={`w-full !text-start !px-1 rounded-md bg-light-primary-main/10 dark:bg-dark-primary-main/10 ${
+                                    isSelected?.selectedId === i
+                                        ? "bg-light-primary-main/30 dark:bg-dark-primary-main/30"
+                                        : ""
+                                }`}
+                                theme={ButtonThemes.TEXT}
+                                onClick={() => {
+                                    setSelected({
+                                        selectedId: i,
+                                        value: item,
+                                    });
+                                }}
+                            >
+                                {item}
+                            </Button>
+                        </div>
+                    ))}
+                </div>
             </>
-            <Button
-                theme={ButtonThemes.FILLED}
-                onClick={() => {
-                    handleAnswer(block.correctAnswer, isSelected?.value || "");
-                    if (!isLast) {
-                        setSelected(null);
-                    } else if (isLast) {
-                        submitHandler();
-                    }
-                }}
-            >
-                {isLast ? "Submit" : "Next"}
-            </Button>
+
+            <div className={"flex justify-end w-full"}>
+                <Button
+                    theme={ButtonThemes.FILLED}
+                    onClick={() => {
+                        handleAnswer(block.correctAnswer, isSelected?.value || "");
+                        if (!isLast) {
+                            setSelected(null);
+                        } else if (isLast) {
+                            submitHandler();
+                        }
+                    }}
+                >
+                    {isLast ? "Submit" : "Next question"}
+                </Button>
+            </div>
         </div>
     );
 };

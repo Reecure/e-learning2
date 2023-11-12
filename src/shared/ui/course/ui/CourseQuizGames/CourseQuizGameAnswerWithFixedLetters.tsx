@@ -62,42 +62,46 @@ const CourseQuizGameAnswerWithFixedLetters: FC<Props> = ({
     };
 
     return (
-        <div>
-            <h5 className={"text-lg font-extrabold"}>{block.question}</h5>
-            <div className={"mb-5"}>
-                {block.answer.split("").map((_, i) => (
-                    <input
-                        key={i}
-                        type={"text"}
-                        className={
-                            "max-w-[15px] mr-2 focus:none outline-0 bg-transparent border-b-[1px] border-dark-primary-main"
-                        }
-                        value={inputValues[i] || ""}
-                        maxLength={1}
-                        onChange={e => {
-                            handleInputChange(e, i);
-                        }}
-                        onKeyDown={e => {
-                            handleKeyDown(e, i);
-                        }}
-
-                        ref={el => (inputRefs.current[i] = el!)}
-                    />
-                ))}
+        <div className={"w-full "}>
+            <div className={"flex flex-col items-center"}>
+                <h5 className={"text-lg font-extrabold"}>{block.question}</h5>
+                <div className={"my-5"}>
+                    {block.answer.split("").map((_, i) => (
+                        <input
+                            key={i}
+                            type={"text"}
+                            className={
+                                " max-w-[15px] mr-2 focus:none outline-0 bg-transparent border-b-[1px] border-dark-primary-main"
+                            }
+                            value={inputValues[i] || ""}
+                            maxLength={1}
+                            onChange={e => {
+                                handleInputChange(e, i);
+                            }}
+                            onKeyDown={e => {
+                                handleKeyDown(e, i);
+                            }}
+                            ref={el => (inputRefs.current[i] = el!)}
+                        />
+                    ))}
+                </div>
             </div>
-            <Button
-                theme={ButtonThemes.FILLED}
-                onClick={() => {
-                    if (!isLast) {
-                        handleAnswer(block?.answer, inputValues.join(""));
-                    } else {
-                        handleAnswer(block?.answer, inputValues.join(""));
-                        submitHandler();
-                    }
-                }}
-            >
-                {isLast ? "Submit" : "Next"}
-            </Button>
+
+            <div className={"flex justify-end"}>
+                <Button
+                    theme={ButtonThemes.FILLED}
+                    onClick={() => {
+                        if (!isLast) {
+                            handleAnswer(block?.answer.toLocaleLowerCase(), inputValues.join("").toLocaleLowerCase());
+                        } else {
+                            handleAnswer(block?.answer.toLocaleLowerCase(), inputValues.join("").toLocaleLowerCase());
+                            submitHandler();
+                        }
+                    }}
+                >
+                    {isLast ? "Submit" : "Next question"}
+                </Button>
+            </div>
         </div>
     );
 };

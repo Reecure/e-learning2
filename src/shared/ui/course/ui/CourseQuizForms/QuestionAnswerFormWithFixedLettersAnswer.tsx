@@ -7,20 +7,27 @@ type Props = {
 };
 
 const QuestionAnswerFormWithFixedLettersAnswer: FC<Props> = ({index}) => {
-    const {register} = useFormContext();
+    const {register, formState: {errors}} = useFormContext();
+
     return (
         <div className={"flex flex-col gap-5 w-full"}>
-            <h5 className={"text-2xl"}>Answer with fixed letters</h5>
-            <Label htmlFor={`blocks.${index}.question`} labelText={"Question"}>
+            <h5 className={"text-2xl w-full font-bold text-blue-400"}>{index + 1}. Answer with fixed letters</h5>
+            <Label htmlFor={`blocks.${index}.question`} labelText={"Question"} textColor={"!text-dark-primary-main"}>
                 <input
                     className={"inputField"}
-                    {...register(`blocks.${index}.question`)}
+                    {...register(`blocks.${index}.question`, {
+                        required: {value: true, message: "Question is required"},
+                        minLength: {value: 1, message: "Min length is 1 letter"},
+                    })}
                 />
             </Label>
-            <Label htmlFor={`blocks.${index}.answer`} labelText={"Answer"}>
+            <Label htmlFor={`blocks.${index}.answer`} labelText={"Answer"} textColor={"!text-green-400 "}>
                 <input
-                    className={"inputField"}
-                    {...register(`blocks.${index}.answer`)}
+                    className={"inputField !border-green-400 "}
+                    {...register(`blocks.${index}.answer`, {
+                        required: {value: true, message: "Answer is required"},
+                        minLength: {value: 1, message: "Min length is 1 letter"},
+                    })}
                 />
             </Label>
         </div>
@@ -28,3 +35,4 @@ const QuestionAnswerFormWithFixedLettersAnswer: FC<Props> = ({index}) => {
 };
 
 export default QuestionAnswerFormWithFixedLettersAnswer;
+

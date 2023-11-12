@@ -91,12 +91,12 @@ const CreateLessonQuizContent: FC<Props> = ({initialData, setQuizContentEditable
                 {fields.map((field, index) => (
                     <div key={field.id}>
                         {field.type === QuizContentType.QUESTION_ANSWER ? (
-                            <div className={"flex gap-2 items-start"}>
+                            <div className={"flex gap-2 items-start bg-neutral-600/30 rounded-xl px-5 py-5"}>
                                 <QuestionAnswerForm index={index}/>
                                 <Button
                                     theme={ButtonThemes.TEXT}
                                     className={"!px-4 !py-2 !rounded-md"}
-                                    type='button'
+                                    type="button"
                                     onClick={() => {
                                         remove(index);
                                     }}
@@ -105,12 +105,12 @@ const CreateLessonQuizContent: FC<Props> = ({initialData, setQuizContentEditable
                                 </Button>
                             </div>
                         ) : field.type === QuizContentType.ANSWER_WITH_FIXED_LETTERS ? (
-                            <div className={"flex gap-2 items-start"}>
+                            <div className={"flex gap-2 items-start bg-neutral-600/30 rounded-xl px-5 py-5"}>
                                 <QuestionAnswerFormWithFixedLettersAnswer index={index}/>
                                 <Button
                                     theme={ButtonThemes.TEXT}
                                     className={"!px-4 !py-2 !rounded-md"}
-                                    type='button'
+                                    type="button"
                                     onClick={() => {
                                         remove(index);
                                     }}

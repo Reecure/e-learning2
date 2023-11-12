@@ -4,13 +4,14 @@ type Props = {
     htmlFor: string;
     labelText: string;
     children: ReactNode | ReactNode[];
+    textColor?: string
 };
 
-const Label: FC<Props> = ({labelText, children, htmlFor}) => (
+const Label: FC<Props> = ({textColor, labelText, children, htmlFor}) => (
     <label htmlFor={htmlFor} className={"relative"}>
         <p
             className={
-                "mb-1 text-sm  dark:text-neutral-300 whitespace-nowrap"
+                `${textColor} mb-1 text-sm  dark:text-neutral-300 whitespace-nowrap`
             }
         >
             {labelText}

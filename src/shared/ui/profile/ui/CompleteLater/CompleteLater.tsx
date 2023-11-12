@@ -23,19 +23,18 @@ const CompleteLater: FC<Props> = ({user_id}) => {
     }
 
     return (
-        <div className={"relative min-w-[250px] max-w-[340px] sm:w-[340px] h-[310px]"}>
-            <div className={" border-[1px] " +
-                "border-light-primary-main dark:border-dark-primary-main rounded-md flex flex-col gap-2 p-2 overflow-auto"}
-            >
-                {
-                    user_read_later.data?.map(item => {
-                        return <div key={item.lesson_id}
-                            className={"px-2 py-1 rounded-md w-full flex items-center justify-between odd:bg-dark-primary-main/30 even:bg-dark-primary-main/20"}>
-                            <CompleteLaterItem lesson={item}/>
-                        </div>;
-                    })
-                }
-            </div>
+
+        <div className={"relative min-w-[250px] max-w-[340px] sm:w-[340px] h-[310px] border-[1px] " +
+            "border-light-primary-main dark:border-dark-primary-main rounded-md flex flex-col gap-2 p-2 overflow-auto"}
+        >
+            {
+                user_read_later.data?.map(item => {
+                    return <div key={item.lesson_id}
+                        className={"px-2 py-1 rounded-md w-full flex items-center justify-between odd:bg-dark-primary-main/30 even:bg-dark-primary-main/20"}>
+                        <CompleteLaterItem lesson={item}/>
+                    </div>;
+                })
+            }
         </div>
     );
 };
