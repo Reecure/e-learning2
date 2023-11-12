@@ -11,8 +11,10 @@ const QuestionAnswerFormWithFixedLettersAnswer: FC<Props> = ({index}) => {
 
     return (
         <div className={"flex flex-col gap-5 w-full"}>
-            <h5 className={"text-2xl w-full font-bold text-blue-400"}>{index + 1}. Answer with fixed letters</h5>
-            <Label htmlFor={`blocks.${index}.question`} labelText={"Question"} textColor={"!text-dark-primary-main"}>
+            <h5 className={"text-2xl w-full font-bold text-blue-700 dark:text-blue-400"}>{index + 1}. Answer with fixed
+                letters</h5>
+            <Label htmlFor={`blocks.${index}.question`} labelText={"Question"}
+                textColor={"!text-light-primary-main dark:!text-dark-primary-main"}>
                 <input
                     className={"inputField"}
                     {...register(`blocks.${index}.question`, {
@@ -21,9 +23,10 @@ const QuestionAnswerFormWithFixedLettersAnswer: FC<Props> = ({index}) => {
                     })}
                 />
             </Label>
-            <Label htmlFor={`blocks.${index}.answer`} labelText={"Answer"} textColor={"!text-green-400 "}>
+            <Label htmlFor={`blocks.${index}.answer`} labelText={"Answer"}
+                textColor={"dark:!text-green-400 !text-green-600"}>
                 <input
-                    className={"inputField !border-green-400 "}
+                    className={"inputField !border-green-600 dark:!border-green-400 "}
                     {...register(`blocks.${index}.answer`, {
                         required: {value: true, message: "Answer is required"},
                         minLength: {value: 1, message: "Min length is 1 letter"},

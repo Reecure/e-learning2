@@ -86,16 +86,17 @@ const CreateLessonQuizContent: FC<Props> = ({initialData, setQuizContentEditable
         <FormProvider {...methods}>
             <form
                 onSubmit={handleSubmit(onSubmit)}
-                className={"flex flex-col gap-2 "}
+                className={"flex flex-col gap-2 mb-10"}
             >
                 {fields.map((field, index) => (
                     <div key={field.id}>
                         {field.type === QuizContentType.QUESTION_ANSWER ? (
-                            <div className={"flex gap-2 items-start bg-neutral-600/30 rounded-xl px-5 py-5"}>
+                            <div
+                                className={"flex gap-2 items-start bg-light-neutral-900/60  dark:bg-neutral-600/30 rounded-xl px-5 py-5"}>
                                 <QuestionAnswerForm index={index}/>
                                 <Button
                                     theme={ButtonThemes.TEXT}
-                                    className={"!px-4 !py-2 !rounded-md"}
+                                    className={"!p-2 !rounded-md"}
                                     type="button"
                                     onClick={() => {
                                         remove(index);
@@ -105,11 +106,12 @@ const CreateLessonQuizContent: FC<Props> = ({initialData, setQuizContentEditable
                                 </Button>
                             </div>
                         ) : field.type === QuizContentType.ANSWER_WITH_FIXED_LETTERS ? (
-                            <div className={"flex gap-2 items-start bg-neutral-600/30 rounded-xl px-5 py-5"}>
+                            <div
+                                className={"flex gap-2 items-start bg-light-neutral-900/60  dark:bg-neutral-600/30 rounded-xl px-5 py-5"}>
                                 <QuestionAnswerFormWithFixedLettersAnswer index={index}/>
                                 <Button
                                     theme={ButtonThemes.TEXT}
-                                    className={"!px-4 !py-2 !rounded-md"}
+                                    className={"!p-2 !rounded-md"}
                                     type="button"
                                     onClick={() => {
                                         remove(index);

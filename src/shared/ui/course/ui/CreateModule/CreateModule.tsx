@@ -96,7 +96,7 @@ const CreateModule: FC<Props> = ({courseId}) => {
                             {...register("title", {
                                 required: {value: true, message: "Title is required"},
                                 minLength: {value: 3, message: "Min length is 3 letters"},
-                                maxLength: {value: 25, message: "Max length is 25 letters"}
+                                maxLength: {value: 100, message: "Max length is 100 letters"}
                             })}
                             className={"inputField"}
                         />

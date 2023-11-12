@@ -1,4 +1,4 @@
-import {type FC, useEffect} from "react";
+import {type FC, useEffect, useState} from "react";
 import {FormProvider, useFieldArray, useForm,} from "react-hook-form";
 import {Button} from "@/shared/ui";
 import {ButtonThemes} from "@/shared/ui/Button/Button";
@@ -31,8 +31,10 @@ const CreateLessonContent: FC<Props> = ({
 
     const utils = trpc.useContext();
 
+    const [imgUrl, setImgUrl] = useState("");
+
     const lessonUpdateContentQuery = trpc.lesson.updateContent.useMutation({
-        async onSuccess(){
+        async onSuccess() {
             await utils.module.byId.invalidate();
             await utils.lesson.byId.invalidate();
         }
@@ -102,14 +104,15 @@ const CreateLessonContent: FC<Props> = ({
                     className={"flex flex-col gap-2 "}
                 >
                     {fields.map((field, index) => (
-                        <div key={field.id}>
+                        <div key={field.id}
+                            className={"flex gap-2 bg-light-neutral-900/60  dark:bg-neutral-600/30 rounded-xl px-5 py-5"}>
                             {field.type === LessonContentType.TEXT ? (
-                                <div className={"flex gap-2 mt-5 sm:mt-0 items-start"}>
+                                <div className={"flex gap-2 mt-5 sm:mt-0 items-start w-full"}>
                                     <TextForm index={index}/>
                                     <Button
                                         theme={ButtonThemes.TEXT}
-                                        className={"!px-2 !py-0 rounded-md"}
-                                        type='button'
+                                        className={"!p-2 rounded-md"}
+                                        type="button"
                                         onClick={() => {
                                             remove(index);
                                         }}
@@ -118,12 +121,12 @@ const CreateLessonContent: FC<Props> = ({
                                     </Button>
                                 </div>
                             ) : field.type === LessonContentType.IMAGE ? (
-                                <div className={"flex gap-2 mt-5 sm:mt-0 items-start"}>
+                                <div className={"flex gap-2 mt-5 sm:mt-0 items-start w-full"}>
                                     <ImageForm index={index}/>
                                     <Button
                                         theme={ButtonThemes.TEXT}
-                                        className={"!px-2 !py-0 rounded-md"}
-                                        type='button'
+                                        className={"!p-2 rounded-md"}
+                                        type="button"
                                         onClick={() => {
                                             remove(index);
                                         }}
@@ -132,12 +135,12 @@ const CreateLessonContent: FC<Props> = ({
                                     </Button>
                                 </div>
                             ) : field.type === LessonContentType.CODE ? (
-                                <div className={"flex gap-2 mt-5 sm:mt-0 items-start"}>
+                                <div className={"flex gap-2 mt-5 sm:mt-0 items-start w-full"}>
                                     <CodeForm index={index}/>
                                     <Button
                                         theme={ButtonThemes.TEXT}
-                                        className={"!px-2 !py-0 rounded-md"}
-                                        type='button'
+                                        className={"!p-2 rounded-md"}
+                                        type="button"
                                         onClick={() => {
                                             remove(index);
                                         }}
@@ -146,12 +149,12 @@ const CreateLessonContent: FC<Props> = ({
                                     </Button>
                                 </div>
                             ) : field.type === LessonContentType.VIDEO ? (
-                                <div className={"flex gap-2 mt-5 sm:mt-0 items-start"}>
+                                <div className={"flex gap-2 mt-5 sm:mt-0 items-start w-full"}>
                                     <VideoForm index={index}/>
                                     <Button
                                         theme={ButtonThemes.TEXT}
-                                        className={"!px-2 !py-0 rounded-md"}
-                                        type='button'
+                                        className={"!p-2 rounded-md"}
+                                        type="button"
                                         onClick={() => {
                                             remove(index);
                                         }}

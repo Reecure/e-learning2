@@ -92,7 +92,7 @@ const SortableLessonItem: FC<Props> = ({item, deleteOpen, disabled}) => {
                     is_completed: userProgressOnLesson && userProgressOnLesson.data?.is_completed !== true || false,
                     quizScore: userProgressOnLesson && userProgressOnLesson.data?.quizScore || 0,
                     lessonType: item.lesson_type,
-                    read_later: userProgressOnLesson && userProgressOnLesson.data?.read_later
+                    read_later: userProgressOnLesson && userProgressOnLesson.data?.read_later || false
                 },
             });
         } catch (e) {

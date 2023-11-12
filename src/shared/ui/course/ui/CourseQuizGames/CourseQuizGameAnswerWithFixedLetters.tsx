@@ -71,7 +71,7 @@ const CourseQuizGameAnswerWithFixedLetters: FC<Props> = ({
                             key={i}
                             type={"text"}
                             className={
-                                " max-w-[15px] mr-2 focus:none outline-0 bg-transparent border-b-[1px] border-dark-primary-main"
+                                " max-w-[15px] mr-2 focus:none outline-0 bg-transparent border-b-[1px] border-light-primary-main dark:border-dark-primary-main"
                             }
                             value={inputValues[i] || ""}
                             maxLength={1}

@@ -15,6 +15,7 @@ import {AiOutlineClose} from "react-icons/ai";
 import {BiLeftArrow} from "react-icons/bi";
 import {Routes} from "@/shared/config/routes";
 import StubText from "@/shared/ui/StubText/StubText";
+import {HiOutlineDocumentText} from "react-icons/hi";
 
 const CourseModuleLessonsPage = () => {
     const [canLessonEdit, setCanLessonEdit] = useState(false);
@@ -95,9 +96,10 @@ const CourseModuleLessonsPage = () => {
                 </div>
             }
 
-            <div className={"fixed bottom-10 left-10 bg-dark-primary-hover-second rounded-full w-16 h-16 md:hidden"}
+            <Button theme={ButtonThemes.FILLED} className={"fixed bottom-0 right-[0%] text-xl !p-4 md:hidden"}
                 onClick={setLessonSidebarOpenHandler}>
-            </div>
+                <HiOutlineDocumentText/>
+            </Button>
 
             <div className={"ml-5 w-full overflow-y-auto mr-5 md:mr-10 xl:mr-20"}>
                 {
