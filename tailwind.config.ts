@@ -13,8 +13,8 @@ const config: Config = withUt({
                 xs: "340px",
             },
             gridTemplateColumns: {
-                "repeat-auto-custom": "repeat(auto-fit,minmax(340px,1fr))",
-                "repeat-auto-progress-custom": "repeat(auto-fit,minmax(280px,1fr))"
+                "repeat-auto-custom": "repeat(auto-fit,minmax(200px,340px))",
+                "repeat-auto-progress-custom": "repeat(auto-fit,minmax(200px,300px))"
             },
             colors: {
                 light: {

@@ -38,12 +38,12 @@ const Navbar: FC<Props> = ({className, theme, toggleTheme}) => {
                 <Image src={logo} alt={"logo"} className={"w-8 h-8 sm:w-10 sm:h-10"}/>
                 <Button theme={ButtonThemes.CLEAR} onClick={() => {
                     openHamburgerHandler();
-                }} className={"text-2xl sm:hidden"}>
+                }} className={"text-2xl sm:hidden !p-0 ml-5"}>
 
                     {!hamburgerOpen && <GiHamburgerMenu/>}
 
                 </Button>
-                <ul className='hidden sm:flex text-lg space-x-4 font-bold'>
+                <ul className="hidden sm:flex text-lg space-x-4 font-bold">
                     {
                         Links.map(item => !item.protected && <li key={item.link} className={""}>
                             {<Link

@@ -13,11 +13,11 @@ class MyDocument extends Document<Props> {
         return (
             <Html lang={currentLocale}>
                 <Head>
-                    <meta charSet="utf-8" />
+                    <meta charSet="utf-8"/>
                 </Head>
                 <body>
-                    <Main />
-                    <NextScript />
+                    <Main/>
+                    <NextScript/>
                 </body>
             </Html>
         );

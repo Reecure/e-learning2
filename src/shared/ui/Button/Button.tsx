@@ -24,7 +24,7 @@ const Button: FC<Props> = ({
     <button
         data-testid={"button"}
         type={"button"}
-        className={`${theme} px-6 py-[10px] ${className}  rounded-md duration-200  disabled:opacity-50 active:scale-95`}
+        className={`${theme} px-6 py-[10px] ${className}  rounded-md duration-200  disabled:opacity-50 xl:active:scale-95`}
         {...otherProps}
     >
         {children}

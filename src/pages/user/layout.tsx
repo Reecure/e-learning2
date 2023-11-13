@@ -37,7 +37,7 @@ const UserLayout: FC<Props> = ({children, contentClassName}) => {
                     sidebarOpen && <Sidebar/>
                 }
                 <Button theme={ButtonThemes.FILLED} onClick={openSidebarHandler}
-                    className={`absolute bottom-0 ${sidebarOpen ? "left-14 md:left-20" : "left-0"} duration-200 transition-all !p-4 z-[99] md:z-[199]`}>
+                    className={`fixed bottom-0 ${sidebarOpen ? "left-14 md:left-20" : "left-0"} duration-200 transition-all !p-4 z-[99] md:z-[199]`}>
                     {
                         sidebarOpen ? <AiOutlineLeft/> : <AiOutlineRight/>
                     }

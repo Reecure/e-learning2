@@ -68,26 +68,26 @@ const CourseGradesPage = () => {
             <div className={"flex justify-between bg-neutral-200 dark:bg-neutral-800 p-5 rounded-md"}>
                 <div className={"flex flex-col justify-between"}>
                     <h3 className={"text-3xl font-extrabold"}>{courseInfo.data?.courseProgress.userProgress.course_name}</h3>
-                    <div className={"grid grid-cols-2 gap-3"}>
+                    <div className={"grid grid-cols-1 md:grid-cols-2 gap-3"}>
                         <div className={"flex gap-1 items-center"}>
                             <BsCalendarDate/>
                             Start course at {courseInfo.data?.courseProgress.userProgress.start_course?.slice(0, 10)}
                         </div>
                         <div className={"flex gap-1 items-center"}>
-                            <BiSolidBarChartAlt2 />
+                            <BiSolidBarChartAlt2/>
                             Avg quiz sccore: {courseInfo.data?.avg_score}
                         </div>
                         <div className={"flex gap-1 items-center"}>
-                            <MdIncompleteCircle />
+                            <MdIncompleteCircle/>
                             Completed modules: {courseInfo.data?.completed_modules}
                         </div>
                         <div className={"flex gap-1 items-center"}>
-                            <MdIncompleteCircle />
+                            <MdIncompleteCircle/>
                             Completed lessons: {courseInfo.data?.completed_lessons}
                         </div>
                     </div>
                 </div>
-                <div className={"w-[150px] h-[150px]"}>
+                <div className={"hidden sm:block w-[150px] h-[150px]"}>
                     <Pie data={
                         {
                             labels: ["completed", "uncompleted"],

@@ -45,7 +45,7 @@ const CoursesPage = () => {
                     <div
                         className={`${
                             courseRendered === CourseType.SubscribedCourses
-                            && "pb-3 border-b-4 border-light-primary-main dark:border-dark-primary-main z-[1]"
+                            && "!pb-0 sm:!pb-3 border-b-4 border-light-primary-main dark:border-dark-primary-main z-[1]"
                         }`}
                     >
                         <Button
@@ -60,7 +60,7 @@ const CoursesPage = () => {
                     <div
                         className={`${
                             courseRendered === CourseType.MyCourses
-                            && "pb-3 border-b-4 border-light-primary-main dark:border-dark-primary-main z-[1]"
+                            && "!pb-0 sm:!pb-3  border-b-4 border-light-primary-main dark:border-dark-primary-main z-[1]"
                         }`}
                     >
                         {
@@ -82,51 +82,56 @@ const CoursesPage = () => {
                 ></div>
             </div>
 
-            {
-                subscribedCourses.isLoading || myselfCourses.isLoading ? <>
-                    <div className={"h-full grid grid-cols-repeat-auto-custom gap-5"}>
-                        {Array(8).fill(null).map((item, i) => <Skeleton key={i} width={340} height={310}/>)}
-                    </div>
-                </> :
-                    <>
-                        {
-                            (
-                                <>
-                                    {courseRendered === CourseType.MyCourses ? (
-                                        <div className={"h-full grid grid-cols-repeat-auto-custom gap-5"}>
-                                            {myselfCourses.data.length === 0 ?
-                                                <div className={"flex flex-col  justify-center items-center "}>
-                                                    <h3 className={"text-3xl font-bold mb-5 text-center max-w-[450px] w-full"}>
-                                                        Looks like your course list is feeling a bit empty at the
-                                                        moment.
-                                                    </h3>
-                                                    <Link href={`${Routes.USER_PROFILE}`}
-                                                        className={"text-lg text-dark-primary-main underline"}>
-                                                        Let&#39;s create it up together!
-                                                    </Link>
-                                                </div> : myselfCourses.data?.map(item =>
-                                                    <SmallCard key={item.id}
-                                                        course={item as Course}/>)}
-                                        </div>
-                                    ) : (
-                                        <div className={"h-full grid grid-cols-repeat-auto-custom gap-5"}>
-                                            {subscribedCourses.data?.length === 0 ?
-                                                <div className={"flex flex-col justify-center items-center "}>
-                                                    <h3 className={"text-3xl font-bold mb-5 text-center max-w-[450px] w-full"}>Looks
-                                                        like your course list is feeling a bit empty at the moment.</h3>
-                                                    <Link href={`${Routes.COURSES}`}
-                                                        className={"text-lg text-dark-primary-main underline"}>Let&#39;s
-                                                        fill it up together!</Link>
-                                                </div> : subscribedCourses.data?.map(item =>
-                                                    <SmallCard key={item.id}
-                                                        course={item as Course}/>)}
-                                        </div>
-                                    )}
-                                </>
-                            )
-                        }
-                    </>
-            }
+            <div className={""}>
+                {
+                    subscribedCourses.isLoading || myselfCourses.isLoading ? <>
+                        <div className={"h-full grid grid-cols-repeat-auto-custom gap-5"}>
+                            {Array(8).fill(null).map((item, i) => <Skeleton key={i} width={340} height={310}/>)}
+                        </div>
+                    </> :
+                        <>
+                            {
+                                (
+                                    <div className={"flex flex-col items-center md:block"}>
+                                        {courseRendered === CourseType.MyCourses ? (
+                                            <div className={"h-full grid grid-cols-repeat-auto-custom gap-5"}>
+                                                {myselfCourses.data.length === 0 ?
+                                                    <div className={"flex flex-col  justify-center items-center "}>
+                                                        <h3 className={"text-3xl font-bold mb-5 text-center max-w-[450px] w-full"}>
+                                                            Looks like your course list is feeling a bit empty at the
+                                                            moment.
+                                                        </h3>
+                                                        <Link href={`${Routes.USER_PROFILE}`}
+                                                            className={"text-lg text-dark-primary-main underline"}>
+                                                            Let&#39;s create it up together!
+                                                        </Link>
+                                                    </div> : myselfCourses.data?.map(item =>
+                                                        <SmallCard key={item.id}
+                                                            course={item as Course}/>)}
+                                            </div>
+                                        ) : (
+                                            <div className={"h-full grid grid-cols-repeat-auto-custom gap-5"}>
+                                                {subscribedCourses.data?.length === 0 ?
+                                                    <div className={"flex flex-col justify-center items-center "}>
+                                                        <h3 className={"text-3xl font-bold mb-5 text-center max-w-[450px] w-full"}>
+                                                            Looks like your course list is feeling a bit empty at the
+                                                            moment.
+                                                        </h3>
+                                                        <Link href={`${Routes.COURSES}`}
+                                                            className={"text-lg text-dark-primary-main underline"}>
+                                                            Let&#39;s fill it up together!
+                                                        </Link>
+                                                    </div> : subscribedCourses.data?.map(item =>
+                                                        <SmallCard key={item.id}
+                                                            course={item as Course}/>)}
+                                            </div>
+                                        )}
+                                    </div>
+                                )
+                            }
+                        </>
+                }
+            </div>
 
 
         </>
