@@ -7,8 +7,8 @@ import LessonContent from "@/shared/ui/course/ui/LessonContent/LessonContent";
 import CreateLesson from "@/shared/ui/course/ui/CreateLesson/CreateLesson";
 import {Button, ButtonThemes, Overlay} from "@/shared/ui";
 import CourseLessons from "@/shared/ui/course/ui/CourseLessons/CourseLessons";
-import {useAppSelector} from "@/app/ReduxProvider/config/hooks";
-import {currentLessonSelector} from "@/shared/ui/course/model";
+import {useAppDispatch, useAppSelector} from "@/app/ReduxProvider/config/hooks";
+import {currentLessonSelector, setCurrentLessonId, setPreviewVisible} from "@/shared/ui/course/model";
 import {useCurrentUser} from "@/shared/hooks";
 import {isLessonPreviewVisible} from "@/shared/ui/course/model/selectors/currentLessonSelector";
 import {AiOutlineClose} from "react-icons/ai";
@@ -16,6 +16,7 @@ import {BiLeftArrow} from "react-icons/bi";
 import {Routes} from "@/shared/config/routes";
 import StubText from "@/shared/ui/StubText/StubText";
 import {HiOutlineDocumentText} from "react-icons/hi";
+import {LessonType} from "@/enteties/Lesson";
 
 const CourseModuleLessonsPage = () => {
     const [canLessonEdit, setCanLessonEdit] = useState(false);
@@ -24,6 +25,8 @@ const CourseModuleLessonsPage = () => {
 
     const router = useRouter();
     const currentUserId = useCurrentUser();
+
+    const dispatch = useAppDispatch();
 
     const moduleQuery = trpc.module.byId.useQuery({
         id: router.query.id as string
@@ -104,7 +107,7 @@ const CourseModuleLessonsPage = () => {
             <div className={"ml-5 w-full overflow-y-auto mr-5 md:mr-10 xl:mr-20"}>
                 {
                     isVisiblePreview ? <div className={"p-5"}>
-                        <h3 className={"text-5xl mb-5 font-bold"}>{moduleQuery.data?.title}</h3>
+                        <h3 className={"text-2xl md:text-3xl mb-5 font-bold"}>{moduleQuery.data?.title}</h3>
                         {
                             moduleQuery.data?.lessons.length === 0 ?
                                 <div className={"w-full flex justify-center items-center"}>
@@ -114,7 +117,18 @@ const CourseModuleLessonsPage = () => {
                                 <ul className={"list-disc flex flex-col gap-2 list-inside"}>
                                     {
                                         moduleQuery.data?.lessons.map(lesson => (
-                                            lesson.is_visible && <li key={lesson.id}>{lesson.title}</li>
+                                            lesson.is_visible &&
+                                            <li onClick={() => {
+                                                dispatch(setCurrentLessonId({
+                                                    currentLessonId: {
+                                                        lesson_id: lesson.lesson_id,
+                                                        progress_lesson_id: lesson.id
+                                                    }
+                                                }));
+                                                dispatch(setPreviewVisible(false));
+                                            }} key={lesson.id}
+                                            className={`px-2 py-1 rounded-md max-w-[500px] ${lesson?.lesson_type === LessonType.TEXT ? "bg-blue-300 dark:bg-blue-300/30 " +
+                                                    "hover:bg-blue-300/60" : "bg-red-300 dark:bg-red-300/30 hover:bg-red-300/60"}`}>{lesson.title}</li>
                                         ))
                                     }
                                 </ul>

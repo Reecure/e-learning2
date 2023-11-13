@@ -86,7 +86,7 @@ const CreateLessonQuizContent: FC<Props> = ({initialData, setQuizContentEditable
         <FormProvider {...methods}>
             <form
                 onSubmit={handleSubmit(onSubmit)}
-                className={"flex flex-col gap-2 mb-10"}
+                className={"flex flex-col gap-2 "}
             >
                 {fields.map((field, index) => (
                     <div key={field.id}>
@@ -123,7 +123,8 @@ const CreateLessonQuizContent: FC<Props> = ({initialData, setQuizContentEditable
                         ) : null}
                     </div>
                 ))}
-                <div className={"flex flex-col sm:flex-row gap-3"}>
+                <div
+                    className={"grid grid-cols-1 gap-2 md:grid-cols-4 mt-5 sm:mt-0 bg-neutral-600/30 p-5 md:p-2 rounded-md"}>
                     <Button theme={ButtonThemes.FILLED} onClick={addQuestionAnswerBlock}>
                         Add Question Answer
                     </Button>
@@ -134,9 +135,11 @@ const CreateLessonQuizContent: FC<Props> = ({initialData, setQuizContentEditable
                         Add Answer with fixed letters
                     </Button>
                 </div>
-                <Button theme={ButtonThemes.FILLED} type='submit'>
-                    Save
-                </Button>
+                <div className={"flex justify-end "}>
+                    <Button theme={ButtonThemes.FILLED} type="submit">
+                        Save
+                    </Button>
+                </div>
             </form>
         </FormProvider>
     );

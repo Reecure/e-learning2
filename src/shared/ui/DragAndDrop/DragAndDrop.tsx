@@ -93,10 +93,6 @@ const DragAndDrop: FC<Props<ModuleLesson | ICourseModules>> = ({
         });
     };
 
-    if (propsItems === undefined) {
-        return <>asf</>;
-    }
-
     return (
         <div className={"mt-5"}>
             <div className={"flex justify-center mb-2"}>

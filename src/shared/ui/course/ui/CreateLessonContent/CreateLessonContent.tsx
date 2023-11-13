@@ -165,7 +165,8 @@ const CreateLessonContent: FC<Props> = ({
                             ) : null}
                         </div>
                     ))}
-                    <div className={"flex flex-col mt-5 sm:mt-0 sm:flex-row gap-3"}>
+                    <div
+                        className={"grid grid-cols-2 gap-2 md:grid-cols-4 mt-5 sm:mt-0 bg-neutral-600/30 p-5 md:p-2 rounded-md"}>
                         <Button theme={ButtonThemes.FILLED} onClick={addTextBlock}>
                             Add Text Block
                         </Button>
@@ -179,9 +180,12 @@ const CreateLessonContent: FC<Props> = ({
                             Add Video Block
                         </Button>
                     </div>
-                    <Button theme={ButtonThemes.FILLED} type='submit'>
-                        Save
-                    </Button>
+                    <div className={"flex justify-end "}>
+                        <Button theme={ButtonThemes.FILLED} type="submit">
+                            Save
+                        </Button>
+                    </div>
+
                 </form>
             </FormProvider>
         </>

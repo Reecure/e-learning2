@@ -20,7 +20,7 @@ const VideoBlock: FC<Props> = ({videoBlock}) => {
                 <span className={"text-dark-primary-main"}>v=</span> flag{" "}
                 <span className={"text-neutral-500"}>
           https://www.youtube.com/watch?
-                    <span className={"italic text-dark-primary-main"}>v=n36n7Ravzwc</span>
+                    <span className={"italic text-dark-primary-main"}>v=video_id</span>
           &ab_channel=User
                 </span>
             </div>
