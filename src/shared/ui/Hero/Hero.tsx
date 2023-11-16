@@ -5,7 +5,7 @@ import hero from "../../assets/Hero.svg";
 type Props = Record<string, unknown>;
 
 const Hero: FC<Props> = () => (
-    <div className={"relative mb-10"}>
+    <div data-testid={"hero"} className={"relative mb-10"}>
         <Image
             src={hero}
             alt={"hero"}

@@ -13,7 +13,7 @@ const LastCourse: FC<Props> = ({course_id}) => {
     if (course_id === "") {
         return <div
             className={"flex flex-col justify-center items-center min-w-[250px] max-w-[470px] sm:w-[340px] h-[310px] rounded-md border-dashed border-2 border-dark-primary-main"}>
-            <StubText link={"Dive into the world of learning!"} title={`You don't visit courses yet`}/>
+            <StubText linkText={"Dive into the world of learning!"} title={`You don't visit courses yet`}/>
         </div>;
     }
 

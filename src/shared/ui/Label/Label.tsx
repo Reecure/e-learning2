@@ -8,7 +8,7 @@ type Props = {
 };
 
 const Label: FC<Props> = ({textColor, labelText, children, htmlFor}) => (
-    <label htmlFor={htmlFor} className={"relative"}>
+    <label data-testid={"label"} htmlFor={htmlFor} className={"relative"}>
         <p
             className={
                 `${textColor} mb-1 text-sm  dark:text-neutral-300 whitespace-nowrap`
@@ -16,7 +16,10 @@ const Label: FC<Props> = ({textColor, labelText, children, htmlFor}) => (
         >
             {labelText}
         </p>
-        {children}
+        <>
+            {children}
+        </>
+
     </label>
 );
 

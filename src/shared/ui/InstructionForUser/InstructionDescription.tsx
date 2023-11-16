@@ -7,7 +7,7 @@ interface Props {
     };
 }
 
-const InstructionDesctiption: FC<Props> = ({item}) => {
+const InstructionDescription: FC<Props> = ({item}) => {
 
     return (
         <>
@@ -23,4 +23,4 @@ const InstructionDesctiption: FC<Props> = ({item}) => {
     );
 };
 
-export default InstructionDesctiption;
+export default InstructionDescription;

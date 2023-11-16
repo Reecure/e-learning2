@@ -16,7 +16,8 @@ const Commentary: FC<Props> = ({info}) => {
     }
 
     return (
-        <div className={"w-full px-5 py-2 rounded-md border-2 border-light-primary-main dark:border-dark-primary-main"}>
+        <div data-testid={"commentary"}
+            className={"w-full px-5 py-2 rounded-md border-2 border-light-primary-main dark:border-dark-primary-main"}>
             <p className={"text-md text-neutral-600 dark:text-neutral-400"}>{userInfo.data?.firstname} {userInfo.data?.lastname} {info.creation_date.toISOString().slice(0, 10)}</p>
             <p className={"mt-2"}>{info.text}</p>
         </div>

@@ -7,8 +7,6 @@ import {ReduxProvider} from "@/app/ReduxProvider";
 import "@/app/styles/globals.css";
 import {useRouter} from "next/router";
 import {Loader} from "@/shared/ui";
-import {appWithTranslation} from "next-i18next";
-
 
 export type NextPageWithLayout<P = Record<string, unknown>, IP = P> = NextPage<P, IP> & {
     getLayout?: (page: ReactElement) => ReactNode;
@@ -52,4 +50,4 @@ const App: FC<AppPropsWithLayout> = ({Component, pageProps}) => {
     );
 };
 
-export default trpc.withTRPC(appWithTranslation(App));
+export default trpc.withTRPC(App);

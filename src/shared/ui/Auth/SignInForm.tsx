@@ -1,8 +1,8 @@
 import {FC, useState} from "react";
 import {signIn} from "next-auth/react";
-import {Routes} from "@/shared/config/routes";
 import {Button, ButtonThemes, Label, Text} from "@/shared/ui";
 import {useForm} from "react-hook-form";
+import {Routes} from "@/shared/config/routes";
 import {useRouter} from "next/router";
 
 type AuthError = {
@@ -59,18 +59,20 @@ const SignInForm: FC<Props> = () => {
 
             <Label htmlFor={"email"} labelText={"Email"}>
                 <input
+                    data-testid={"email"}
                     className={"inputField"}
-                    type='text'
+                    type="text"
                     placeholder={"Enter your email"}
                     {...register("email", {required: true})}
                 />
                 {errors.email && <Text error text={"Email is required"}/>}
             </Label>
 
-            <Label htmlFor='password' labelText={"Password"}>
+            <Label htmlFor="password" labelText={"Password"}>
                 <input
+                    data-testid={"password"}
                     className={"inputField"}
-                    type='password'
+                    type="password"
                     placeholder={"Enter your password"}
                     {...register("password", {required: true})}
                 />
@@ -78,7 +80,7 @@ const SignInForm: FC<Props> = () => {
             </Label>
 
             <div className={"flex justify-end mt-5"}>
-                <Button type={"submit"} theme={ButtonThemes.FILLED} className={"w-[170px]"}>
+                <Button data-testid={"submit"} type={"submit"} theme={ButtonThemes.FILLED} className={"w-[170px]"}>
                     Login
                 </Button>
             </div>

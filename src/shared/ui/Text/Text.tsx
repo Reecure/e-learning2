@@ -7,7 +7,6 @@ type Props = {
 
 const Text: FC<Props> = ({text, error}) => (
     <p
-        data-testid={"text"}
         className={`${
             error ? "text-light-error-main dark:text-dark-error-main" : ""
         }`}

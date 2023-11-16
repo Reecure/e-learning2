@@ -6,11 +6,24 @@ import ThemeToggle, {Themes} from "../../../../ThemeTogler/ui/ThemeToggle";
 import {signOut, useSession} from "next-auth/react";
 import {Button} from "@/shared/ui";
 import Menu from "@/shared/ui/Menu/Menu";
+import {Routes} from "@/shared/config/routes";
 
 interface Props {
     theme: Themes;
     toggleTheme: () => void;
 }
+
+const Links = [
+    {
+        title: "Profile",
+        href: Routes.USER_PROFILE
+    },
+    {
+        title: "My courses",
+        href: Routes.USER_COURSE_PAGE
+    },
+
+];
 
 const NavbarMenu: FC<Props> = ({toggleTheme, theme}) => {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -37,26 +50,19 @@ const NavbarMenu: FC<Props> = ({toggleTheme, theme}) => {
             <div className={"flex flex-col gap-y-1 items-start"}>
                 {status === "authenticated" && (
                     <>
-                        <div>
-                            <Link href={"/user/profile"} className={"hover:opacity-70"}
-                                onClick={() => {
-                                    setMenuOpen(!menuOpen);
-                                }}
-                            >
-                                Profile
-                            </Link>
-                        </div>
-                        <div>
-                            <Link
-                                href={"/user/my-courses"}
-                                className={"hover:opacity-70"}
-                                onClick={() => {
-                                    setMenuOpen(!menuOpen);
-                                }}
-                            >
-                                My courses
-                            </Link>
-                        </div>
+                        {
+                            Links.map(link => {
+                                return <div key={link.title}>
+                                    <Link href={link.href} className={"hover:opacity-70"}
+                                        onClick={() => {
+                                            setMenuOpen(!menuOpen);
+                                        }}
+                                    >
+                                        {link.title}
+                                    </Link>
+                                </div>;
+                            })
+                        }
                     </>
                 )}
                 <div className={"flex justify-between items-center w-full"}>

@@ -1,5 +1,5 @@
 import {FC, useState} from "react";
-import InstructionDesctiption from "@/shared/ui/InstructionForUser/InstructionDesctiption";
+import InstructionDescription from "@/shared/ui/InstructionForUser/InstructionDescription";
 
 interface Props {
 }
@@ -7,15 +7,15 @@ interface Props {
 const currentTab = (tab: number, item: { title: string; paragraph: string[] }) => {
     switch (tab) {
     case 0:
-        return <InstructionDesctiption key={tab} item={item}/>;
+        return <InstructionDescription key={tab} item={item}/>;
     case 1:
-        return <InstructionDesctiption key={tab} item={item}/>;
+        return <InstructionDescription key={tab} item={item}/>;
     case 2:
-        return <InstructionDesctiption key={tab} item={item}/>;
+        return <InstructionDescription key={tab} item={item}/>;
     case 3:
-        return <InstructionDesctiption key={tab} item={item}/>;
+        return <InstructionDescription key={tab} item={item}/>;
     default:
-        return <InstructionDesctiption key={tab} item={item}/>;
+        return <InstructionDescription key={tab} item={item}/>;
     }
 };
 

@@ -42,47 +42,48 @@ const CreateNewsForm: FC<Props> = ({onSubmit}) => {
     };
 
     return (
-        <>
-            <form
-                className={"flex flex-col gap-2 w-[200px] sm:w-[300px] md:w-[350px] lg:w-[430px]"}
-                onSubmit={handleSubmit(submitHandler)}
+
+        <form
+            className={"flex flex-col gap-2 w-[200px] sm:w-[300px] md:w-[350px] lg:w-[430px]"}
+            onSubmit={handleSubmit(submitHandler)}
+        >
+            <p className={"text-3xl mb-5 text-center font-extrabold"}>
+                Create News
+            </p>
+            <Label htmlFor={"title"} labelText={"Title"}>
+                <input data-testid={"title"} className={"inputField"} {...register("title", {
+                    required: {value: true, message: "Title is required"},
+                    minLength: {value: 3, message: "Min length is 3 letters"},
+                    maxLength: {value: 25, message: "Max length is 25 letters"}
+                })} />
+                {(errors.title != null) && <Text error text={errors.title.message || "Error"}/>}
+
+            </Label>
+            <Label htmlFor={"description"} labelText={"Description"}>
+                <input data-testid={"description"} className={"inputField"} {...register("description", {
+                    required: {value: true, message: "Description is required"},
+                    minLength: {value: 3, message: "Min length is 3 letters"},
+                    maxLength: {value: 25, message: "Max length is 25 letters"}
+                })} />
+                {(errors.description != null) && <Text error text={errors.description.message || "Error"}/>}
+
+            </Label>
+
+            <Button
+                data-testid={"submit"}
+                disabled={disableButton} type={"submit"} theme={ButtonThemes.FILLED}>
+                Create News
+            </Button>
+            <Button
+                type={"button"}
+                theme={ButtonThemes.FILLED}
+                onClick={() => {
+                    reset();
+                }}
             >
-                <p className={"text-3xl mb-5 text-center font-extrabold"}>
-                    Create News
-                </p>
-                <Label htmlFor={"title"} labelText={"Title"}>
-                    <input className={"inputField"} {...register("title", {
-                        required: {value: true, message: "Title is required"},
-                        minLength: {value: 3, message: "Min length is 3 letters"},
-                        maxLength: {value: 25, message: "Max length is 25 letters"}
-                    })} />
-                    {(errors.title != null) && <Text error text={errors.title.message || "Error"}/>}
-
-                </Label>
-                <Label htmlFor={"description"} labelText={"Description"}>
-                    <input className={"inputField"} {...register("description", {
-                        required: {value: true, message: "Description is required"},
-                        minLength: {value: 3, message: "Min length is 3 letters"},
-                        maxLength: {value: 25, message: "Max length is 25 letters"}
-                    })} />
-                    {(errors.description != null) && <Text error text={errors.description.message || "Error"}/>}
-
-                </Label>
-
-                <Button disabled={disableButton} type={"submit"} theme={ButtonThemes.FILLED}>
-                    Create News
-                </Button>
-                <Button
-                    type={"button"}
-                    theme={ButtonThemes.FILLED}
-                    onClick={() => {
-                        reset();
-                    }}
-                >
-                    Reset
-                </Button>
-            </form>
-        </>
+                Reset
+            </Button>
+        </form>
     );
 };
 

@@ -7,6 +7,8 @@ type Props = {
     index: number;
 };
 
+const tdStyle = "p-1  text-center border-light-primary-main  border-r-2";
+
 const UserRaw: FC<Props> = ({user, index}) => {
     const [isEditable, setIsEditable] = useState(false);
     const openHandler = () => {
@@ -17,27 +19,27 @@ const UserRaw: FC<Props> = ({user, index}) => {
         <>
             <tr className={"border-b-2 border-light-primary-main hover:bg-dark-primary-container/30"}>
                 <td
-                    className={"p-1  text-center border-light-primary-main  border-r-2"}
+                    className={tdStyle}
                 >
                     {index + 1}
                 </td>
                 <td
-                    className={"p-1  text-center border-light-primary-main  border-r-2"}
+                    className={tdStyle}
                 >
                     {user.firstname}
                 </td>
                 <td
-                    className={"p-1  text-center border-light-primary-main  border-r-2"}
+                    className={tdStyle}
                 >
                     {user.lastname}
                 </td>
                 <td
-                    className={"p-1  text-center border-light-primary-main  border-r-2"}
+                    className={tdStyle}
                 >
                     {user.email}
                 </td>
                 <td
-                    className={"p-1  text-center border-light-primary-main  border-r-2"}
+                    className={tdStyle}
                 >
                     {user.role}
                 </td>

@@ -44,7 +44,7 @@ const DragAndDrop: FC<Props<ModuleLesson | ICourseModules>> = ({
         }});
     const updateModulesOrder = trpc.module.updateOrder.useMutation({
         async onSuccess(){
-            await utils.module.byCourseId.invalidate();
+            await utils.course.courseById.invalidate();
         }
     });
 
@@ -96,30 +96,17 @@ const DragAndDrop: FC<Props<ModuleLesson | ICourseModules>> = ({
     return (
         <div className={"mt-5"}>
             <div className={"flex justify-center mb-2"}>
-                {isUserAuthor && canEdit && items.length > 1 && (isModule
-                    ? (
-                        <div className={"flex gap-5"}>
-                            <Button
-                                disabled={!orderChange}
-                                theme={ButtonThemes.FILLED}
-                                onClick={saveModules}
-                            >
-                                Save Order
-                            </Button>
-                        </div>
-
-                    )
-                    : (
-                        <div className={"flex gap-5"}>
-                            <Button
-                                disabled={!orderChange}
-                                theme={ButtonThemes.FILLED}
-                                onClick={saveLessons}
-                            >
-                                Save Order
-                            </Button>
-                        </div>
-                    ))}
+                {isUserAuthor && canEdit && items.length > 1 && (
+                    <div className="flex gap-5">
+                        <Button
+                            disabled={!orderChange}
+                            theme={ButtonThemes.FILLED}
+                            onClick={isModule ? saveModules : saveLessons}
+                        >
+                            Save Order
+                        </Button>
+                    </div>
+                )}
             </div>
             {
                 propsItems === undefined || propsItems.length === 0

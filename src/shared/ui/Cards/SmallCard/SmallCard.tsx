@@ -1,5 +1,4 @@
 import {type FC,} from "react";
-import Image from "next/image";
 import {type Course} from "@/enteties/Course";
 import Link from "next/link";
 import {Routes} from "@/shared/config/routes";
@@ -9,6 +8,7 @@ import {trpc} from "@/shared/utils/trpc";
 import {useSession} from "next-auth/react";
 import {AiFillStar, AiOutlineStar} from "react-icons/ai";
 import empty_image from "@/shared/assets/empty_image.png";
+import Image from "next/image";
 
 type Props = {
     course: Course;
@@ -81,7 +81,6 @@ const SmallCard: FC<Props> = ({course}) => {
                                 height={350}
                             />
                     }
-
                 </div>
                 <div className={"max-w-[300px] flex flex-col justify-between"}>
                     <div className={"flex justify-between my-4 text-light-neutral-300 dark:text-neutral-400 text-sm"}>

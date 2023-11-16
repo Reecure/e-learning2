@@ -26,11 +26,13 @@ const DeleteModal: FC<Props> = ({deleteIsOpen, deleteOpenHandler, itemName, dele
 
     return (
         <Modal isOpen={deleteIsOpen} setIsOpen={deleteOpenHandler}>
-            <form onSubmit={(event) => {
-                event.preventDefault();
-                deleteFunc();
-                setNotificationOpen && setNotificationOpen();
-            }} className={"flex flex-col gap-2"}>
+            <form
+                data-testid={"delete-modal"}
+                onSubmit={(event) => {
+                    event.preventDefault();
+                    deleteFunc();
+                    setNotificationOpen && setNotificationOpen();
+                }} className={"flex flex-col gap-2"}>
                 <div className={"text-xl"}>
                     Write{" "}
                     <span className={"underline text-dark-error-main"}>
@@ -39,7 +41,8 @@ const DeleteModal: FC<Props> = ({deleteIsOpen, deleteOpenHandler, itemName, dele
                     to delete {itemName}
                 </div>
                 <input
-                    type='text'
+                    data-testid={"delete-input"}
+                    type="text"
                     className={"inputField"}
                     onChange={deleteValueHandler}
                 />

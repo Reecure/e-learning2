@@ -4,6 +4,7 @@ import {ReduxProvider} from "@/app/ReduxProvider";
 import {SessionProvider} from "next-auth/react";
 import {Session} from "next-auth";
 import {UserRoles} from "@/enteties/User";
+import "@testing-library/jest-dom";
 
 const mockSession: Session = {
     user: {

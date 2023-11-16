@@ -1,7 +1,7 @@
 import React from "react";
 import {Themes, ThemeToggle} from "@/widgets/ThemeTogler";
 import {fireEvent, screen} from "@testing-library/react";
-import {ComponentRender} from "../../../shared/config/test/test-utils";
+import {ComponentRender} from "@/shared/config/test/test-utils";
 
 
 describe("ThemeToggle", () => {

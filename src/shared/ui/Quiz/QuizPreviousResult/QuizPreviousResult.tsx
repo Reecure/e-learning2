@@ -7,7 +7,7 @@ interface Props {
 const QuizPreviousResult: FC<Props> = ({res}) => {
 
     return (
-        <p className={"text-lg font-bold "}>
+        <p className={"text-lg font-bold "} data-testid={"quiz-previous-result"}>
             Your previous result <span className={"text-blue-400 dark:text-blue-700 text-xl"}>{res}</span>
         </p>
     );

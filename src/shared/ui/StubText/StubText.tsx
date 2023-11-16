@@ -4,15 +4,15 @@ import {Routes} from "@/shared/config/routes";
 
 interface Props {
     title: string,
-    link?: string
+    linkText?: string
 }
 
-const StubText: FC<Props> = ({link, title}) => {
+const StubText: FC<Props> = ({linkText, title}) => {
 
     return (
         <>
             <p className={"text-xl font-bold mb-4"}>{title}</p>
-            <Link href={Routes.COURSES} className={"text-sm underline text-blue-400"}>{link}</Link>
+            <Link href={Routes.COURSES} className={"text-sm underline text-blue-400"}>{linkText}</Link>
         </>
     );
 };

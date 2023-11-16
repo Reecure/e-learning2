@@ -203,10 +203,8 @@ const SortableLessonItem: FC<Props> = ({item, deleteOpen, disabled}) => {
                                     <AiOutlineCheck/>
                                 )}
                             </>
-                        </Button>
-                )}
-
-
+                        </Button>)
+                }
                 {disabled && <div className={"relative"} ref={menuRef}>
                     <Button
                         type={"submit"}
