@@ -2,6 +2,7 @@ import {type FC, useEffect, useState} from "react";
 import {Button} from "@/shared/ui";
 import {ButtonThemes} from "@/shared/ui/Button/Button";
 import {QuestionAnswerBlock} from "@/enteties/Lesson";
+import {shuffle} from "@/shared/helpers";
 
 type Props = {
     block: QuestionAnswerBlock;
@@ -37,7 +38,7 @@ const CourseQuizGameQuestionWithAnswer: FC<Props> = ({
     }, [isLast]);
 
     useEffect(() => {
-        setAnswers([...createAnswer(block), block.correctAnswer]);
+        setAnswers(shuffle([...createAnswer(block), block.correctAnswer]));
     }, [block]);
 
     return (
@@ -49,7 +50,7 @@ const CourseQuizGameQuestionWithAnswer: FC<Props> = ({
                         <div key={i} className={"flex gap-2 items-center"}>
                             <div>{i + 1}.</div>
                             <Button
-                                className={`w-full !text-start !px-1 rounded-md bg-light-primary-main/10 dark:bg-dark-primary-main/10 ${
+                                className={`w-full !text-start !px-1 lg:dark:hover:!bg-dark-primary-main/30 rounded-md bg-light-primary-main/10 dark:bg-dark-primary-main/10 ${
                                     isSelected?.selectedId === i
                                         ? "bg-light-primary-main/30 dark:bg-dark-primary-main/30"
                                         : ""

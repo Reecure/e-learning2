@@ -11,10 +11,10 @@ export enum LessonContentType {
 }
 
 export enum QuizContentType {
-    DRAG_BLOCKS = " DRAG_BLOCKS",
     QUESTION_ANSWER = "QUESTION_ANSWER",
     ANSWER_WITH_FIXED_LETTERS = "ANSWER_WITH_FIXED_LETTERS",
-    SORT_ANSWER = "SORT_ANSWER",
+    ALPHABET_SOUP_QUIZ = "ALPHABET_SOUP_QUIZ",
+    TRUE_FALSE = "TRUE_FALSE"
 }
 
 export interface ITextBlock {
@@ -66,7 +66,22 @@ export type AnswerWithFixedLetters = {
     answer: string;
 };
 
-export type QuizBlocks = QuestionAnswerBlock | AnswerWithFixedLetters
+export type AlphabetSoupQuiz = {
+    id: string;
+    type: QuizContentType.ALPHABET_SOUP_QUIZ;
+    question: string;
+    answer: string;
+};
+
+export type TrueFalseQuiz = {
+    id: string;
+    type: QuizContentType.TRUE_FALSE;
+    question: string;
+    answer: string;
+};
+
+
+export type QuizBlocks = QuestionAnswerBlock | AnswerWithFixedLetters | AlphabetSoupQuiz | TrueFalseQuiz
 
 export interface LessonsContent {
     blocks: LessonBlocks[] | QuizBlocks[];

@@ -1,14 +1,18 @@
 import {FC} from "react";
 import {
+    AlphabetSoupQuiz,
     AnswerWithFixedLetters,
     LessonBlocks,
     QuestionAnswerBlock,
     QuizBlocks,
-    QuizContentType
+    QuizContentType,
+    TrueFalseQuiz
 } from "@/enteties/Lesson";
 import CourseQuizGameQuestionWithAnswer from "@/shared/ui/course/ui/CourseQuizGames/CourseQuizGameQuestionWithAnswer";
 import CourseQuizGameAnswerWithFixedLetters
     from "@/shared/ui/course/ui/CourseQuizGames/CourseQuizGameAnswerWithFixedLetters";
+import AlphabetSoupQuizGame from "@/shared/ui/course/ui/CourseQuizGames/AlphabetSoupQuizGame";
+import TrueFalseQuizGame from "@/shared/ui/course/ui/CourseQuizGames/TrueFalseQuizGame";
 
 interface Props {
     currentQuestion: number;
@@ -47,11 +51,29 @@ const QuizContent: FC<Props> = ({
                     submitHandler={submitHandler}
                 />
             );
+        case QuizContentType.ALPHABET_SOUP_QUIZ:
+            return (
+                <AlphabetSoupQuizGame
+                    block={block as AlphabetSoupQuiz}
+                    handleAnswer={handleAnswer}
+                    isLast={submitValuesVisible}
+                    submitHandler={submitHandler}
+                />
+            );
+        case QuizContentType.TRUE_FALSE:
+            return (
+                <TrueFalseQuizGame
+                    block={block as TrueFalseQuiz}
+                    handleAnswer={handleAnswer}
+                    isLast={submitValuesVisible}
+                    submitHandler={submitHandler}
+                />
+            );
         }
     };
 
     return (
-        <div className={""}>
+        <div>
             {quizContentRender(
                 blocks[currentQuestion].type,
                 blocks[currentQuestion],

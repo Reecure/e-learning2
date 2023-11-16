@@ -1,4 +1,5 @@
 import {
+    AlphabetSoupQuiz,
     AnswerWithFixedLetters,
     ICodeBlock,
     IImageBlock,
@@ -10,14 +11,18 @@ import {
     LessonType,
     QuestionAnswerBlock,
     QuizBlocks,
-    QuizContentType
+    QuizContentType,
+    TrueFalseQuiz
 } from "./model/types/lesson";
+
 
 export type {
     Lesson,
     ITextBlock,
     ICodeBlock,
+    TrueFalseQuiz,
     IImageBlock,
+    AlphabetSoupQuiz,
     IVideoBlock,
     QuizBlocks,
     QuestionAnswerBlock,

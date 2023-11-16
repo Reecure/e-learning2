@@ -20,7 +20,7 @@ const Links = [
     },
     {
         title: "My courses",
-        href: Routes.USER_COURSE_PAGE
+        href: Routes.USER_COURSES
     },
 
 ];
