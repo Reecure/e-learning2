@@ -59,7 +59,7 @@ const CourseReviewsTab: FC<Props> = () => {
                         <input
                             type={"text"}
                             {...register("text", {
-                                required: {value: true, message: "Title is required"},
+                                required: {value: true, message: "Text is required"},
                                 minLength: {value: 3, message: "Min length is 3 letters"},
                                 maxLength: {value: 25, message: "Max length is 25 letters"}
                             })}

@@ -11,6 +11,7 @@ import {QuizBlocks, QuizContentType} from "@/enteties/Lesson";
 import {AiOutlineClose} from "react-icons/ai";
 import AlphabetSoupQuizForm from "@/shared/ui/course/ui/CourseQuizForms/AlphabetSoupQuizForm";
 import TrueFalseQuizForm from "@/shared/ui/course/ui/CourseQuizForms/TrueFalseQuizForm";
+import QuestionTwoMoreAnswerForm from "@/shared/ui/course/ui/CourseQuizForms/QuestionTwoMoreAnswerForm";
 
 
 export type FormData = {
@@ -104,6 +105,24 @@ const CreateLessonQuizContent: FC<Props> = ({initialData, setQuizContentEditable
         });
     };
 
+    const addQuestionTwoMoreAnswerBlock = () => {
+        append({
+            id: uuidv4(),
+            type: QuizContentType.QUESTION_TWO_MORE_ANSWER,
+            question: "",
+            correctAnswer: [
+                {
+                    otherCorrectAnswer: ""
+                }
+            ],
+            answer: [
+                {
+                    otherAnswer: "",
+                },
+            ],
+        });
+    };
+
     const addQuestionAnswerBlock = () => {
         append({
             id: uuidv4(),
@@ -133,6 +152,10 @@ const CreateLessonQuizContent: FC<Props> = ({initialData, setQuizContentEditable
     {
         title: "Add True False",
         func: addTrueFalseQuiz
+    },
+    {
+        title: "Add Question Two More Answer",
+        func: addQuestionTwoMoreAnswerBlock
     },
     ];
 
@@ -174,6 +197,15 @@ const CreateLessonQuizContent: FC<Props> = ({initialData, setQuizContentEditable
                                 <div
                                     className={QUIZ_FORM_STYLE}>
                                     <TrueFalseQuizForm index={index}/>
+                                    {renderCloseButton(index)}
+                                </div>
+                            )
+                        }
+                        {
+                            field.type === QuizContentType.QUESTION_TWO_MORE_ANSWER && (
+                                <div
+                                    className={QUIZ_FORM_STYLE}>
+                                    <QuestionTwoMoreAnswerForm index={index}/>
                                     {renderCloseButton(index)}
                                 </div>
                             )

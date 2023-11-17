@@ -35,9 +35,10 @@ type LessonsLessonContentBlocks {
   /// Multiple data types found: String: 40%, Array(LessonsLessonContentBlocksAnswer): 60% out of 5 sampled entries
   answer        Json?
   code          String?
-  correctAnswer String?
+  correctAnswer Json?
   id            String
   paragraphs    LessonsLessonContentBlocksParagraphs[]
+  listItems     LessonsLessonContentBlocksListItems[]
   question      String?
   src           String?
   title         String?
@@ -52,6 +53,11 @@ type LessonsLessonContentBlocksAnswer {
 type LessonsLessonContentBlocksParagraphs {
   id   String
   text String
+}
+
+type LessonsLessonContentBlocksListItems {
+  id   String
+  item String
 }
 
 type UsersCoursesProgress {

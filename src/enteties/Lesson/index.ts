@@ -10,6 +10,7 @@ import {
     LessonContentType,
     LessonType,
     QuestionAnswerBlock,
+    QuestionTwoMoreAnswerQuiz,
     QuizBlocks,
     QuizContentType,
     TrueFalseQuiz
@@ -27,6 +28,7 @@ export type {
     QuizBlocks,
     QuestionAnswerBlock,
     LessonBlocks,
+    QuestionTwoMoreAnswerQuiz,
     AnswerWithFixedLetters,
 
 };

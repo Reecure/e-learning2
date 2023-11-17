@@ -3,14 +3,6 @@ import {ICodeBlock} from "@/enteties/Lesson";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import {oneDark} from "react-syntax-highlighter/dist/cjs/styles/prism";
 
-
-const theme = {
-    // keyword: "green",
-    // identifier: "blue",
-    // string: "red",
-    // className: "bg-neutral-600"
-};
-
 type Props = {
     codeBlock: ICodeBlock
 };

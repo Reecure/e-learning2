@@ -12,9 +12,11 @@ import TextBlock from "@/shared/ui/course/ui/CourseBlocks/TextBlock";
 import CodeBlock from "@/shared/ui/course/ui/CourseBlocks/CodeBlock";
 import ImageBlock from "@/shared/ui/course/ui/CourseBlocks/ImageBlock";
 import VideoBlock from "@/shared/ui/course/ui/CourseBlocks/VideoBlock";
+import {IListBlock} from "@/enteties/Lesson/model/types/lesson";
+import ListBlock from "@/shared/ui/course/ui/CourseBlocks/ListBlock";
 
 interface Props {
-    items: Lesson
+    items: Lesson;
 }
 
 const LessonComponent: FC<Props> = ({items}) => {
@@ -34,6 +36,8 @@ const LessonComponent: FC<Props> = ({items}) => {
             return <ImageBlock imageBlock={block as IImageBlock}/>;
         case LessonContentType.VIDEO:
             return <VideoBlock videoBlock={block as IVideoBlock}/>;
+        case LessonContentType.LIST:
+            return <ListBlock listBlock={block as IListBlock}/>;
         }
     };
     return (

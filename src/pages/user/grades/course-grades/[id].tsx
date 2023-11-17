@@ -26,20 +26,9 @@ ChartJS.register(
 export const options = {
     responsive: true,
     plugins: {
-        legend: {
-            position: "top" as const,
-        },
-        title: {
-            display: true,
-            text: "Your grades",
-        },
     },
 };
 ChartJS.register(ArcElement, Tooltip, Legend);
-
-export const data = {
-
-};
 
 const CourseGradesPage = () => {
     const [openModuleId, setOpenModuleId] = useState<string | null>(null);

@@ -10,6 +10,7 @@ import ImageForm from "@/shared/ui/course/ui/CourseForms/ImageForm";
 import VideoForm from "@/shared/ui/course/ui/CourseForms/VideoForm";
 import {LessonBlocks, LessonContentType} from "@/enteties/Lesson";
 import {AiOutlineClose} from "react-icons/ai";
+import ListForm from "@/shared/ui/course/ui/CourseForms/ListForm";
 
 type FormData = {
     blocks: LessonBlocks[];
@@ -21,6 +22,8 @@ type Props = {
     setLessonContentEditable: () => void
     setIsSuccessVisible: (id: string, visible: boolean, isSuccess: boolean, error?: string) => void
 };
+
+const BlockStyle = "flex gap-2 mt-5 sm:mt-0 items-start w-full";
 
 const CreateLessonContent: FC<Props> = ({
     initialData,
@@ -37,6 +40,10 @@ const CreateLessonContent: FC<Props> = ({
         async onSuccess() {
             await utils.module.byId.invalidate();
             await utils.lesson.byId.invalidate();
+            await setIsSuccessVisible(lessonId, true, true);
+        },
+        onError() {
+            setIsSuccessVisible(lessonId, true, false);
         }
     });
 
@@ -50,6 +57,8 @@ const CreateLessonContent: FC<Props> = ({
     }, [initialData, reset]);
 
     const onSubmit = (data: FormData) => {
+        // console.log(data);
+
         try {
             lessonUpdateContentQuery.mutate({
                 id: lessonId,
@@ -61,7 +70,6 @@ const CreateLessonContent: FC<Props> = ({
             console.log(e);
         } finally {
             setLessonContentEditable();
-            setIsSuccessVisible(lessonId, true, true);
         }
     };
 
@@ -69,6 +77,19 @@ const CreateLessonContent: FC<Props> = ({
         control: methods.control,
         name: "blocks",
     });
+
+    const renderCloseButton = (index: number) => (
+        <Button
+            theme={ButtonThemes.TEXT}
+            className="!p-2 !rounded-md"
+            type="button"
+            onClick={() => {
+                remove(index);
+            }}
+        >
+            <AiOutlineClose/>
+        </Button>
+    );
 
     const addTextBlock = () => {
         append({
@@ -79,6 +100,20 @@ const CreateLessonContent: FC<Props> = ({
                 {
                     id: uuidv4(),
                     text: "",
+                },
+            ],
+        });
+    };
+
+    const addListBlock = () => {
+        append({
+            id: uuidv4(),
+            type: LessonContentType.LIST,
+            title: "",
+            listItems: [
+                {
+                    id: uuidv4(),
+                    item: "",
                 },
             ],
         });
@@ -96,6 +131,28 @@ const CreateLessonContent: FC<Props> = ({
         append({id: uuidv4(), type: LessonContentType.VIDEO, url: ""});
     };
 
+    const addButtons = [{
+        title: "Add Text Block",
+        func: addTextBlock
+    },
+    {
+        title: "Add Image Block",
+        func: addImageBlock
+    },
+    {
+        title: "Add Code Block",
+        func: addCodeBlock
+    },
+    {
+        title: "Add Video Block",
+        func: addVideoBlock
+    },
+    {
+        title: "Add List Block",
+        func: addListBlock
+    },
+    ];
+
     return (
         <>
             <FormProvider {...methods}>
@@ -106,79 +163,58 @@ const CreateLessonContent: FC<Props> = ({
                     {fields.map((field, index) => (
                         <div key={field.id}
                             className={"flex gap-2 bg-light-neutral-900/60  dark:bg-neutral-600/30 rounded-xl px-5 py-5"}>
-                            {field.type === LessonContentType.TEXT ? (
-                                <div className={"flex gap-2 mt-5 sm:mt-0 items-start w-full"}>
-                                    <TextForm index={index}/>
-                                    <Button
-                                        theme={ButtonThemes.TEXT}
-                                        className={"!p-2 rounded-md"}
-                                        type="button"
-                                        onClick={() => {
-                                            remove(index);
-                                        }}
-                                    >
-                                        <AiOutlineClose/>
-                                    </Button>
-                                </div>
-                            ) : field.type === LessonContentType.IMAGE ? (
-                                <div className={"flex gap-2 mt-5 sm:mt-0 items-start w-full"}>
-                                    <ImageForm index={index}/>
-                                    <Button
-                                        theme={ButtonThemes.TEXT}
-                                        className={"!p-2 rounded-md"}
-                                        type="button"
-                                        onClick={() => {
-                                            remove(index);
-                                        }}
-                                    >
-                                        <AiOutlineClose/>
-                                    </Button>
-                                </div>
-                            ) : field.type === LessonContentType.CODE ? (
-                                <div className={"flex gap-2 mt-5 sm:mt-0 items-start w-full"}>
-                                    <CodeForm index={index}/>
-                                    <Button
-                                        theme={ButtonThemes.TEXT}
-                                        className={"!p-2 rounded-md"}
-                                        type="button"
-                                        onClick={() => {
-                                            remove(index);
-                                        }}
-                                    >
-                                        <AiOutlineClose/>
-                                    </Button>
-                                </div>
-                            ) : field.type === LessonContentType.VIDEO ? (
-                                <div className={"flex gap-2 mt-5 sm:mt-0 items-start w-full"}>
-                                    <VideoForm index={index}/>
-                                    <Button
-                                        theme={ButtonThemes.TEXT}
-                                        className={"!p-2 rounded-md"}
-                                        type="button"
-                                        onClick={() => {
-                                            remove(index);
-                                        }}
-                                    >
-                                        <AiOutlineClose/>
-                                    </Button>
-                                </div>
-                            ) : null}
+                            {
+                                field.type === LessonContentType.TEXT && (
+                                    <div className={BlockStyle}>
+                                        <TextForm index={index}/>
+                                        {renderCloseButton(index)}
+                                    </div>
+                                )
+                            }
+                            {
+                                field.type === LessonContentType.IMAGE && (
+                                    <div className={"flex gap-2 mt-5 sm:mt-0 items-start w-full"}>
+                                        <ImageForm index={index}/>
+                                        {renderCloseButton(index)}
+                                    </div>
+                                )
+                            }
+                            {
+                                field.type === LessonContentType.CODE && (
+                                    <div className={"flex gap-2 mt-5 sm:mt-0 items-start w-full"}>
+                                        <CodeForm index={index}/>
+                                        {renderCloseButton(index)}
+                                    </div>
+                                )
+                            }
+                            {
+                                field.type === LessonContentType.VIDEO && (
+                                    <div className={"flex gap-2 mt-5 sm:mt-0 items-start w-full"}>
+                                        <VideoForm index={index}/>
+                                        {renderCloseButton(index)}
+                                    </div>
+                                )
+
+                            }
+                            {
+                                field.type === LessonContentType.LIST && (
+                                    <div className={"flex gap-2 mt-5 sm:mt-0 items-start w-full"}>
+                                        <ListForm index={index}/>
+                                        {renderCloseButton(index)}
+                                    </div>
+                                )
+                            }
                         </div>
                     ))}
                     <div
-                        className={"grid grid-cols-2 gap-2 md:grid-cols-4 mt-5 sm:mt-0 bg-neutral-600/30 p-5 md:p-2 rounded-md"}>
-                        <Button theme={ButtonThemes.FILLED} onClick={addTextBlock}>
-                            Add Text Block
-                        </Button>
-                        <Button theme={ButtonThemes.FILLED} onClick={addImageBlock}>
-                            Add Image Block
-                        </Button>
-                        <Button theme={ButtonThemes.FILLED} onClick={addCodeBlock}>
-                            Add Code Block
-                        </Button>
-                        <Button theme={ButtonThemes.FILLED} onClick={addVideoBlock}>
-                            Add Video Block
-                        </Button>
+                        className={"grid grid-cols-1 gap-2 md:grid-cols-4 mt-5 sm:mt-0 bg-neutral-600/30 p-5 md:p-2 rounded-md"}>
+                        {
+                            addButtons.map(item => (
+                                <Button key={item.title} theme={ButtonThemes.FILLED} onClick={item.func}>
+                                    {item.title}
+                                </Button>
+                            ))
+                        }
                     </div>
                     <div className={"flex justify-end "}>
                         <Button theme={ButtonThemes.FILLED} type="submit">

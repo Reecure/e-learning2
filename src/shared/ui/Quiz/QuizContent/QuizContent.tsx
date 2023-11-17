@@ -4,6 +4,7 @@ import {
     AnswerWithFixedLetters,
     LessonBlocks,
     QuestionAnswerBlock,
+    QuestionTwoMoreAnswerQuiz,
     QuizBlocks,
     QuizContentType,
     TrueFalseQuiz
@@ -13,6 +14,7 @@ import CourseQuizGameAnswerWithFixedLetters
     from "@/shared/ui/course/ui/CourseQuizGames/CourseQuizGameAnswerWithFixedLetters";
 import AlphabetSoupQuizGame from "@/shared/ui/course/ui/CourseQuizGames/AlphabetSoupQuizGame";
 import TrueFalseQuizGame from "@/shared/ui/course/ui/CourseQuizGames/TrueFalseQuizGame";
+import QuestionTwoMoreAnswerGame from "@/shared/ui/course/ui/CourseQuizGames/QuestionTwoMoreAnswerGame";
 
 interface Props {
     currentQuestion: number;
@@ -64,6 +66,15 @@ const QuizContent: FC<Props> = ({
             return (
                 <TrueFalseQuizGame
                     block={block as TrueFalseQuiz}
+                    handleAnswer={handleAnswer}
+                    isLast={submitValuesVisible}
+                    submitHandler={submitHandler}
+                />
+            );
+        case QuizContentType.QUESTION_TWO_MORE_ANSWER:
+            return (
+                <QuestionTwoMoreAnswerGame
+                    block={block as QuestionTwoMoreAnswerQuiz}
                     handleAnswer={handleAnswer}
                     isLast={submitValuesVisible}
                     submitHandler={submitHandler}

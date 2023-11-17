@@ -8,23 +8,35 @@ export enum LessonContentType {
     IMAGE = "IMAGE",
     CODE = "CODE",
     VIDEO = "VIDEO",
+    LIST = "LIST"
 }
 
 export enum QuizContentType {
     QUESTION_ANSWER = "QUESTION_ANSWER",
     ANSWER_WITH_FIXED_LETTERS = "ANSWER_WITH_FIXED_LETTERS",
     ALPHABET_SOUP_QUIZ = "ALPHABET_SOUP_QUIZ",
-    TRUE_FALSE = "TRUE_FALSE"
+    TRUE_FALSE = "TRUE_FALSE",
+    QUESTION_TWO_MORE_ANSWER = "QUESTION_TWO_MORE_ANSWER"
 }
 
 export interface ITextBlock {
     id: string;
-    title: string;
+    title?: string;
     paragraphs: Array<{
         id: string;
         text: string;
     }>;
     type: LessonContentType.TEXT;
+}
+
+export interface IListBlock {
+    id: string;
+    title?: string;
+    listItems: Array<{
+        id: string;
+        item: string;
+    }>;
+    type: LessonContentType.LIST;
 }
 
 export interface ICodeBlock {
@@ -47,7 +59,7 @@ export interface IVideoBlock {
 }
 
 
-export type LessonBlocks = ITextBlock | ICodeBlock | IImageBlock | IVideoBlock;
+export type LessonBlocks = ITextBlock | ICodeBlock | IImageBlock | IVideoBlock | IListBlock;
 
 export type QuestionAnswerBlock = {
     id: string;
@@ -80,8 +92,25 @@ export type TrueFalseQuiz = {
     answer: string;
 };
 
+export type QuestionTwoMoreAnswerQuiz = {
+    id: string;
+    type: QuizContentType.QUESTION_TWO_MORE_ANSWER;
+    question: string;
+    correctAnswer: Array<{
+        otherCorrectAnswer: string;
+    }>;
+    answer: Array<{
+        otherAnswer: string;
+    }>;
+};
 
-export type QuizBlocks = QuestionAnswerBlock | AnswerWithFixedLetters | AlphabetSoupQuiz | TrueFalseQuiz
+
+export type QuizBlocks =
+    QuestionAnswerBlock
+    | AnswerWithFixedLetters
+    | AlphabetSoupQuiz
+    | TrueFalseQuiz
+    | QuestionTwoMoreAnswerQuiz
 
 export interface LessonsContent {
     blocks: LessonBlocks[] | QuizBlocks[];

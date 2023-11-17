@@ -47,12 +47,12 @@ const CourseQuizGameQuestionWithAnswer: FC<Props> = ({
                 <h5 className={"text-lg font-extrabold mb-3 "}>{block.question}</h5>
                 <div className={"flex flex-col gap-2 mb-5"}>
                     {answers.map((item, i) => (
-                        <div key={i} className={"flex gap-2 items-center"}>
+                        <div key={i} className={"flex gap-2 items-center w-full"}>
                             <div>{i + 1}.</div>
                             <Button
                                 className={`w-full !text-start !px-1 lg:dark:hover:!bg-dark-primary-main/30 rounded-md bg-light-primary-main/10 dark:bg-dark-primary-main/10 ${
                                     isSelected?.selectedId === i
-                                        ? "bg-light-primary-main/30 dark:bg-dark-primary-main/30"
+                                        ? "bg-light-primary-main/30 dark:bg-dark-primary-main/30 "
                                         : ""
                                 }`}
                                 theme={ButtonThemes.TEXT}

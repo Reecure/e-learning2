@@ -128,7 +128,7 @@ const CourseForm: FC<Props> = ({imageUrl, setImageUrl, courseData, isCreating, o
                 </Label>
                 <div className={"flex flex-col items-start"}>
                     <p className={"mb-1 text-sm  dark:text-neutral-300 whitespace-nowrap"}>Cover Image</p>
-                    <div className={"flex gap-20"}>
+                    <div className={"flex flex-col gap-7 sm:flex-row sm:gap-20"}>
                         <UploadButton
                             appearance={{
                                 button:
@@ -144,7 +144,7 @@ const CourseForm: FC<Props> = ({imageUrl, setImageUrl, courseData, isCreating, o
                                 setUploadError(false);
                                 setUploadNotificationOpenHandler();
                             }}
-                            onUploadError={(error: Error) => {
+                            onUploadError={() => {
                                 setUploadError(true);
                                 setUploadNotificationOpenHandler();
                             }}
@@ -186,28 +186,31 @@ const CourseForm: FC<Props> = ({imageUrl, setImageUrl, courseData, isCreating, o
                             viewBox='0 0 24 24'
                         >
                             <path
-                                strokeLinecap='round'
-                                strokeLinejoin='round'
-                                strokeWidth='2'
-                                d='M4 12.611 8.923 17.5 20 6.5'
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M4 12.611 8.923 17.5 20 6.5"
                             />
                         </svg>
                     </label>
 
                     <p className={"whitespace-nowrap"}>Open for community</p>
                 </div>
-                <Button disabled={disableButton} type={"submit"} theme={ButtonThemes.FILLED}>
-                    {isCreating ? "Create course" : "Update course"}
-                </Button>
-                <Button
-                    type={"button"}
-                    theme={ButtonThemes.FILLED}
-                    onClick={() => {
-                        reset();
-                    }}
-                >
-                    Reset
-                </Button>
+
+                <div className={"flex flex-col md:flex-row justify-center md:mt-5 mt-3 gap-3 md:gap-5"}>
+                    <Button disabled={disableButton} type={"submit"} theme={ButtonThemes.FILLED}>
+                        {isCreating ? "Create course" : "Update course"}
+                    </Button>
+                    <Button
+                        type={"button"}
+                        theme={ButtonThemes.FILLED}
+                        onClick={() => {
+                            reset();
+                        }}
+                    >
+                        Reset
+                    </Button>
+                </div>
             </form>
             <Notification isSuccess={!submitError} open={notificationOpen} onClose={notificationOpenHandler}
                 timeoutDelay={TIMEOUT}>

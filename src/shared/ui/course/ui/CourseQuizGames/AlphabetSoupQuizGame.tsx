@@ -42,9 +42,10 @@ const AlphabetSoupQuizGame: FC<Props> = ({submitHandler, isLast, block, handleAn
         <div className={"w-full "}>
             <div className={"flex flex-col items-center"}>
                 <h5 className={"text-lg font-extrabold"}>{block.question}</h5>
-                <div className={"grid grid-cols-10 gap-2 my-5 max-h-10"}>
+                <div className={"grid grid-cols-10 p-2 gap-2 my-5"}>
                     {answer.map((letter, i) => (
-                        <div key={i} className={"px-2 py-1 bg-neutral-600 rounded-md cursor-pointer"}
+                        <div key={i}
+                            className={"flex items-center justify-center h-8 w-8 bg-neutral-600 rounded-md cursor-pointer"}
                             onClick={() => getLetterFromAnswer(i)}>{letter}</div>
                     ))}
                 </div>

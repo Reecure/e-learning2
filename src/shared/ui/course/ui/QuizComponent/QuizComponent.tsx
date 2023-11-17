@@ -131,8 +131,8 @@ const QuizComponent: FC<Props> = ({blocks, currentLessonId, updateInfo}) => {
                                 <div className={"text-xl font-bold"}>No questions yet</div>
                             ) : (
                                 <div className={"flex flex-col gap-5 w-full"}>
-                                    <p className={"text-2xl text-blue-700 dark:text-blue-400"}>Question
-                                        - {currentQuestion + 1}</p>
+                                    <p className={"text-2xl text-blue-700 dark:text-blue-400"}>
+                                        Question - {currentQuestion + 1}</p>
                                     <QuizContent
                                         currentQuestion={currentQuestion}
                                         submitValuesVisible={submitValuesVisible}

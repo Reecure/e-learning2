@@ -47,7 +47,7 @@ const CreateNewsForm: FC<Props> = ({onSubmit}) => {
             className={"flex flex-col gap-2 w-[200px] sm:w-[300px] md:w-[350px] lg:w-[430px]"}
             onSubmit={handleSubmit(submitHandler)}
         >
-            <p className={"text-3xl mb-5 text-center font-extrabold"}>
+            <p className={"text-3xl text-center font-extrabold"}>
                 Create News
             </p>
             <Label htmlFor={"title"} labelText={"Title"}>
@@ -69,20 +69,22 @@ const CreateNewsForm: FC<Props> = ({onSubmit}) => {
 
             </Label>
 
-            <Button
-                data-testid={"submit"}
-                disabled={disableButton} type={"submit"} theme={ButtonThemes.FILLED}>
-                Create News
-            </Button>
-            <Button
-                type={"button"}
-                theme={ButtonThemes.FILLED}
-                onClick={() => {
-                    reset();
-                }}
-            >
-                Reset
-            </Button>
+            <div className={"flex flex-col md:flex-row justify-center md:mt-5 mt-3 gap-3 md:gap-5"}>
+                <Button
+                    data-testid={"submit"}
+                    disabled={disableButton} type={"submit"} theme={ButtonThemes.FILLED}>
+                    Create News
+                </Button>
+                <Button
+                    type={"button"}
+                    theme={ButtonThemes.FILLED}
+                    onClick={() => {
+                        reset();
+                    }}
+                >
+                    Reset
+                </Button>
+            </div>
         </form>
     );
 };
