@@ -44,9 +44,6 @@ const UserRaw: FC<Props> = ({user, index}) => {
                     {user.role}
                 </td>
                 <td className={"flex justify-center gap-3 p-1"}>
-                    <Button theme={ButtonThemes.FILLED} className={"!px-4 !py-1"}>
-                        Ban
-                    </Button>
                     <Button
                         theme={ButtonThemes.FILLED}
                         className={"!px-4 !py-1"}

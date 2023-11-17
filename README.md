@@ -1,40 +1,69 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Project Setup
 
-## Getting Started
+1. Run `pnpm install` to install project dependencies
+2. Run `npx prisma generate` to generate Prisma Client.
+3. Connect your mongodb. Shared your mongodb link in .env file.
+4. `pnpm dev` for regular startup.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Available Scripts
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Use these scripts to manage the project:
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+- `dev` : This script launches a development server using Webpack to serve the application. It sets an environment
+  variable port to 3000, specifying the port on which the server will listen.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- `build`: Triggers build process in development mode.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- `start`: Launch the project using the compiled code.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- `lint` : Executes ESLint to analyze for code quality
 
-## Learn More
+- `lint-fix` : Similar to the previous script, this command also uses ESLint to analyze files, attempting
+  to automatically fix any fixable issues by applying suggested code changes.
 
-To learn more about Next.js, take a look at the following resources:
+- `test` : Executes Jest tests
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Project Architecture
 
-## Deploy on Vercel
+This project follows the [Feature-Sliced Design](https://feature-sliced.design/) approach.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Tests
+
+In project use [Jest](https://jestjs.io/) along
+with [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) for testing.
+
+---
+
+## Forms
+
+I utilize [React Hook Form](https://react-hook-form.com/docs/useform) for handling forms and [Zod](https://zod.dev/) for
+form validation.
+
+---
+
+## Enteties
+
+- [Course](src/enteties/Course)
+- [Lesson](src/enteties/Lesson)
+- [Module](src/enteties/Module)
+- [News](src/enteties/News)
+- [Review](src/enteties/Review)
+- [User](src/enteties/User)
+
+---
+
+## Server routes
+
+- [Course route](src/server/routers/course)
+- [Lesson route](src/server/routers/lesson)
+- [Module route](src/server/routers/module)
+- [News route](src/server/routers/news)
+- [Progress route](src/server/routers/progress)
+- [Reviews route](src/server/routers/reviews)
+- [User route](src/server/routers/user)

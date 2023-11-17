@@ -6,12 +6,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "storybook": "storybook dev -p 6006",
     "start": "next start",
     "lint": "eslint .",
-    "prisma-pull": "prisma db pull",
     "lint-fix": "eslint . --fix",
-    "build-storybook": "storybook build",
     "test": "jest"
   },
   "dependencies": {
